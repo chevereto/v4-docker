@@ -36,7 +36,7 @@ mkdir -p importing/{no-parse,parse-albums,parse-users}
 * The application will be at `public_html`
 * Local uploads will be stored at `images`
 
-> All these directories are for reference, you can customize the volumes at [Setup Web Server](#setup-web-server).
+> All these directories are for reference, you can customize the volumes at [Setup v3-docker](#setup-v3-docker).
 
 ### Installer Project (recommended)
 
