@@ -28,8 +28,7 @@ cd /var/www/html/chevereto.loc/
 Create the volumes (if required):
 
 ```sh
-mkdir public_html
-mkdir images
+mkdir {public_html,images,database}
 mkdir -p importing/{no-parse,parse-albums,parse-users}
 ```
 
@@ -73,7 +72,6 @@ docker run -itd \
     --name chv-mariadb \
     --network chv-network \
     --network-alias mariadb \
-    --hostname mariadb \
     --mount src="/var/www/html/chevereto.loc/database",target=/var/lib/mysql,type=bind \
     -e MYSQL_ROOT_PASSWORD=password \
     mariadb:focal
@@ -86,18 +84,11 @@ docker run -itd \
     --name chv-mariadb \
     --network chv-network \
     --network-alias mariadb \
-    --hostname mariadb \
     -e MYSQL_ROOT_PASSWORD=password \
     mariadb:focal
 ```
 
 **Note:** Use your own password at `password`.
-
-* To get the MariaDB container IP:
-
-```sh
-docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' chv-mariadb
-```
 
 * Enter the `chv-mariadb` container SQL console:
 
