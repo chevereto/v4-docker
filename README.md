@@ -141,7 +141,7 @@ Reload privilege tables now? [Y/n] y
 
 ```sh
 docker run -itd \
-    --name chv-v3
+    --name chv-v3 \
     --network chv-network \
     --restart always \
     -p 4430:443 -p 8000:80 \
@@ -159,3 +159,6 @@ docker run -itd \
     --mount src="/var/www/html/chevereto.loc/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
     chevereto:v3-docker
 ```
+
+* [localhost:8000](http://localhost:8000)
+* [localhost:4430](https://localhost:4430)
