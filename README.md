@@ -152,6 +152,10 @@ docker run -itd \
     -e "CHEVERETO_DB_TABLE_PREFIX=chv_" \
     -e "CHEVERETO_DB_PORT=3306" \
     -e "CHEVERETO_DB_DRIVER=mysql" \
+    -e "CHEVERETO_UPLOAD_MAX_FILESIZE=25M" \
+    -e "CHEVERETO_POST_MAX_SIZE=25M" \
+    -e "CHEVERETO_MAX_EXECUTION_TIME=30" \
+    -e "CHEVERETO_MEMORY_LIMIT=512M" \
     --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
     --mount src="/var/www/html/chevereto.loc/images",target=/var/www/html/images,type=bind \
     --mount src="/var/www/html/chevereto.loc/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
