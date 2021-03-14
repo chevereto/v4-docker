@@ -158,3 +158,21 @@ docker run -itd \
 
 * [localhost:8000](http://localhost:8000)
 * [localhost:4430](https://localhost:4430)
+
+## Setup Cron
+
+You can add the following commands to your host crontab.
+
+### Background Tasks
+
+```sh
+docker exec -it -e IS_CRON=1 chv-v3 /usr/local/bin/php /var/www/html/cron.php
+```
+
+### Automatic Importing
+
+The following command will execute automatic importing.
+
+```sh
+docker exec -it -e IS_CRON=1 -e THREAD_ID=1 chv-v3 /usr/local/bin/php /var/www/html/importing.php
+```
