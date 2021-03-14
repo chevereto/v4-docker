@@ -27,25 +27,22 @@ VOLUME /var/www/html/importing/parse-users
 
 EXPOSE 80 443
 
-ENV CHEVERETO_SERVICING docker
+ENV CHEVERETO_SERVICING=docker \
+    CHEVERETO_DB_HOST=mariadb \
+    CHEVERETO_DB_USER=chevereto \
+    CHEVERETO_DB_PASS=user_database_password \
+    CHEVERETO_DB_NAME=chevereto \
+    CHEVERETO_DB_TABLE_PREFIX=chv_ \
+    CHEVERETO_DB_PORT=3306 \
+    CHEVERETO_DB_DRIVER=mysql \
+    CHEVERETO_SESSION_SAVE_HANDLER=files \
+    CHEVERETO_SESSION_SAVE_PATH=/tmp \
+    CHEVERETO_UPLOAD_MAX_FILESIZE=25M \
+    CHEVERETO_POST_MAX_SIZE=25M \
+    CHEVERETO_MAX_EXECUTION_TIME=30 \
+    CHEVERETO_MEMORY_LIMIT=512M
 
-ENV CHEVERETO_DB_HOST mariadb
-ENV CHEVERETO_DB_USER chevereto
-ENV CHEVERETO_DB_PASS user_database_password
-ENV CHEVERETO_DB_NAME chevereto
-ENV CHEVERETO_DB_TABLE_PREFIX chv_
-ENV CHEVERETO_DB_PORT 3306
-ENV CHEVERETO_DB_DRIVER mysql
-
-ENV CHEVERETO_SESSION_SAVE_HANDLER files
-ENV CHEVERETO_SESSION_SAVE_PATH /tmp
-
-ENV CHEVERETO_UPLOAD_MAX_FILESIZE 25M
-ENV CHEVERETO_POST_MAX_SIZE 25M
-ENV CHEVERETO_MAX_EXECUTION_TIME 30
-ENV CHEVERETO_MEMORY_LIMIT 512M
-
-RUN echo "upload_max_filesize = \${CHEVERETO_UPLOAD_MAX_FILESIZE}" >> $PHP_INI_DIR/conf.d/php.ini
-RUN echo "post_max_size = \${CHEVERETO_POST_MAX_SIZE}" >> $PHP_INI_DIR/conf.d/php.ini
-RUN echo "max_execution_time = \${CHEVERETO_MAX_EXECUTION_TIME}" >> $PHP_INI_DIR/conf.d/php.ini
-RUN echo "memory_limit = \${CHEVERETO_MEMORY_LIMIT}" >> $PHP_INI_DIR/conf.d/php.ini
+RUN echo "upload_max_filesize = \${CHEVERETO_UPLOAD_MAX_FILESIZE}" >> $PHP_INI_DIR/conf.d/php.ini \
+    && echo "post_max_size = \${CHEVERETO_POST_MAX_SIZE}" >> $PHP_INI_DIR/conf.d/php.ini \
+    && echo "max_execution_time = \${CHEVERETO_MAX_EXECUTION_TIME}" >> $PHP_INI_DIR/conf.d/php.ini \
+    && echo "memory_limit = \${CHEVERETO_MEMORY_LIMIT}" >> $PHP_INI_DIR/conf.d/php.ini
