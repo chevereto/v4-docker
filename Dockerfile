@@ -46,3 +46,4 @@ RUN echo "upload_max_filesize = \${CHEVERETO_UPLOAD_MAX_FILESIZE}" >> $PHP_INI_D
     && echo "post_max_size = \${CHEVERETO_POST_MAX_SIZE}" >> $PHP_INI_DIR/conf.d/php.ini \
     && echo "max_execution_time = \${CHEVERETO_MAX_EXECUTION_TIME}" >> $PHP_INI_DIR/conf.d/php.ini \
     && echo "memory_limit = \${CHEVERETO_MEMORY_LIMIT}" >> $PHP_INI_DIR/conf.d/php.ini
+
