@@ -6,7 +6,7 @@ docker network create chv-network
 
 echo "✨ Removing any existing container"
 
-docker rm -f -v chv-v3 chv-mariadb
+docker rm -f -v chv-php chv-nginx chv-mariadb
 
 echo "✨ Run MariaDB Server"
 
@@ -34,21 +34,32 @@ RESULT=$?
 if [ $RESULT -eq 1 ]; then
     echo "✨ Database Setup"
     docker exec -it chv-mariadb mysql -uroot -ppassword -e "CREATE DATABASE chevereto;"
-    docker exec -it chv-mariadb mysql -uroot -ppassword -e "CREATE USER 'chevereto' IDENTIFIED BY 'user_database_password;'"
-    docker exec -it chv-mariadb mysql -uroot -ppassword -e "GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password;'"
+    docker exec -it chv-mariadb mysql -uroot -ppassword -e "CREATE USER 'chevereto' IDENTIFIED BY 'user_database_password';"
+    docker exec -it chv-mariadb mysql -uroot -ppassword -e "GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
 fi
 
-echo "✨ Server Setup"
+echo "✨ PHP Setup"
 
 docker run -itd \
-    --name chv-v3 \
+    --name chv-php \
     --network chv-network \
-    --restart always \
-    -p 4430:443 -p 8000:80 \
-    chevereto:v3-docker
+    --network-alias php \
+    --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
+    --mount src="/var/www/html/chevereto.loc/images",target=/var/www/html/images,type=bind \
+    chevereto:v3-php-fpm
+
+echo "✨ Nginx Setup"
+
+docker run -itd \
+    --name chv-nginx \
+    --network chv-network \
+    --network-alias webserver \
+    --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
+    -p 8000:80 \
+    chevereto:v3-nginx
 
 echo '✨ Applying permissions'
 
-docker exec -it chv-v3 bash -c "chown www-data: . -R"
+docker exec -it chv-php bash -c "chown www-data: . -R"
 
 echo "\n💯 Done! Chevereto is at http://localhost:8000"

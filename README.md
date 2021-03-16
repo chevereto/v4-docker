@@ -73,6 +73,7 @@ docker run -itd \
     --network chv-network \
     --network-alias mariadb \
     --mount src="/var/www/html/chevereto.loc/database",target=/var/lib/mysql,type=bind \
+    --health-cmd='mysqladmin ping --silent' \
     -e MYSQL_ROOT_PASSWORD=password \
     mariadb:focal
 ```
@@ -84,6 +85,7 @@ docker run -itd \
     --name chv-mariadb \
     --network chv-network \
     --network-alias mariadb \
+    --health-cmd='mysqladmin ping --silent' \
     -e MYSQL_ROOT_PASSWORD=password \
     mariadb:focal
 ```
@@ -124,11 +126,55 @@ Remove test database and access to it? [Y/n] y
 Reload privilege tables now? [Y/n] y
 ```
 
+### Setup `chv-php`
+
+Uses the `chevereto:v3-php-fpm` Dockerfile image.
+
+```sh
+docker run -it \
+    --name chv-php \
+    --network chv-network \
+    --network-alias php \
+    --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
+    chevereto:v3-php-fpm
+```
+
+### Setup `chv-nginx`
+
+Uses the `chevereto:v3-nginx` Dockerfile image.
+
+```sh
+docker run -it \
+    --name chv-nginx \
+    --network chv-network \
+    --network-alias webserver \
+    --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
+    -p 8000:80 \
+    chevereto:v3-nginx
+```
+
 ### Setup `v3-docker`
+
+Short command:
+
+```sh
+docker run -itd \
+    --name chv-v3 \
+    --network chv-network \
+    --network-alias chevereto \
+    --restart always \
+    -p 4430:443 -p 8000:80 \
+    --mount src="/var/www/html/chevereto.loc/installer",target=/var/www/html,type=bind \
+    chevereto:v3-docker
+```
+
+Port mapping:
 
 ```sh
     -p 443:443 -p 80:80 \
 ```
+
+Full command:
 
 ```sh
 docker run -itd \
