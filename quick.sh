@@ -1,7 +1,12 @@
 # !/usr/bin/bash
+
+echo "✨ Setup Network"
+
+docker network create chv-network
+
 echo "✨ Removing any existing container"
-docker rm -f chv-v3 || true
-docker rm -f chv-mariadb || true
+
+docker rm -f -v chv-v3 chv-mariadb
 
 echo "✨ Run MariaDB Server"
 
@@ -9,21 +14,31 @@ docker run -itd \
     --name chv-mariadb \
     --network chv-network \
     --network-alias mariadb \
+    --health-cmd='mysqladmin ping --silent' \
     -e MYSQL_ROOT_PASSWORD=password \
     mariadb:focal
 
-echo "✨ Database Setup"
+echo "✨ Waiting for mysqld"
 
-sleep 1
+while [ $(docker inspect --format "{{json .State.Health.Status }}" chv-mariadb) != "\"healthy\"" ]; do
+    printf "."
+    sleep 1
+done
 
-docker exec -it chv-mariadb mysql -uroot -ppassword -e "CREATE DATABASE chevereto;
-CREATE USER 'chevereto' IDENTIFIED BY 'user_database_password;'
-GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password;'
-quit;"
+echo "\n"
+
+docker exec -it chv-mariadb test -d /var/lib/mysql/chevereto
+
+RESULT=$?
+
+if [ $RESULT -eq 1 ]; then
+    echo "✨ Database Setup"
+    docker exec -it chv-mariadb mysql -uroot -ppassword -e "CREATE DATABASE chevereto;"
+    docker exec -it chv-mariadb mysql -uroot -ppassword -e "CREATE USER 'chevereto' IDENTIFIED BY 'user_database_password;'"
+    docker exec -it chv-mariadb mysql -uroot -ppassword -e "GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password;'"
+fi
 
 echo "✨ Server Setup"
-
-sleep 1
 
 docker run -itd \
     --name chv-v3 \
@@ -36,4 +51,4 @@ echo '✨ Applying permissions'
 
 docker exec -it chv-v3 bash -c "chown www-data: . -R"
 
-echo "\n💯 Chevereto is at http://localhost:8000"
+echo "\n💯 Done! Chevereto is at http://localhost:8000"
