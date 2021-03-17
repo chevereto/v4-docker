@@ -15,8 +15,7 @@ RUN apt-get update && apt-get install -y \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     && php -m \
-    && a2enmod ssl \
-    && a2enmod rewrite \
+    && a2enmod ssl rewrite \
     && a2ensite default-ssl.conf
 
 VOLUME /var/www/html/
@@ -46,4 +45,3 @@ RUN echo "upload_max_filesize = \${CHEVERETO_UPLOAD_MAX_FILESIZE}" >> $PHP_INI_D
     && echo "post_max_size = \${CHEVERETO_POST_MAX_SIZE}" >> $PHP_INI_DIR/conf.d/php.ini \
     && echo "max_execution_time = \${CHEVERETO_MAX_EXECUTION_TIME}" >> $PHP_INI_DIR/conf.d/php.ini \
     && echo "memory_limit = \${CHEVERETO_MEMORY_LIMIT}" >> $PHP_INI_DIR/conf.d/php.ini
-
