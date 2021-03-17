@@ -10,8 +10,9 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     imagemagick libmagickwand-dev --no-install-recommends \
+    && docker-php-ext-install -j$(nproc) gd pdo_mysql zip opcache \
     && docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo_mysql zip \
+    && docker-php-ext-configure opcache --enable-opcache \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     && php -m \

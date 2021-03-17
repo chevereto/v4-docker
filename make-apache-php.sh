@@ -6,6 +6,6 @@ docker run -it \
     --name chv-apache-php \
     --network chv-network \
     --network-alias apache-php \
-    -p 4430:443 -p 8111:80 \
     --mount src="/var/www/html/chevereto.loc/installer",target=/var/www/html,type=bind \
+    -p 8000:80 \
     chevereto:v3-apache-php

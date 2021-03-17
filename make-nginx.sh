@@ -6,6 +6,6 @@ docker run -it \
     --name chv-nginx \
     --network chv-network \
     --network-alias nginx \
-    --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
-    -p 8000:80 \
+    --mount src="/var/www/html/chevereto.loc/installer",target=/var/www/html,type=bind \
+    -p 8010:80 \
     chevereto:v3-nginx
