@@ -9,18 +9,17 @@ RUN apt-get update && apt-get install -y \
     libgd-dev \
     libzip-dev \
     zip \
-    imagemagick libmagickwand-dev --no-install-recommends
-
-RUN docker-php-ext-configure gd \
+    imagemagick libmagickwand-dev --no-install-recommends \
+    && docker-php-ext-configure gd \
     --with-freetype=/usr/include/ \
     --with-jpeg=/usr/include/ \
-    --with-webp=/usr/include/
-RUN docker-php-ext-configure opcache --enable-opcache
-RUN docker-php-ext-install -j$(nproc) gd pdo_mysql zip opcache
-RUN pecl install imagick
-RUN docker-php-ext-enable imagick
-RUN php -m 
-RUN a2enmod rewrite
+    --with-webp=/usr/include/ \
+    && docker-php-ext-configure opcache --enable-opcache \
+    && docker-php-ext-install -j$(nproc) gd pdo_mysql zip opcache \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
+    && php -m  \
+    && a2enmod rewrite
 
 ENV CHEVERETO_SERVICING=docker \
     CHEVERETO_DB_HOST=demo-mariadb \
@@ -37,16 +36,16 @@ RUN set -eux; \
     { \
     echo "log_errors = On"; \
     echo "error_log = /dev/stderr"; \
-    echo "upload_max_filesize = 25M"; \
-    echo "post_max_size = 25M"; \
-    echo "max_execution_time = 30"; \
-    echo "memory_limit = 512M"; \
+    echo "upload_max_filesize = \${CHEVERETO_UPLOAD_MAX_FILESIZE}"; \
+    echo "post_max_size = \${CHEVERETO_POST_MAX_SIZE}"; \
+    echo "max_execution_time = \${CHEVERETO_MAX_EXECUTION_TIME}"; \
+    echo "memory_limit = \${CHEVERETO_MEMORY_LIMIT}"; \
     } > $PHP_INI_DIR/conf.d/php.ini
 
-RUN curl -sS -o /var/www/html/installer.php -L "https://raw.githubusercontent.com/chevereto/installer/master/installer.php";
-RUN php installer.php -a download -s chevereto-free
-RUN php installer.php -a extract -s chevereto-free -p $(pwd) -f chevereto-pkg-*.zip
-RUN set -eux; \
+RUN curl -sS -o /var/www/html/installer.php -L "https://raw.githubusercontent.com/chevereto/installer/master/installer.php" \
+    && php installer.php -a download -s chevereto-free \
+    && php installer.php -a extract -s chevereto-free -p $(pwd) -f chevereto-pkg-*.zip \
+    && set -eux; \
     { \
     echo "<?php"; \
     echo "\$settings = ["; \

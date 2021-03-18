@@ -6,8 +6,8 @@ VOLUME /var/www/html/importing/no-parse
 VOLUME /var/www/html/importing/parse-albums
 VOLUME /var/www/html/importing/parse-users
 
-RUN apt-get update -y
-RUN apt-get install apache2 -y
+RUN apt-get update -y \
+    && apt-get -y install apache2 
 
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
