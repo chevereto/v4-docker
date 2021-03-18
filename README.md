@@ -14,7 +14,7 @@ It provides the **servicing layer**.
 
 The [Dockerfile](Dockerfile) creates a container image that setups PHP, its extensions and Apache HTTP web server for spawning any Chevereto based project. Application updates are handled directly by the application.
 
-## Setup Project
+<!-- ## Setup Project
 
 A Chevereto project could be either the [Installer](https://github.com/chevereto/installer), [Chevereto V3](https://chevereto.com/pricing) or [Chevereto-Free](https://github.com/chevereto/chevereto-free).
 
@@ -221,4 +221,4 @@ The following command will execute automatic importing.
 
 ```sh
 docker exec -it -e IS_CRON=1 -e THREAD_ID=1 chv-v3 /usr/local/bin/php /var/www/html/importing.php
-```
+``` -->

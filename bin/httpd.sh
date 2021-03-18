@@ -1,5 +1,5 @@
 # !/usr/bin/bash
-echo "Build Chevereto [http + php-fpm] at port 8000"
+echo "Build Chevereto [httpd (mpm_event), php-fpm] at port 8000"
 docker rm chv-php-fpm chv-httpd -f
 docker network inspect chv-network
 RESULT=$?
