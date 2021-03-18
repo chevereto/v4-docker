@@ -30,7 +30,11 @@ ENV CHEVERETO_SERVICING=docker \
     CHEVERETO_DB_PORT=3306 \
     CHEVERETO_DB_DRIVER=mysql \
     CHEVERETO_SESSION_SAVE_HANDLER=files \
-    CHEVERETO_SESSION_SAVE_PATH=/tmp
+    CHEVERETO_SESSION_SAVE_PATH=/tmp \
+    CHEVERETO_UPLOAD_MAX_FILESIZE=25M \
+    CHEVERETO_POST_MAX_SIZE=25M \
+    CHEVERETO_MAX_EXECUTION_TIME=30 \
+    CHEVERETO_MEMORY_LIMIT=512M
 
 RUN set -eux; \
     { \
@@ -44,8 +48,9 @@ RUN set -eux; \
 
 RUN curl -sS -o /var/www/html/installer.php -L "https://raw.githubusercontent.com/chevereto/installer/master/installer.php" \
     && php installer.php -a download -s chevereto-free \
-    && php installer.php -a extract -s chevereto-free -p $(pwd) -f chevereto-pkg-*.zip \
-    && set -eux; \
+    && php installer.php -a extract -s chevereto-free -p $(pwd) -f chevereto-pkg-*.zip
+
+RUN set -eux; \
     { \
     echo "<?php"; \
     echo "\$settings = ["; \

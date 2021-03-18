@@ -1,21 +1,13 @@
 FROM debian:buster
 
-VOLUME /var/www/html/
-VOLUME /var/www/html/images
-VOLUME /var/www/html/importing/no-parse
-VOLUME /var/www/html/importing/parse-albums
-VOLUME /var/www/html/importing/parse-users
-
 RUN apt-get update -y \
     && apt-get -y install apache2 
 
-COPY apache.conf /etc/apache2/sites-available/000-default.conf
-
-RUN a2dismod mpm_prefork 
-RUN a2enmod actions proxy_fcgi rewrite
-
+COPY httpd.conf /etc/apache2/sites-available/000-default.conf
 COPY apache2-foreground /usr/local/bin/
-RUN chmod +x /usr/local/bin/apache2-foreground
+
+RUN a2enmod actions proxy_fcgi rewrite \
+    && chmod +x /usr/local/bin/apache2-foreground
 
 ENV CHEVERETO_SERVICING=docker \
     CHEVERETO_DB_HOST=mariadb \
@@ -33,4 +25,5 @@ ENV CHEVERETO_SERVICING=docker \
     CHEVERETO_MEMORY_LIMIT=512M
 
 EXPOSE 80
+
 CMD ["apache2-foreground"]

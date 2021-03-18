@@ -1,7 +1,6 @@
 FROM php:7.4-apache
 
 RUN apt-get update && apt-get install -y \
-    ssl-cert \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libpng-dev \
@@ -17,15 +16,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure opcache --enable-opcache \
     && docker-php-ext-install -j$(nproc) gd pdo_mysql zip opcache \
     && pecl install imagick \
-    && docker-php-ext-enable imagick \
+    && docker-php-ext-enable imagick opcache \
     && php -m  \
     && a2enmod rewrite
-
-VOLUME /var/www/html/
-VOLUME /var/www/html/images
-VOLUME /var/www/html/importing/no-parse
-VOLUME /var/www/html/importing/parse-albums
-VOLUME /var/www/html/importing/parse-users
 
 ENV CHEVERETO_SERVICING=docker \
     CHEVERETO_DB_HOST=mariadb \
@@ -51,3 +44,9 @@ RUN set -eux; \
     echo "max_execution_time = \${CHEVERETO_MAX_EXECUTION_TIME}"; \
     echo "memory_limit = \${CHEVERETO_MEMORY_LIMIT}"; \
     } > $PHP_INI_DIR/conf.d/php.ini
+
+VOLUME /var/www/html/
+VOLUME /var/www/html/images
+VOLUME /var/www/html/importing/no-parse
+VOLUME /var/www/html/importing/parse-albums
+VOLUME /var/www/html/importing/parse-users

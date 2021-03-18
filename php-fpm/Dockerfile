@@ -9,18 +9,15 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     imagemagick libmagickwand-dev --no-install-recommends \
-    && docker-php-ext-install -j$(nproc) gd pdo_mysql zip opcache \
-    && docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg \
+    && docker-php-ext-configure gd \
+    --with-freetype=/usr/include/ \
+    --with-jpeg=/usr/include/ \
+    --with-webp=/usr/include/ \
     && docker-php-ext-configure opcache --enable-opcache \
+    && docker-php-ext-install -j$(nproc) gd pdo_mysql zip opcache \
     && pecl install imagick \
     && docker-php-ext-enable imagick opcache \
     && php -m
-
-VOLUME /var/www/html/
-VOLUME /var/www/html/images
-VOLUME /var/www/html/importing/no-parse
-VOLUME /var/www/html/importing/parse-albums
-VOLUME /var/www/html/importing/parse-users
 
 ENV CHEVERETO_SERVICING=docker \
     CHEVERETO_DB_HOST=mariadb \
@@ -37,10 +34,19 @@ ENV CHEVERETO_SERVICING=docker \
     CHEVERETO_MAX_EXECUTION_TIME=30 \
     CHEVERETO_MEMORY_LIMIT=512M
 
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
-COPY opcache.ini $PHP_INI_DIR/conf.d/
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
+    && set -eux; \
+    { \
+    echo "log_errors = On"; \
+    echo "error_log = /dev/stderr"; \
+    echo "upload_max_filesize = \${CHEVERETO_UPLOAD_MAX_FILESIZE}"; \
+    echo "post_max_size = \${CHEVERETO_POST_MAX_SIZE}"; \
+    echo "max_execution_time = \${CHEVERETO_MAX_EXECUTION_TIME}"; \
+    echo "memory_limit = \${CHEVERETO_MEMORY_LIMIT}"; \
+    } > $PHP_INI_DIR/conf.d/php.ini
 
-RUN echo "upload_max_filesize = \${CHEVERETO_UPLOAD_MAX_FILESIZE}" >> $PHP_INI_DIR/conf.d/php.ini \
-    && echo "post_max_size = \${CHEVERETO_POST_MAX_SIZE}" >> $PHP_INI_DIR/conf.d/php.ini \
-    && echo "max_execution_time = \${CHEVERETO_MAX_EXECUTION_TIME}" >> $PHP_INI_DIR/conf.d/php.ini \
-    && echo "memory_limit = \${CHEVERETO_MEMORY_LIMIT}" >> $PHP_INI_DIR/conf.d/php.ini
+VOLUME /var/www/html/
+VOLUME /var/www/html/images
+VOLUME /var/www/html/importing/no-parse
+VOLUME /var/www/html/importing/parse-albums
+VOLUME /var/www/html/importing/parse-users
