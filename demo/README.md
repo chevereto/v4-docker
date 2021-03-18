@@ -20,7 +20,7 @@ docker exec chv-demo-mariadb mysql -uroot -ppassword -e "CREATE DATABASE chevere
     GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
 ```
 
-Run Chevereto demo:
+Run Chevereto demo website:
 
 ```sh
 docker run -d \
@@ -33,7 +33,7 @@ docker run -d \
 - Front [localhost:8001](http://localhost:8001)
 - Dashboard [localhost:8001/dashboard](http://localhost:8001/dashboard)
 
-Setup `demo:password` user:
+Open the website to complete the installation. This can be also made running:
 
 ```sh
 docker exec -d chv-demo \

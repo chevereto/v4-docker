@@ -1,5 +1,5 @@
 # !/usr/bin/bash
-
+echo "Build Chevereto demo at port 8001"
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 1 ]; then
