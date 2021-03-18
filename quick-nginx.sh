@@ -60,6 +60,6 @@ docker run -itd \
 
 echo '✨ Applying permissions'
 
-docker exec -it chv-php bash -c "chown www-data: . -R"
+docker exec -it chv-php-fpm bash -c "chown www-data: * -R"
 
 echo "\n💯 Done! Chevereto is at http://localhost:8000"
