@@ -1,4 +1,4 @@
-# !/usr/bin/bash
+#!/usr/bin/bash
 echo "Build Chevereto demo [httpd (mpm_prefork), mod_php] at port 8001"
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?

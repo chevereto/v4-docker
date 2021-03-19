@@ -6,7 +6,7 @@
 
 [![Discord](https://img.shields.io/discord/759137550312407050?style=flat-square)](https://chv.to/discord)
 
-This repository is for the official [Chevereto V3](https://chevereto.com/pricing) / [Chevereto-Free](https://github.com/chevereto/chevereto-free) Docker image, providing the servicing required to run any existing or new Chevereto installation.
+This repository is for the official [Chevereto V3](https://chevereto.com/pricing) / [Chevereto-Free](https://github.com/chevereto/chevereto-free) Docker images, providing the servicing required to run any existing or new Chevereto installation.
 
 ## What it does?
 
