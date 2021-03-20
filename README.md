@@ -220,5 +220,5 @@ docker exec -it -e IS_CRON=1 chv-v3 /usr/local/bin/php /var/www/html/cron.php
 The following command will execute automatic importing.
 
 ```sh
-docker exec -it -e IS_CRON=1 -e THREAD_ID=1 chv-v3 /usr/local/bin/php /var/www/html/importing.php
+docker exec -it -e IS_CRON=1 -e THREAD_ID=1 chv-demo /usr/local/bin/php /var/www/html/importing.php
 ``` -->

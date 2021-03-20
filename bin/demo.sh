@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+# !/usr/bin/bash
 echo "Build Chevereto demo [httpd (mpm_prefork), mod_php] at port 8001"
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
@@ -46,17 +46,29 @@ docker run -d \
     --network chv-network \
     -p 8001:80 \
     chevereto:v3-demo >/dev/null 2>&1
-echo "* Creating demo:password user credentials"
+echo "* Creating admin:password"
 docker exec -d chv-demo \
     curl -X POST http://localhost:80/install \
-    --data "username=demo" \
-    --data "email=demo@chevereto.loc" \
+    --data "username=admin" \
+    --data "email=admin@chevereto.loc" \
     --data "password=password" \
-    --data "email_from_email=demo@chevereto.loc" \
-    --data "email_incoming_email=demo@chevereto.loc" \
+    --data "email_from_email=no-reply@chevereto.loc" \
+    --data "email_incoming_email=inbox@chevereto.loc" \
     --data "website_mode=community" >/dev/null 2>&1
-echo "\n💯 Done! Chevereto is running at localhost:8001\n"
-echo "Front http://localhost:8001"
-echo "Dashboard http://localhost:8001/dashboard"
-echo "Username demo"
-echo "Password password"
+echo "[OK] Chevereto is running at localhost:8001"
+echo "* About to import demo data"
+sleep 2
+count=4
+for i in $(seq $count); do
+    echo '...'
+    docker exec -it \
+        -e IS_CRON=1 \
+        -e THREAD_ID=1 \
+        chv-demo /usr/local/bin/php /var/www/html/importing.php
+done
+echo "-------------------------------------------"
+echo "All done!"
+echo "- Front http://localhost:8001"
+echo "- Dashboard http://localhost:8001/dashboard"
+echo "(username admin)"
+echo "(password password)"

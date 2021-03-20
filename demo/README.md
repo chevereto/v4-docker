@@ -45,3 +45,12 @@ docker exec -d chv-demo \
     --data "email_incoming_email=demo@chevereto.loc" \
     --data "website_mode=community"
 ```
+
+## Importing
+
+```sh
+docker exec -it \
+    -e IS_CRON=1 \
+    -e THREAD_ID=1 \
+    chv-demo /usr/local/bin/php /var/www/html/importing.php
+```

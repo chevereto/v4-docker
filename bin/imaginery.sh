@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+# !/usr/bin/bash
 echo '* Building v3-httpd-php'
 docker build -t chevereto:v3-httpd-php httpd-php
 echo '* Building v3-demo'

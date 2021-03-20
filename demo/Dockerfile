@@ -46,7 +46,7 @@ RUN set -eux; \
     echo "memory_limit = \${CHEVERETO_MEMORY_LIMIT}"; \
     } > $PHP_INI_DIR/conf.d/php.ini
 
-RUN curl -sS -o /var/www/html/installer.php -L "https://raw.githubusercontent.com/chevereto/installer/master/installer.php" \
+RUN curl -S -o /var/www/html/installer.php -L "https://raw.githubusercontent.com/chevereto/installer/master/installer.php" \
     && php installer.php -a download -s chevereto-free \
     && php installer.php -a extract -s chevereto-free -p $(pwd) -f chevereto-pkg-*.zip
 
@@ -65,5 +65,12 @@ RUN set -eux; \
     echo "  'debug_level' => 3,"; \
     echo "];"; \
     } > /var/www/html/app/settings.php
+
+RUN curl -S -o /var/www/html/importing/importing.tar.gz -L "https://codeload.github.com/Chevereto/v3-demo-importing/tar.gz/refs/heads/main"
+
+RUN tar -xf /var/www/html/importing/importing.tar.gz -C /var/www/html/importing/ \
+    && rm -rf /var/www/html/importing/importing.tar.gz \
+    && mv /var/www/html/importing/v3-demo-importing-main/* /var/www/html/importing \
+    && rm -rf /var/www/html/importing/v3-demo-importing-main
 
 RUN chown www-data: /var/www/html -R
