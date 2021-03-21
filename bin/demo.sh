@@ -26,12 +26,12 @@ docker run -d \
     --health-cmd='mysqladmin ping --silent' \
     -e MYSQL_ROOT_PASSWORD=password \
     mariadb:focal >/dev/null 2>&1
-echo "* Waiting for mysqld"
+printf "* Starting mysqld"
 while [ $(docker inspect --format "{{json .State.Health.Status }}" chv-demo-mariadb) != "\"healthy\"" ]; do
     printf "."
     sleep 1
 done
-echo "\n"
+echo ""
 docker exec -it chv-demo-mariadb test -d /var/lib/mysql/chevereto
 RESULT=$?
 if [ $RESULT -eq 1 ]; then
