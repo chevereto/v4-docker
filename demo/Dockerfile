@@ -66,6 +66,8 @@ RUN set -eux; \
     echo "];"; \
     } > /var/www/html/app/settings.php
 
+ARG CACHEBUST=1
+RUN echo "$CACHEBUST"
 RUN curl -S -o /var/www/html/importing/importing.tar.gz -L "https://codeload.github.com/Chevereto/v3-demo-importing/tar.gz/refs/heads/main"
 
 RUN tar -xf /var/www/html/importing/importing.tar.gz -C /var/www/html/importing/ \
