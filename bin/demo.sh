@@ -80,7 +80,7 @@ docker exec -d chv-demo \
     --data "email_from_email=no-reply@chevereto.loc" \
     --data "email_incoming_email=inbox@chevereto.loc" \
     --data "website_mode=community" >/dev/null 2>&1
-echo "[OK] $software is running at localhost:8001"
+echo "[OK] $SOFTWARE is running at localhost:8001"
 echo "* About to import demo data"
 sleep 2
 count=4

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 echo "Build Chevereto [httpd (mpm_event), php-fpm] at port 8000"
-docker rm chv-php-fpm chv-httpd -f
-docker network inspect chv-network
+docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 1 ]; then
     echo "* Setup Network"
@@ -12,11 +11,11 @@ RESULT=$?
 if [ $RESULT -eq 1 ]; then
     echo "* Provide MariaDB Server"
     docker run -d \
+        -e MYSQL_ROOT_PASSWORD=password \
         --name chv-mariadb \
         --network chv-network \
         --network-alias mariadb \
         --health-cmd='mysqladmin ping --silent' \
-        -e MYSQL_ROOT_PASSWORD=password \
         --mount src="/var/www/html/chevereto.loc/database",target=/var/lib/mysql,type=bind \
         mariadb:focal
     echo "* Waiting for mysqld"
