@@ -1,4 +1,4 @@
-# !/usr/bin/bash
+#!/usr/bin/env bash
 echo "Build Chevereto demo [httpd (mpm_prefork), mod_php] at port 8001"
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
@@ -51,8 +51,9 @@ echo -n "* Test Chevereto V3 paid edition (y/n)?"
 read usePaid
 if [ "$usePaid" != "${usePaid#[Yy]}" ]; then
     SOFTWARE="Chevereto"
-    echo "* Provide $SOFTWARE paid edition key:"
-    read license
+    echo -n "* $SOFTWARE key:"
+    read -s license
+    echo
     docker exec -it \
         --user www-data \
         chv-demo php installer.php -a download -s chevereto -l=$license
