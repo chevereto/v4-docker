@@ -42,7 +42,7 @@ if [ $RESULT -eq 1 ]; then
     GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
 fi
 SOFTWARE="Chevereto Source"
-echo "* Provide chv-demo"
+# echo "* Provide chv-demo"
 # echo "* Creating admin:password"
 # docker exec -d chv-demo \
 #     curl -X POST http://localhost:80/install \
