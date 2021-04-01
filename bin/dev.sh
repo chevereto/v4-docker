@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 echo "Build Chevereto dev [httpd (mpm_prefork), mod_php] at port 8008"
+echo -n "* Clean install (y/n)?"
+read cleanInstall
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 1 ]; then
@@ -19,6 +21,10 @@ if [ $RESULT -eq 0 ]; then
     docker rm -f chv-dev-mariadb >/dev/null 2>&1
 fi
 echo "* Provide MariaDB Server"
+if [ "$cleanInstall" != "${cleanInstall#[Yy]}" ]; then
+    echo "* Remove existing database at /var/www/html/chevereto.loc/database/*"
+    sudo rm -rf /var/www/html/chevereto.loc/database/*
+fi
 docker run -d \
     -e MYSQL_ROOT_PASSWORD=password \
     --name chv-dev-mariadb \
@@ -42,17 +48,6 @@ if [ $RESULT -eq 1 ]; then
     GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
 fi
 SOFTWARE="Chevereto Source"
-# echo "* Provide chv-demo"
-# echo "* Creating admin:password"
-# docker exec -d chv-demo \
-#     curl -X POST http://localhost:80/install \
-#     --data "username=admin" \
-#     --data "email=admin@chevereto.loc" \
-#     --data "password=password" \
-#     --data "email_from_email=no-reply@chevereto.loc" \
-#     --data "email_incoming_email=inbox@chevereto.loc" \
-#     --data "website_mode=community" >/dev/null 2>&1
-
 echo "* Provide httpd-php"
 docker run -d \
     -p 8008:80 \
@@ -76,13 +71,26 @@ docker run -d \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
-    chevereto:v3-httpd-php
+    chevereto:v3-httpd-php >/dev/null 2>&1
 echo '* Applying permissions'
 docker exec -it chv-dev bash -c "chown www-data: . -R"
+if [ "$cleanInstall" != "${cleanInstall#[Yy]}" ]; then
+    echo "* Creating dev:password"
+    docker exec -d chv-dev \
+        curl -X POST http://localhost:80/install \
+        --data "username=dev" \
+        --data "email=dev@chevereto.loc" \
+        --data "password=password" \
+        --data "email_from_email=dev@chevereto.loc" \
+        --data "email_incoming_email=dev@chevereto.loc" \
+        --data "website_mode=community" >/dev/null 2>&1
+fi
 echo "[OK] $SOFTWARE is running at localhost:8008"
 echo "-------------------------------------------"
 echo "All done!"
 echo "- Front http://localhost:8008"
 echo "- Dashboard http://localhost:8008/dashboard"
-# echo "(username admin)"
-# echo "(password password)"
+if [ "$cleanInstall" != "${cleanInstall#[Yy]}" ]; then
+    echo "(username dev)"
+    echo "(password password)"
+fi
