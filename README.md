@@ -14,6 +14,24 @@ It provides the **servicing layer**.
 
 The [Dockerfile](Dockerfile) creates a container image that setups PHP, its extensions and Apache HTTP web server for spawning any Chevereto based project. Application updates are handled directly by the application.
 
+## Dockerfile
+
+### `httpd-php`
+
+The [httpd-php](https://github.com/Chevereto/docker/tree/main/httpd-php) image allows you to run Chevereto with Apache HTTP web server + PHP (mod_php).
+
+### `php-fpm`
+
+The [php-fpm](https://github.com/Chevereto/docker/tree/main/php-fpm) image contains PHP-FPM to be used with a proxy pass server (httpd, nginx).
+
+### `httpd`
+
+The [httpd](https://github.com/Chevereto/docker/tree/main/nginx) image contains Apache HTTP web server that connects to the `php-fpm` container.
+
+### `nginx`
+
+The [httpd](https://github.com/Chevereto/docker/tree/main/nginx) image contains Apache HTTP web server that connects to the `nginx` container.
+
 <!-- ## Setup Project
 
 A Chevereto project could be either the [Installer](https://github.com/chevereto/installer), [Chevereto V3](https://chevereto.com/pricing) or [Chevereto-Free](https://github.com/chevereto/chevereto-free).
