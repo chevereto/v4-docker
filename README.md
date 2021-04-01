@@ -1,4 +1,4 @@
-# V3 Docker
+# Docker
 
 > 🔔 [Subscribe](https://newsletter.chevereto.com/subscription?f=PmL892XuTdfErVq763PCycJQrvZ8PYc9JbsVUttqiPV1zXt6DDtf7lhepEStqE8LhGs8922ZYmGT7CYjMH5uSx23pL6Q) to don't miss any update regarding Chevereto.
 
@@ -18,11 +18,11 @@ The [Dockerfile](Dockerfile) creates a container image that setups PHP, its exte
 
 ### `httpd-php`
 
-The [httpd-php](https://github.com/Chevereto/docker/tree/main/httpd-php) image allows you to run Chevereto with Apache HTTP web server + PHP (mod_php).
+The [httpd-php](https://github.com/Chevereto/docker/tree/main/httpd-php) image contains Apache HTTP web server + PHP (mod_php).
 
 ### `php-fpm`
 
-The [php-fpm](https://github.com/Chevereto/docker/tree/main/php-fpm) image contains PHP-FPM to be used with a proxy pass server (httpd, nginx).
+The [php-fpm](https://github.com/Chevereto/docker/tree/main/php-fpm) image contains PHP-FPM to be used with a proxy pass server (`httpd`, `nginx`).
 
 ### `httpd`
 
