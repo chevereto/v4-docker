@@ -1,4 +1,12 @@
-# Demo
+# demo
+
+## Build
+
+```sh
+docker build -t chevereto:v3-demo . 
+```
+
+## Run
 
 Run MariaDB Server container:
 

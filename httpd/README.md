@@ -1,5 +1,13 @@
 # httpd
 
+## Build
+
+```sh
+docker build -t chevereto:v3-httpd . 
+```
+
+## Run
+
 ```sh
 docker run -d \
     -p 8000:80 \

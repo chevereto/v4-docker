@@ -1,5 +1,13 @@
 # php-fpm
 
+## Build
+
+```sh
+docker build -t chevereto:v3-php-fpm . 
+```
+
+## Run
+
 ```sh
 docker run -d \
     --name chv-php-fpm \
