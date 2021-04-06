@@ -74,7 +74,9 @@ docker run -d \
     chevereto:v3-httpd-php >/dev/null 2>&1
 echo '* Applying permissions'
 docker exec -it chv-dev bash -c "chown www-data: . -R"
-if [ "$cleanInstall" != "${cleanInstall#[Yy]}" ]; then
+echo -n "* Create user dev:password (y/n)?"
+read createDev
+if [ "$createDev" != "${createDev#[Yy]}" ]; then
     echo "* Creating dev:password"
     docker exec -d chv-dev \
         curl -X POST http://localhost:80/install \
@@ -90,7 +92,7 @@ echo "-------------------------------------------"
 echo "All done!"
 echo "- Front http://localhost:8008"
 echo "- Dashboard http://localhost:8008/dashboard"
-if [ "$cleanInstall" != "${cleanInstall#[Yy]}" ]; then
+if [ "$createDev" != "${createDev#[Yy]}" ]; then
     echo "(username dev)"
     echo "(password password)"
 fi
