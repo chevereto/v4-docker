@@ -22,7 +22,7 @@ The [php-fpm](php-fpm/README.md) image contains PHP-FPM to be used with a proxy 
 
 ### `httpd`
 
-The [httpd](nginx/README.md) image contains Apache HTTP web server to use with `php-fpm` container.
+The [httpd](httpd/README.md) image contains Apache HTTP web server to use with `php-fpm` container.
 
 ### `nginx`
 
