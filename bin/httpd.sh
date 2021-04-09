@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo "Build Chevereto [httpd (mpm_event), php-fpm] at port 8000"
+echo "Build Chevereto [httpd (mpm_event)] + [php-fpm] at port 8000"
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 1 ]; then

@@ -68,11 +68,11 @@ RUN set -eux; \
 
 ARG CACHEBUST=1
 RUN echo "$CACHEBUST"
-RUN curl -S -o /var/www/html/importing/importing.tar.gz -L "https://codeload.github.com/Chevereto/v3-demo-importing/tar.gz/refs/heads/main"
+RUN curl -S -o /var/www/html/importing/importing.tar.gz -L "https://codeload.github.com/Chevereto/demo-importing/tar.gz/refs/heads/main"
 
 RUN tar -xf /var/www/html/importing/importing.tar.gz -C /var/www/html/importing/ \
     && rm -rf /var/www/html/importing/importing.tar.gz \
-    && mv /var/www/html/importing/v3-demo-importing-main/* /var/www/html/importing \
-    && rm -rf /var/www/html/importing/v3-demo-importing-main
+    && mv /var/www/html/importing/demo-importing-main/* /var/www/html/importing \
+    && rm -rf /var/www/html/importing/demo-importing-main
 
 RUN chown www-data: /var/www/html -R
