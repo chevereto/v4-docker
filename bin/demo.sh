@@ -71,11 +71,11 @@ if [ "$usePaid" != "${usePaid#[Yy]}" ]; then
 else
     echo "[OK] Sticking with $SOFTWARE"
 fi
-echo "* Creating admin:password"
+echo "* Creating demo:password"
 docker exec -d chv-demo \
     curl -X POST http://localhost:80/install \
-    --data "username=admin" \
-    --data "email=admin@chevereto.loc" \
+    --data "username=demo" \
+    --data "email=demo@chevereto.loc" \
     --data "password=password" \
     --data "email_from_email=no-reply@chevereto.loc" \
     --data "email_incoming_email=inbox@chevereto.loc" \

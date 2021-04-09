@@ -2,6 +2,10 @@
 echo "Build Chevereto dev [httpd (mpm_prefork), mod_php] at port 8008"
 echo -n "* Clean install (y/n)?"
 read cleanInstall
+if [ "$cleanInstall" != "${cleanInstall#[Yy]}" ]; then
+    echo -n "* Create user dev:password (y/n)?"
+    read createDev
+fi
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 1 ]; then
@@ -74,8 +78,6 @@ docker run -d \
     chevereto:v3-httpd-php >/dev/null 2>&1
 echo '* Applying permissions'
 docker exec -it chv-dev bash -c "chown www-data: . -R"
-echo -n "* Create user dev:password (y/n)?"
-read createDev
 if [ "$createDev" != "${createDev#[Yy]}" ]; then
     echo "* Creating dev:password"
     docker exec -d chv-dev \
