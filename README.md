@@ -14,19 +14,19 @@ This repository provides both PHP and webserver servicing. For database use any 
 
 ### `httpd-php`
 
-The [httpd-php](https://github.com/Chevereto/docker/tree/main/httpd-php) image contains Apache HTTP webserver built-in with PHP (mod_php).
+The [httpd-php](httpd-php/README.md) image contains Apache HTTP webserver built-in with PHP (mod_php).
 
 ### `php-fpm`
 
-The [php-fpm](https://github.com/Chevereto/docker/tree/main/php-fpm) image contains PHP-FPM to be used with a proxy pass server (to use with `httpd`, `nginx`).
+The [php-fpm](php-fpm/README.md) image contains PHP-FPM to be used with a proxy pass server (to use with `httpd`, `nginx`).
 
 ### `httpd`
 
-The [httpd](https://github.com/Chevereto/docker/tree/main/nginx) image contains Apache HTTP web server to use with `php-fpm` container.
+The [httpd](nginx/README.md) image contains Apache HTTP web server to use with `php-fpm` container.
 
 ### `nginx`
 
-The [httpd](https://github.com/Chevereto/docker/tree/main/nginx) image contains Apache HTTP web server to use with `nginx` container.
+The [httpd](nginx/README.md) image contains Apache HTTP web server to use with `nginx` container.
 
 ## Setup Project
 
@@ -65,19 +65,18 @@ Take note on the host path to your Chevereto installation, it will be used to mo
 
 ## Building images
 
-The script at [bin/](bin/imaginery.sh) contains the build steps for the images provides by this repo.
+The script at [bin/imaginery.sh](bin/imaginery.sh) contains the build steps for the images provides by this repo.
 
 ## Automatic setup
 
 The folder at [bin/](bin/) contains shell scripts that automates the provisioning process.
 
-| Script                       | Stack                         | Description                                                         |
-| ---------------------------- | ----------------------------- | ------------------------------------------------------------------- |
-| [demo.sh](bin/demo.sh)       | `mariadb`, `httpd-php`        | Demo with [dummy data](https://github.com/chevereto/demo-importing) |
-| [dev.sh](bin/dev.sh)         | `mariadb`, `httpd-php`        | Dev stack (install and account opts)                                |
-| [httpd.sh](bin/httpd.sh)     | `mariadb`, `httpd`, `php-fpm` | Same as `dev.sh` but for httpd (mpm_event) + php-fpm                |
-| [nginx.sh](bin/nginx.sh)     | `mariadb`, `nginx`, `php-fpm` | Same as `dev.sh` but for nginx + php-fpm                            |
-| [nginx.sh](bin/imaginery.sh) | n/a                           | Same as `dev.sh` but for nginx + php-fpm                            |
+| Script                   | Stack                         | Description                                                         |
+| ------------------------ | ----------------------------- | ------------------------------------------------------------------- |
+| [demo.sh](bin/demo.sh)   | `mariadb`, `httpd-php`        | Demo with [dummy data](https://github.com/chevereto/demo-importing) |
+| [dev.sh](bin/dev.sh)     | `mariadb`, `httpd-php`        | Dev stack (install and account opts)                                |
+| [httpd.sh](bin/httpd.sh) | `mariadb`, `httpd`, `php-fpm` | Same as `dev.sh` but for httpd (mpm_event) + php-fpm                |
+| [nginx.sh](bin/nginx.sh) | `mariadb`, `nginx`, `php-fpm` | Same as `dev.sh` but for nginx + php-fpm                            |
 
 ## Manual database setup
 
