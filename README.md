@@ -8,36 +8,32 @@
 
 This repository is for the official [Chevereto V3](https://chevereto.com/pricing) / [Chevereto-Free](https://github.com/chevereto/chevereto-free) Docker images, providing the servicing required to run any existing or new Chevereto installation.
 
-## What it does?
-
-It provides the **servicing layer**.
-
-The [Dockerfile](Dockerfile) creates a container image that setups PHP, its extensions and Apache HTTP web server for spawning any Chevereto based project. Application updates are handled directly by the application.
-
 ## Dockerfile
+
+This repository provides both PHP and webserver servicing. For database use any official MariaDB image.
 
 ### `httpd-php`
 
-The [httpd-php](https://github.com/Chevereto/docker/tree/main/httpd-php) image contains Apache HTTP web server + PHP (mod_php).
+The [httpd-php](https://github.com/Chevereto/docker/tree/main/httpd-php) image contains Apache HTTP webserver built-in with PHP (mod_php).
 
 ### `php-fpm`
 
-The [php-fpm](https://github.com/Chevereto/docker/tree/main/php-fpm) image contains PHP-FPM to be used with a proxy pass server (`httpd`, `nginx`).
+The [php-fpm](https://github.com/Chevereto/docker/tree/main/php-fpm) image contains PHP-FPM to be used with a proxy pass server (to use with `httpd`, `nginx`).
 
 ### `httpd`
 
-The [httpd](https://github.com/Chevereto/docker/tree/main/nginx) image contains Apache HTTP web server that connects to the `php-fpm` container.
+The [httpd](https://github.com/Chevereto/docker/tree/main/nginx) image contains Apache HTTP web server to use with `php-fpm` container.
 
 ### `nginx`
 
-The [httpd](https://github.com/Chevereto/docker/tree/main/nginx) image contains Apache HTTP web server that connects to the `nginx` container.
+The [httpd](https://github.com/Chevereto/docker/tree/main/nginx) image contains Apache HTTP web server to use with `nginx` container.
 
-<!-- ## Setup Project
+## Setup Project
 
 A Chevereto project could be either the [Installer](https://github.com/chevereto/installer), [Chevereto V3](https://chevereto.com/pricing) or [Chevereto-Free](https://github.com/chevereto/chevereto-free).
 
-* The project is a folder intended to be served under an HTTP server.
-* This guide assumes `/var/www/html/chevereto.loc` as project folder.
+* The project is a folder intended to be served under an HTTP server
+* This guide assumes `/var/www/html/chevereto.loc` as project folder
 
 ```sh
 cd /var/www/html/chevereto.loc/
@@ -50,28 +46,40 @@ mkdir {public_html,images,database}
 mkdir -p importing/{no-parse,parse-albums,parse-users}
 ```
 
-* The application will be at `public_html`
-* Local uploads will be stored at `images`
+* The application will be at `public_html/`
+* Local uploads will be stored at `images/`
 
-> All these directories are for reference, you can customize the volumes at [Setup v3-docker](#setup-v3-docker).
+> All these directories are for reference, you can customize the volumes with the `--mount` option.
 
 ### Installer Project (recommended)
 
 * Download the Installer at your project's public folder:
 
 ```sh
-wget -O public_html/index.php https://chevereto.com/download/file/installer
+wget -O public_html/installer.php https://chevereto.com/download/file/installer
 ```
 
 ### Existing Project
 
-If you already have a Chevereto project simply take note on the host path. It will be used to mount the application in the containers build using this image.
+Take note on the host path to your Chevereto installation, it will be used to mount the application at that path.
 
-## Automatic Setup
+## Building images
 
-TODO.
+The script at [bin/](bin/imaginery.sh) contains the build steps for the images provides by this repo.
 
-## Manual Setup
+## Automatic setup
+
+The folder at [bin/](bin/) contains shell scripts that automates the provisioning process.
+
+| Script                       | Stack                         | Description                                                         |
+| ---------------------------- | ----------------------------- | ------------------------------------------------------------------- |
+| [demo.sh](bin/demo.sh)       | `mariadb`, `httpd-php`        | Demo with [dummy data](https://github.com/chevereto/demo-importing) |
+| [dev.sh](bin/dev.sh)         | `mariadb`, `httpd-php`        | Dev stack (install and account opts)                                |
+| [httpd.sh](bin/httpd.sh)     | `mariadb`, `httpd`, `php-fpm` | Same as `dev.sh` but for httpd (mpm_event) + php-fpm                |
+| [nginx.sh](bin/nginx.sh)     | `mariadb`, `nginx`, `php-fpm` | Same as `dev.sh` but for nginx + php-fpm                            |
+| [nginx.sh](bin/imaginery.sh) | n/a                           | Same as `dev.sh` but for nginx + php-fpm                            |
+
+## Manual database setup
 
 ### Setup `chv-network`
 
@@ -143,100 +151,3 @@ Disallow root login remotely? [Y/n] y
 Remove test database and access to it? [Y/n] y
 Reload privilege tables now? [Y/n] y
 ```
-
-### Setup `chv-php`
-
-Uses the `chevereto:v3-php-fpm` Dockerfile image.
-
-```sh
-docker run -it \
-    --name chv-php \
-    --network chv-network \
-    --network-alias php \
-    --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
-    chevereto:v3-php-fpm
-```
-
-### Setup `chv-nginx`
-
-Uses the `chevereto:v3-nginx` Dockerfile image.
-
-```sh
-docker run -it \
-    --name chv-nginx \
-    --network chv-network \
-    --network-alias webserver \
-    --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
-    -p 8000:80 \
-    chevereto:v3-nginx
-```
-
-### Setup `v3-docker`
-
-Short command:
-
-```sh
-docker run -itd \
-    --name chv-v3 \
-    --network chv-network \
-    --network-alias chevereto \
-    --restart always \
-    -p 4430:443 -p 8000:80 \
-    --mount src="/var/www/html/chevereto.loc/installer",target=/var/www/html,type=bind \
-    chevereto:v3-docker
-```
-
-Port mapping:
-
-```sh
-    -p 443:443 -p 80:80 \
-```
-
-Full command:
-
-```sh
-docker run -itd \
-    --name chv-v3 \
-    --network chv-network \
-    --restart always \
-    -p 4430:443 -p 8000:80 \
-    -e "CHEVERETO_DB_HOST=mariadb" \
-    -e "CHEVERETO_DB_USER=chevereto" \
-    -e "CHEVERETO_DB_PASS=user_database_password" \
-    -e "CHEVERETO_DB_NAME=chevereto" \
-    -e "CHEVERETO_DB_TABLE_PREFIX=chv_" \
-    -e "CHEVERETO_DB_PORT=3306" \
-    -e "CHEVERETO_DB_DRIVER=mysql" \
-    -e "CHEVERETO_UPLOAD_MAX_FILESIZE=25M" \
-    -e "CHEVERETO_POST_MAX_SIZE=25M" \
-    -e "CHEVERETO_MAX_EXECUTION_TIME=30" \
-    -e "CHEVERETO_MEMORY_LIMIT=512M" \
-    -e "CHEVERETO_DEBUG_LEVEL=1" \
-    --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
-    --mount src="/var/www/html/chevereto.loc/images",target=/var/www/html/images,type=bind \
-    --mount src="/var/www/html/chevereto.loc/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
-    --mount src="/var/www/html/chevereto.loc/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
-    --mount src="/var/www/html/chevereto.loc/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
-    chevereto:v3-docker
-```
-
-* [localhost:8000](http://localhost:8000)
-* [localhost:4430](https://localhost:4430)
-
-## Setup Cron
-
-You can add the following commands to your host crontab.
-
-### Background Tasks
-
-```sh
-docker exec -it -e IS_CRON=1 chv-v3 /usr/local/bin/php /var/www/html/cron.php
-```
-
-### Automatic Importing
-
-The following command will execute automatic importing.
-
-```sh
-docker exec -it -e IS_CRON=1 -e THREAD_ID=1 chv-demo /usr/local/bin/php /var/www/html/importing.php
-``` -->
