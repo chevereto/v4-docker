@@ -26,7 +26,7 @@ The [httpd](httpd/README.md) image contains Apache HTTP web server to use with `
 
 ### `nginx`
 
-The [httpd](nginx/README.md) image contains Apache HTTP web server to use with `nginx` container.
+The [nginx](nginx/README.md) image contains Apache HTTP web server to use with `nginx` container.
 
 ## Setup Project
 
