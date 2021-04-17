@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
     --with-jpeg=/usr/include/ \
     --with-webp=/usr/include/ \
     && docker-php-ext-configure opcache --enable-opcache \
-    && docker-php-ext-install -j$(nproc) gd pdo_mysql zip opcache \
+    && docker-php-ext-install -j$(nproc) exif gd pdo_mysql zip opcache \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     && php -m  \
@@ -34,7 +34,17 @@ ENV CHEVERETO_SERVICING=docker \
     CHEVERETO_UPLOAD_MAX_FILESIZE=25M \
     CHEVERETO_POST_MAX_SIZE=25M \
     CHEVERETO_MAX_EXECUTION_TIME=30 \
-    CHEVERETO_MEMORY_LIMIT=512M
+    CHEVERETO_MEMORY_LIMIT=512M \
+    CHEVERETO_ASSET_STORAGE_NAME=local \
+    CHEVERETO_ASSET_STORAGE_TYPE=localstorage \
+    CHEVERETO_ASSET_STORAGE_KEY= \
+    CHEVERETO_ASSET_STORAGE_SECRET= \
+    CHEVERETO_ASSET_STORAGE_BUCKET= \
+    CHEVERETO_ASSET_STORAGE_URL= \
+    CHEVERETO_ASSET_STORAGE_REGION= \
+    CHEVERETO_ASSET_STORAGE_SERVER= \
+    CHEVERETO_ASSET_STORAGE_ACCOUNT_ID= \
+    CHEVERETO_ASSET_STORAGE_ACCOUNT_NAME= 
 
 RUN set -eux; \
     { \
