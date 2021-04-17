@@ -18,7 +18,7 @@ The [httpd-php](httpd-php/README.md) image contains Apache HTTP webserver built-
 
 ### `php-fpm`
 
-The [php-fpm](php-fpm/README.md) image contains PHP-FPM to be used with a proxy pass server (to use with `httpd`, `nginx`).
+The [php-fpm](php-fpm/README.md) image contains PHP-FPM to be used with a proxy pass server (to use with `httpd`, `nginx` or anything else).
 
 ### `httpd`
 
@@ -51,7 +51,7 @@ mkdir -p importing/{no-parse,parse-albums,parse-users}
 
 > All these directories are for reference, you can customize the volumes with the `--mount` option.
 
-### Installer Project (recommended)
+### Installer project (recommended)
 
 * Download the Installer at your project's public folder:
 
@@ -59,7 +59,7 @@ mkdir -p importing/{no-parse,parse-albums,parse-users}
 wget -O public_html/installer.php https://chevereto.com/download/file/installer
 ```
 
-### Existing Project
+### Existing project
 
 Take note on the host path to your Chevereto installation, it will be used to mount the application at that path.
 
