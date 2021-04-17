@@ -10,23 +10,23 @@ This repository is for the official [Chevereto V3](https://chevereto.com/pricing
 
 ## Dockerfile
 
-This repository provides both PHP and webserver servicing. For database use any official MariaDB image.
+This repository provides PHP and webserver servicing. For database use any MariaDB/MySQL image.
 
 ### `httpd-php`
 
-The [httpd-php](httpd-php/README.md) image contains Apache HTTP webserver built-in with PHP (mod_php).
+The [httpd-php](httpd-php/README.md) image provides Apache HTTP webserver built-in with PHP (mod_php).
 
 ### `php-fpm`
 
-The [php-fpm](php-fpm/README.md) image contains PHP-FPM to be used with a proxy pass server (to use with `httpd`, `nginx` or anything else).
+The [php-fpm](php-fpm/README.md) image provides PHP-FPM to be used with a proxy pass server (to use with `httpd`, `nginx` or anything else).
 
 ### `httpd`
 
-The [httpd](httpd/README.md) image contains Apache HTTP web server to use with `php-fpm` container.
+The [httpd](httpd/README.md) image provides Apache HTTP web server to use with `php-fpm` container.
 
 ### `nginx`
 
-The [nginx](nginx/README.md) image contains Apache HTTP web server to use with `nginx` container.
+The [nginx](nginx/README.md) image provides Apache HTTP web server to use with `nginx` container.
 
 ## Setup Project
 

@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+PROJECT="$(dirname $DIR)"
 echo "Build Chevereto demo [httpd (mpm_prefork), mod_php] at port 8001"
+echo '* Building v3-demo'
+docker build -t chevereto:v3-demo "$PROJECT/"demo
+RESULT=$?
+if [ $RESULT -ne 0 ]; then
+    exit $RESULT
+fi
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 1 ]; then
-    echo "* Setup Network"
+    echo "* Setup chv-demo network"
     docker network create chv-network
 fi
 docker container inspect chv-demo >/dev/null 2>&1
