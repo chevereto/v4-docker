@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 PROJECT="$(dirname $DIR)"
-echo "Build Chevereto demo [httpd (mpm_prefork), mod_php] at port 8001"
-echo '* Building v3-demo'
-docker build -t chevereto:v3-demo "$PROJECT/"demo
+SOFTWARE="Chevereto"
+PORT="8002"
+echo "Build $SOFTWARE [httpd (mpm_prefork), mod_php] at port $PORT"
+echo "* Building v3-demo image"
+docker build -t chevereto:v3-demo "$PROJECT/"demo >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -ne 0 ]; then
     exit $RESULT
@@ -11,7 +13,7 @@ fi
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 1 ]; then
-    echo "* Setup chv-demo network"
+    echo "* Setup chv-network network"
     docker network create chv-network
 fi
 docker container inspect chv-demo >/dev/null 2>&1
@@ -30,8 +32,9 @@ echo "* Provide MariaDB Server"
 docker run -d \
     --name chv-demo-mariadb \
     --network chv-network \
-    --network-alias demo-mariadb \
+    --network-alias chv-demo-mariadb \
     --health-cmd='mysqladmin ping --silent' \
+    --mount src="/var/www/html/chevereto.loc/database/demo",target=/var/lib/mysql,type=bind \
     -e MYSQL_ROOT_PASSWORD=password \
     mariadb:focal >/dev/null 2>&1
 printf "* Starting mysqld"
@@ -52,43 +55,35 @@ echo "* Provide chv-demo"
 docker run -d \
     --name chv-demo \
     --network chv-network \
-    -p 8001:80 \
+    -e "CHEVERETO_DB_HOST=chv-demo-mariadb" \
+    -p "$PORT:80" \
     chevereto:v3-demo >/dev/null 2>&1
-SOFTWARE="Chevereto-Free"
-echo -n "* Test Chevereto V3 paid edition (y/n)?"
-read usePaid
-if [ "$usePaid" != "${usePaid#[Yy]}" ]; then
-    SOFTWARE="Chevereto"
-    echo -n "* $SOFTWARE key:"
-    read -s license
-    echo
-    docker exec -it \
-        --user www-data \
-        chv-demo php installer.php -a download -s chevereto -l=$license
-    RESULT=$?
-    if [ $RESULT -eq 0 ]; then
-        echo '[OK] License valid'
-    else
-        echo "Not a valid license key. Go to http://chv.to/pricing if you haven't one already"
-        exit 1
-    fi
-    echo "* Installing paid edition"
-    docker exec -it \
-        --user www-data \
-        chv-demo bash -c "php installer.php -a extract -s chevereto -p /var/www/html -f chevereto-pkg-*.zip"
+echo -n "* $SOFTWARE key:"
+read -s license
+echo
+docker exec -it \
+    --user www-data \
+    chv-demo php installer.php -a download -s chevereto -l=$license
+RESULT=$?
+if [ $RESULT -eq 0 ]; then
+    echo '[OK] License valid'
 else
-    echo "[OK] Sticking with $SOFTWARE"
+    echo "Not a valid license key. Go to http://chv.to/pricing if you haven't one already"
+    exit 1
 fi
+echo "* Installing paid edition"
+docker exec -it \
+    --user www-data \
+    chv-demo bash -c "php installer.php -a extract -s chevereto -p /var/www/html -f chevereto-pkg-*.zip"
 echo "* Creating demo:password"
-docker exec -d chv-demo \
-    curl -X POST http://localhost:80/install \
-    --data "username=demo" \
-    --data "email=demo@chevereto.loc" \
-    --data "password=password" \
-    --data "email_from_email=no-reply@chevereto.loc" \
-    --data "email_incoming_email=inbox@chevereto.loc" \
-    --data "website_mode=community" >/dev/null 2>&1
-echo "[OK] $SOFTWARE is running at localhost:8001"
+docker exec -it \
+    --user www-data \
+    -e THREAD_ID=1 \
+    chv-demo /usr/local/bin/php /var/www/html/cli.php -C install \
+    -u demo \
+    -e demo@chevereto.loc \
+    -x password
+echo "[OK] $SOFTWARE is running at localhost:$PORT"
 echo "* About to import demo data"
 sleep 2
 count=4
@@ -96,13 +91,12 @@ for i in $(seq $count); do
     echo '...'
     docker exec -it \
         --user www-data \
-        -e IS_CRON=1 \
         -e THREAD_ID=1 \
-        chv-demo /usr/local/bin/php /var/www/html/importing.php
+        chv-demo /usr/local/bin/php /var/www/html/cli.php -C importing
 done
 echo "-------------------------------------------"
 echo "All done!"
-echo "- Front http://localhost:8001"
-echo "- Dashboard http://localhost:8001/dashboard"
+echo "- Front http://localhost:$PORT"
+echo "- Dashboard http://localhost:$PORT/dashboard"
 echo "(username demo)"
 echo "(password password)"

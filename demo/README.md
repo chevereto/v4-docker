@@ -56,6 +56,16 @@ docker exec -d chv-demo \
 
 ## Importing
 
+Chevereto V3.20+
+
+```sh
+docker exec -it \
+    -e THREAD_ID=1 \
+    chv-demo /usr/local/bin/php /var/www/html/cli.php -C importing
+```
+
+Chevereto V3.18 - Chevereto-Free
+
 ```sh
 docker exec -it \
     -e IS_CRON=1 \
