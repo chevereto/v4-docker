@@ -39,10 +39,11 @@ A Chevereto project could be either the [Installer](https://github.com/chevereto
 cd /var/www/html/chevereto.loc/
 ```
 
-Create the volumes (if required):
+Create the volumes (if required) at `/var/www/html/chevereto.loc/`:
 
 ```sh
-mkdir {public_html,images,database}
+mkdir public_html
+mkdir -p database/{dev,demo,demo-free}
 mkdir -p importing/{no-parse,parse-albums,parse-users}
 ```
 
