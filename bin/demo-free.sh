@@ -2,7 +2,13 @@
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 PROJECT="$(dirname $DIR)"
 SOFTWARE="Chevereto-Free"
-PORT="8001"
+PORT="8002"
+DB_DIR="$PROJECT/build/database/demo-free"
+mkdir -p $DB_DIR
+RESULT=$?
+if [ $RESULT -ne 0 ]; then
+    exit $RESULT
+fi
 echo "Build $SOFTWARE [httpd (mpm_prefork), mod_php] at port $PORT"
 echo "* Building v3-demo image"
 docker build -t chevereto:v3-demo "$PROJECT/"demo >/dev/null 2>&1
@@ -34,7 +40,7 @@ docker run -d \
     --network chv-network \
     --network-alias chv-demo-free-mariadb \
     --health-cmd='mysqladmin ping --silent' \
-    --mount src="/var/www/html/chevereto.loc/database/demo-free",target=/var/lib/mysql,type=bind \
+    --mount src="$DB_DIR",target=/var/lib/mysql,type=bind \
     -e MYSQL_ROOT_PASSWORD=password \
     mariadb:focal >/dev/null 2>&1
 printf "* Starting mysqld"

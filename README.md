@@ -12,6 +12,10 @@ This repository is for the official [Chevereto V3](https://chevereto.com/pricing
 
 This repository provides PHP and webserver servicing. For database use any MariaDB/MySQL image.
 
+### `demo`
+
+The [demo](demo/README.md) image provides a one-click deployable demo.
+
 ### `httpd-php`
 
 The [httpd-php](httpd-php/README.md) image provides Apache HTTP webserver built-in with PHP (mod_php).
