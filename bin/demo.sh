@@ -4,6 +4,15 @@ PROJECT="$(dirname $DIR)"
 SOFTWARE="Chevereto"
 PORT="8001"
 DB_DIR="$PROJECT/build/database/demo"
+if [ -d "$DB_DIR" ]; then
+    echo "* Need to remove $DB_DIR"
+    rm -rf $DB_DIR
+    RESULT=$?
+    if [ $RESULT -ne 0 ]; then
+        exit $RESULT
+    fi
+fi
+echo "* Need to create $DB_DIR"
 mkdir -p $DB_DIR
 RESULT=$?
 if [ $RESULT -ne 0 ]; then
