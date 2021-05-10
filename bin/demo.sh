@@ -11,7 +11,7 @@ if [ $RESULT -ne 0 ]; then
 fi
 echo "Build $SOFTWARE [httpd (mpm_prefork), mod_php] at port $PORT"
 echo "* Pull demo image"
-docker pull chevereto/demo >/dev/null 2>&1
+docker pull chevereto/demo
 RESULT=$?
 if [ $RESULT -ne 0 ]; then
     exit $RESULT
