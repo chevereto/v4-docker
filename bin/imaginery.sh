@@ -7,8 +7,8 @@ RESULT=$?
 if [ $RESULT -ne 0 ]; then
     exit $RESULT
 fi
-echo '* Building v3-demo'
-docker build -t chevereto:v3-demo "$PROJECT/"demo
+echo '* Building demo'
+docker build -t chevereto:demo "$PROJECT/"demo
 RESULT=$?
 if [ $RESULT -ne 0 ]; then
     exit $RESULT

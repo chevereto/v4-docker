@@ -10,15 +10,12 @@ if [ $RESULT -ne 0 ]; then
     exit $RESULT
 fi
 echo "Build $SOFTWARE [httpd (mpm_prefork), mod_php] at port $PORT"
-printf "* Building v3-demo image"
-(docker build -t chevereto:v3-demo "$PROJECT/"demo >/dev/null 2>&1) &
-PID=$!
-sleep 1
-while [ "$(ps a | awk '{print $1}' | grep $PID)" ]; do
-    printf "."
-    sleep 1
-done
-echo ""
+echo "* Pull demo image"
+docker pull chevereto/demo >/dev/null 2>&1
+RESULT=$?
+if [ $RESULT -ne 0 ]; then
+    exit $RESULT
+fi
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 1 ]; then
@@ -66,7 +63,7 @@ docker run -d \
     --network chv-network \
     -e "CHEVERETO_DB_HOST=chv-demo-free-mariadb" \
     -p "$PORT:80" \
-    chevereto:v3-demo >/dev/null 2>&1
+    chevereto/demo >/dev/null 2>&1
 echo "* Creating demo:password"
 docker exec -d chv-demo-free \
     curl -X POST http://localhost:80/install \

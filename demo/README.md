@@ -3,7 +3,7 @@
 ## Build
 
 ```sh
-docker build -t chevereto:v3-demo . 
+docker build -t chevereto:demo . 
 ```
 
 ## Run
