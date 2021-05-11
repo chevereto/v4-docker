@@ -68,10 +68,10 @@ if [ $RESULT -eq 1 ]; then
 fi
 echo "* Provide chv-demo-free"
 docker run -d \
+    -p "$PORT:80" \
     --name chv-demo-free \
     --network chv-network \
     -e "CHEVERETO_DB_HOST=chv-demo-free-mariadb" \
-    -p "$PORT:80" \
     chevereto/demo >/dev/null 2>&1
 echo "* Creating demo:password"
 docker exec -d chv-demo-free \

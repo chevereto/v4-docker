@@ -19,11 +19,4 @@ RESULT=$?
 if [ $RESULT -ne 0 ]; then
     exit $RESULT
 fi
-# echo '* Building v3-httpd'
-# docker build -t chevereto:v3-httpd "$PROJECT/"httpd
-# RESULT=$?
-# if [ $RESULT -ne 0 ]; then
-#     exit $RESULT
-# fi
-
 printf '[OK] Chevereto imagenery done!\n'
