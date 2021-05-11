@@ -62,7 +62,7 @@ docker run -itd \
     --mount src="/var/www/html/chevereto.loc/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
     --mount src="/var/www/html/chevereto.loc/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
     --mount src="/var/www/html/chevereto.loc/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
-    chevereto:v3-php-fpm
+    chevereto/servicing:v3-php-fpm
 
 echo "✨ Nginx Setup"
 

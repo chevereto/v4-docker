@@ -52,7 +52,7 @@ if [ $RESULT -eq 1 ]; then
     GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
 fi
 SOFTWARE="Chevereto Source"
-echo "* Provide httpd-php"
+echo "* Provide v3-httpd-php"
 docker run -d \
     -p 8008:80 \
     -e "CHEVERETO_DB_HOST=dev-mariadb" \
@@ -75,7 +75,7 @@ docker run -d \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
-    chevereto:v3-httpd-php >/dev/null 2>&1
+    chevereto/servicing:v3-httpd-php >/dev/null 2>&1
 echo '* Applying permissions'
 docker exec -it chv-dev bash -c "chown www-data: . -R"
 if [ "$createDev" != "${createDev#[Yy]}" ]; then

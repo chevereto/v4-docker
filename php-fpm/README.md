@@ -3,7 +3,7 @@
 ## Build
 
 ```sh
-docker build -t chevereto:v3-php-fpm . 
+docker build -t chevereto/servicing:v3-php-fpm . 
 ```
 
 ## Run
@@ -19,5 +19,5 @@ docker run -d \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
     -p 8010:80 \
-    chevereto:v3-php-fpm
+    chevereto/servicing:v3-php-fpm
 ```

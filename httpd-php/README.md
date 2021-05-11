@@ -3,7 +3,7 @@
 ## Build
 
 ```sh
-docker build -t chevereto:v3-httpd-php . 
+docker build -t chevereto/servicing:v3-httpd-php . 
 ```
 
 ## Run
@@ -14,5 +14,5 @@ docker run -d \
     --name chv-dev \
     --network chv-network \
     --network-alias dev \
-    chevereto:v3-httpd-php
+    chevereto/servicing:v3-httpd-php
 ```
