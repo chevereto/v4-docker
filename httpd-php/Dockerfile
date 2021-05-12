@@ -28,6 +28,11 @@ ENV CHEVERETO_SERVICING=docker \
     CHEVERETO_DB_TABLE_PREFIX=chv_ \
     CHEVERETO_DB_PORT=3306 \
     CHEVERETO_DB_DRIVER=mysql \
+    CHEVERETO_DB_PDO_ATTRS=[] \
+    CHEVERETO_DEBUG_LEVEL=1 \
+    CHEVERETO_IMAGE_FORMATS_AVAILABLE=["JPG","PNG","BMP","GIF","WEBP"] \
+    CHEVERETO_HOSTNAME=localhost \
+    CHEVERETO_HOSTNAME_PATH=/ \
     CHEVERETO_SESSION_SAVE_HANDLER=files \
     CHEVERETO_SESSION_SAVE_PATH=/tmp \
     CHEVERETO_UPLOAD_MAX_FILESIZE=25M \
@@ -44,6 +49,30 @@ RUN set -eux; \
     echo "max_execution_time = \${CHEVERETO_MAX_EXECUTION_TIME}"; \
     echo "memory_limit = \${CHEVERETO_MEMORY_LIMIT}"; \
     } > $PHP_INI_DIR/conf.d/php.ini
+
+RUN mkdir -p /var/www/html/app/ && \
+    set -eux; \
+    { \
+    echo "<?php"; \
+    echo "\$settings = ["; \
+    echo "  'db_host' => getenv('CHEVERETO_DB_HOST'),"; \
+    echo "  'db_name' => getenv('CHEVERETO_DB_NAME'),"; \
+    echo "  'db_user' => getenv('CHEVERETO_DB_USER'),"; \
+    echo "  'db_pass' => getenv('CHEVERETO_DB_PASS'),"; \
+    echo "  'db_port' => getenv('CHEVERETO_DB_PORT'),"; \
+    echo "  'db_table_prefix' => getenv('CHEVERETO_DB_TABLE_PREFIX'),"; \
+    echo "  'db_driver' => getenv('CHEVERETO_DB_DRIVER'),"; \
+    echo "  'db_pdo_attrs' => getenv('CHEVERETO_DB_PDO_ATTRS'),"; \
+    echo "  'image_formats_available' => getenv('CHEVERETO_IMAGE_FORMATS_AVAILABLE'),"; \
+    echo "  'hostname' => getenv('CHEVERETO_HOSTNAME'),"; \
+    echo "  'hostname_path' => getenv('CHEVERETO_HOSTNAME_PATH'),"; \
+    echo "  'debug_level' => getenv('CHEVERETO_DEBUG_LEVEL'),"; \
+    echo "  'session.save_handler' => getenv('CHEVERETO_SESSION_SAVE_HANDLER'),"; \
+    echo "  'session.save_path' => getenv('CHEVERETO_SESSION_SAVE_PATH'),"; \
+    echo "  'https' => getenv('CHEVERETO_HTTPS'),"; \
+    echo "  'disable_php_pages' => getenv('CHEVERETO_DISABLE_PHP_PAGES'),"; \
+    echo "];"; \
+    } > /var/www/html/app/settings.php
 
 VOLUME /var/www/html/
 VOLUME /var/www/html/images

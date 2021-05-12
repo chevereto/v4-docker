@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-echo "Build Chevereto dev [httpd (mpm_prefork), mod_php] at port 8008"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+PROJECT="$(dirname $DIR)"
+SOFTWARE="X"
+PORT="8008"
+DB_DIR="$PROJECT/build/database/dev"
+echo "Build Chevereto dev [httpd (mpm_prefork), mod_php] at port $PORT"
 echo -n "* Clean install (y/n)?"
 read cleanInstall
 if [ "$cleanInstall" != "${cleanInstall#[Yy]}" ]; then
@@ -18,6 +23,12 @@ if [ $RESULT -eq 0 ]; then
     echo "* Removing existing chv-dev"
     docker rm -f chv-dev >/dev/null 2>&1
 fi
+echo "* Need to create $DB_DIR"
+mkdir -p $DB_DIR
+RESULT=$?
+if [ $RESULT -ne 0 ]; then
+    exit $RESULT
+fi
 docker container inspect chv-dev-mariadb >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 0 ]; then
@@ -26,8 +37,8 @@ if [ $RESULT -eq 0 ]; then
 fi
 echo "* Provide MariaDB Server"
 if [ "$cleanInstall" != "${cleanInstall#[Yy]}" ]; then
-    echo "* Remove existing database at /var/www/html/chevereto.loc/database/*"
-    sudo rm -rf /var/www/html/chevereto.loc/database/*
+    echo "* Remove existing database at $DB_DIR/*"
+    sudo rm -rf $DB_DIR/*
 fi
 docker run -d \
     -e MYSQL_ROOT_PASSWORD=password \
@@ -35,7 +46,7 @@ docker run -d \
     --network chv-network \
     --network-alias dev-mariadb \
     --health-cmd='mysqladmin ping --silent' \
-    --mount src="/var/www/html/chevereto.loc/database",target=/var/lib/mysql,type=bind \
+    --mount src="$DB_DIR",target=/var/lib/mysql,type=bind \
     mariadb:focal >/dev/null 2>&1
 printf "* Starting mysqld"
 while [ $(docker inspect --format "{{json .State.Health.Status }}" chv-dev-mariadb) != "\"healthy\"" ]; do
@@ -54,7 +65,7 @@ fi
 SOFTWARE="Chevereto Source"
 echo "* Provide v3-httpd-php"
 docker run -d \
-    -p 8008:80 \
+    -p "$PORT:80" \
     -e "CHEVERETO_DB_HOST=dev-mariadb" \
     -e "CHEVERETO_DB_USER=chevereto" \
     -e "CHEVERETO_DB_PASS=user_database_password" \
@@ -89,7 +100,7 @@ if [ "$createDev" != "${createDev#[Yy]}" ]; then
         --data "email_incoming_email=dev@chevereto.loc" \
         --data "website_mode=community" >/dev/null 2>&1
 fi
-echo "[OK] $SOFTWARE is running at localhost:8008"
+echo "[OK] $SOFTWARE is running at localhost:$PORT"
 echo "-------------------------------------------"
 echo "All done!"
 echo "- Front http://localhost:8008"

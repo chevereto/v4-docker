@@ -4,20 +4,6 @@ PROJECT="$(dirname $DIR)"
 SOFTWARE="Chevereto"
 PORT="8001"
 DB_DIR="$PROJECT/build/database/demo"
-if [ -d "$DB_DIR" ]; then
-    echo "* Need to remove $DB_DIR"
-    rm -rf $DB_DIR
-    RESULT=$?
-    if [ $RESULT -ne 0 ]; then
-        exit $RESULT
-    fi
-fi
-echo "* Need to create $DB_DIR"
-mkdir -p $DB_DIR
-RESULT=$?
-if [ $RESULT -ne 0 ]; then
-    exit $RESULT
-fi
 echo "Build $SOFTWARE [httpd (mpm_prefork), mod_php] at port $PORT"
 echo "* Pull demo image"
 docker pull chevereto/demo
@@ -36,6 +22,20 @@ RESULT=$?
 if [ $RESULT -eq 0 ]; then
     echo "* Removing existing chv-demo"
     docker rm -f chv-demo >/dev/null 2>&1
+fi
+if [ -d "$DB_DIR" ]; then
+    echo "* Need to remove $DB_DIR"
+    rm -rf $DB_DIR
+    RESULT=$?
+    if [ $RESULT -ne 0 ]; then
+        exit $RESULT
+    fi
+fi
+echo "* Need to create $DB_DIR"
+mkdir -p $DB_DIR
+RESULT=$?
+if [ $RESULT -ne 0 ]; then
+    exit $RESULT
 fi
 docker container inspect chv-demo-mariadb >/dev/null 2>&1
 RESULT=$?

@@ -71,8 +71,15 @@ RUN set -eux; \
     echo "  'db_port' => getenv('CHEVERETO_DB_PORT'),"; \
     echo "  'db_table_prefix' => getenv('CHEVERETO_DB_TABLE_PREFIX'),"; \
     echo "  'db_driver' => getenv('CHEVERETO_DB_DRIVER'),"; \
-    echo "  'db_pdo_attrs' => [],"; \
-    echo "  'debug_level' => 3,"; \
+    echo "  'db_pdo_attrs' => getenv('CHEVERETO_DB_PDO_ATTRS'),"; \
+    echo "  'image_formats_available' => getenv('CHEVERETO_IMAGE_FORMATS_AVAILABLE'),"; \
+    echo "  'hostname' => getenv('CHEVERETO_HOSTNAME'),"; \
+    echo "  'hostname_path' => getenv('CHEVERETO_HOSTNAME_PATH'),"; \
+    echo "  'debug_level' => getenv('CHEVERETO_DEBUG_LEVEL'),"; \
+    echo "  'session.save_handler' => getenv('CHEVERETO_SESSION_SAVE_HANDLER'),"; \
+    echo "  'session.save_path' => getenv('CHEVERETO_SESSION_SAVE_PATH'),"; \
+    echo "  'https' => getenv('CHEVERETO_HTTPS'),"; \
+    echo "  'disable_php_pages' => getenv('CHEVERETO_DISABLE_PHP_PAGES'),"; \
     echo "];"; \
     } > /var/www/html/app/settings.php
 
