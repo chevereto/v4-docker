@@ -24,14 +24,6 @@ The [httpd-php](httpd-php/README.md) image provides Apache HTTP webserver built-
 
 The [php-fpm](php-fpm/README.md) image provides PHP-FPM to be used with a proxy pass server (to use with `httpd`, `nginx` or anything else).
 
-### `httpd`
-
-The [httpd](httpd/README.md) image provides Apache HTTP web server to use with `php-fpm` container.
-
-### `nginx`
-
-The [nginx](nginx/README.md) image provides Apache HTTP web server to use with `nginx` container.
-
 ## Setup Project
 
 A Chevereto project could be either the [Installer](https://github.com/chevereto/installer), [Chevereto V3](https://chevereto.com/pricing) or [Chevereto-Free](https://github.com/chevereto/chevereto-free).
@@ -76,12 +68,11 @@ The script at [bin/imaginery.sh](bin/imaginery.sh) contains the build steps for 
 
 The folder at [bin/](bin/) contains shell scripts that automates the provisioning process.
 
-| Script                   | Stack                         | Description                                                         |
-| ------------------------ | ----------------------------- | ------------------------------------------------------------------- |
-| [demo.sh](bin/demo.sh)   | `mariadb`, `httpd-php`        | Demo with [dummy data](https://github.com/chevereto/demo-importing) |
-| [dev.sh](bin/dev.sh)     | `mariadb`, `httpd-php`        | Dev stack (install and account opts)                                |
-| [httpd.sh](bin/httpd.sh) | `mariadb`, `httpd`, `php-fpm` | Same as `dev.sh` but for httpd (mpm_event) + php-fpm                |
-| [nginx.sh](bin/nginx.sh) | `mariadb`, `nginx`, `php-fpm` | Same as `dev.sh` but for nginx + php-fpm                            |
+| Script                           | Stack                  | Description                                                                                         |
+| -------------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------- |
+| [demo.sh](bin/demo.sh)           | `mariadb`, `httpd-php` | Chevereto V3 (requires license) demo with [dummy data](https://github.com/chevereto/demo-importing) |
+| [demo-free.sh](bin/demo-free.sh) | `mariadb`, `httpd-php` | Chevereto-Free demo with [dummy data](https://github.com/chevereto/demo-importing)                  |
+| [dev.sh](bin/dev.sh)             | `mariadb`, `httpd-php` | Dev stack (install and account opts)                                                                |
 
 ## Manual database setup
 

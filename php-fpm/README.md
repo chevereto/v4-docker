@@ -14,6 +14,13 @@ docker run -d \
     --name chv-php-fpm \
     --network chv-network \
     --network-alias php \
+    -e "CHEVERETO_DB_HOST=mariadb" \
+    -e "CHEVERETO_DB_USER=chevereto" \
+    -e "CHEVERETO_DB_PASS=user_database_password" \
+    -e "CHEVERETO_DB_NAME=chevereto" \
+    -e "CHEVERETO_DB_TABLE_PREFIX=chv_" \
+    -e "CHEVERETO_DB_PORT=3306" \
+    -e "CHEVERETO_DB_DRIVER=mysql" \
     --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/images",target=/var/www/html/images,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
