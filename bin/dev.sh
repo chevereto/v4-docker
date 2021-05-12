@@ -70,7 +70,6 @@ docker run -d \
     -e "CHEVERETO_DB_USER=chevereto" \
     -e "CHEVERETO_DB_PASS=user_database_password" \
     -e "CHEVERETO_DB_NAME=chevereto" \
-    -e "CHEVERETO_ERROR_LOG=dev.log" \
     --name chv-dev \
     --network chv-network \
     --network-alias dev \
