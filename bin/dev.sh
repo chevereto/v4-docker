@@ -5,63 +5,63 @@ SOFTWARE="X"
 PORT="8008"
 DB_DIR="$PROJECT/build/database/dev"
 echo "Build Chevereto dev [httpd (mpm_prefork), mod_php] at port $PORT"
-echo -n "* Clean install (y/n)?"
-read cleanInstall
-if [ "$cleanInstall" != "${cleanInstall#[Yy]}" ]; then
-    echo -n "* Create user dev:password (y/n)?"
-    read createDev
-fi
-docker network inspect chv-network >/dev/null 2>&1
-RESULT=$?
-if [ $RESULT -eq 1 ]; then
-    echo "* Setup Network"
-    docker network create chv-network
-fi
+# echo -n "* Clean install (y/n)?"
+# read cleanInstall
+# if [ "$cleanInstall" != "${cleanInstall#[Yy]}" ]; then
+#     echo -n "* Create user dev:password (y/n)?"
+#     read createDev
+# fi
+# docker network inspect chv-network >/dev/null 2>&1
+# RESULT=$?
+# if [ $RESULT -eq 1 ]; then
+#     echo "* Setup Network"
+#     docker network create chv-network
+# fi
 docker container inspect chv-dev >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 0 ]; then
     echo "* Removing existing chv-dev"
     docker rm -f chv-dev >/dev/null 2>&1
 fi
-echo "* Need to create $DB_DIR"
-mkdir -p $DB_DIR
-RESULT=$?
-if [ $RESULT -ne 0 ]; then
-    exit $RESULT
-fi
-docker container inspect chv-dev-mariadb >/dev/null 2>&1
-RESULT=$?
-if [ $RESULT -eq 0 ]; then
-    echo "* Removing existing chv-dev-mariadb"
-    docker rm -f chv-dev-mariadb >/dev/null 2>&1
-fi
-echo "* Provide MariaDB Server"
-if [ "$cleanInstall" != "${cleanInstall#[Yy]}" ]; then
-    echo "* Remove existing database at $DB_DIR/*"
-    sudo rm -rf $DB_DIR/*
-fi
-docker run -d \
-    -e MYSQL_ROOT_PASSWORD=password \
-    --name chv-dev-mariadb \
-    --network chv-network \
-    --network-alias dev-mariadb \
-    --health-cmd='mysqladmin ping --silent' \
-    --mount src="$DB_DIR",target=/var/lib/mysql,type=bind \
-    mariadb:focal >/dev/null 2>&1
-printf "* Starting mysqld"
-while [ $(docker inspect --format "{{json .State.Health.Status }}" chv-dev-mariadb) != "\"healthy\"" ]; do
-    printf "."
-    sleep 1
-done
-echo ""
-docker exec -it chv-dev-mariadb test -d /var/lib/mysql/chevereto
-RESULT=$?
-if [ $RESULT -eq 1 ]; then
-    echo "* Setup database"
-    docker exec chv-dev-mariadb mysql -uroot -ppassword -e "CREATE DATABASE chevereto; \
-    CREATE USER 'chevereto' IDENTIFIED BY 'user_database_password'; \
-    GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
-fi
+# echo "* Need to create $DB_DIR"
+# mkdir -p $DB_DIR
+# RESULT=$?
+# if [ $RESULT -ne 0 ]; then
+#     exit $RESULT
+# fi
+# docker container inspect chv-dev-mariadb >/dev/null 2>&1
+# RESULT=$?
+# if [ $RESULT -eq 0 ]; then
+#     echo "* Removing existing chv-dev-mariadb"
+#     docker rm -f chv-dev-mariadb >/dev/null 2>&1
+# fi
+# echo "* Provide MariaDB Server"
+# if [ "$cleanInstall" != "${cleanInstall#[Yy]}" ]; then
+#     echo "* Remove existing database at $DB_DIR/*"
+#     sudo rm -rf $DB_DIR/*
+# fi
+# docker run -d \
+#     -e MYSQL_ROOT_PASSWORD=password \
+#     --name chv-dev-mariadb \
+#     --network chv-network \
+#     --network-alias dev-mariadb \
+#     --health-cmd='mysqladmin ping --silent' \
+#     --mount src="$DB_DIR",target=/var/lib/mysql,type=bind \
+#     mariadb:focal >/dev/null 2>&1
+# printf "* Starting mysqld"
+# while [ $(docker inspect --format "{{json .State.Health.Status }}" chv-dev-mariadb) != "\"healthy\"" ]; do
+#     printf "."
+#     sleep 1
+# done
+# echo ""
+# docker exec -it chv-dev-mariadb test -d /var/lib/mysql/chevereto
+# RESULT=$?
+# if [ $RESULT -eq 1 ]; then
+#     echo "* Setup database"
+#     docker exec chv-dev-mariadb mysql -uroot -ppassword -e "CREATE DATABASE chevereto; \
+#     CREATE USER 'chevereto' IDENTIFIED BY 'user_database_password'; \
+#     GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
+# fi
 SOFTWARE="Chevereto Source"
 echo "* Provide v3-httpd-php"
 docker run -d \
@@ -70,14 +70,6 @@ docker run -d \
     -e "CHEVERETO_DB_USER=chevereto" \
     -e "CHEVERETO_DB_PASS=user_database_password" \
     -e "CHEVERETO_DB_NAME=chevereto" \
-    -e "CHEVERETO_DB_TABLE_PREFIX=chv_" \
-    -e "CHEVERETO_DB_PORT=3306" \
-    -e "CHEVERETO_DB_DRIVER=mysql" \
-    -e "CHEVERETO_UPLOAD_MAX_FILESIZE=25M" \
-    -e "CHEVERETO_POST_MAX_SIZE=25M" \
-    -e "CHEVERETO_MAX_EXECUTION_TIME=30" \
-    -e "CHEVERETO_MEMORY_LIMIT=512M" \
-    -e "CHEVERETO_DEBUG_LEVEL=1" \
     --name chv-dev \
     --network chv-network \
     --network-alias dev \
