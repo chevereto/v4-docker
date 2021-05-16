@@ -20,7 +20,13 @@ RUN apt-get update && apt-get install -y \
     && php -m  \
     && a2enmod rewrite
 
-ENV CHEVERETO_SERVICING=docker \
+ARG CHEVERETO_SOFTWARE=chevereto
+ARG CHEVERETO_TAG=latest
+
+ENV CHEVERETO_SOFTWARE=$CHEVERETO_SOFTWARE \
+    CHEVERETO_TAG=$CHEVERETO_TAG \
+    CHEVERETO_LICENSE= \
+    CHEVERETO_SERVICING=docker \
     CHEVERETO_DB_HOST=mariadb \
     CHEVERETO_DB_USER=chevereto \
     CHEVERETO_DB_PASS=user_database_password \
@@ -80,3 +86,7 @@ VOLUME /var/www/html/images
 VOLUME /var/www/html/importing/no-parse
 VOLUME /var/www/html/importing/parse-albums
 VOLUME /var/www/html/importing/parse-users
+
+ADD bootstrap.sh /var/www/bootstrap.sh
+RUN chmod +x /var/www/bootstrap.sh
+CMD ["/bin/bash", "/var/www/bootstrap.sh"]
