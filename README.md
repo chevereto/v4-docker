@@ -2,87 +2,21 @@
 
 > 🔔 [Subscribe](https://newsletter.chevereto.com/subscription?f=PmL892XuTdfErVq763PCycJQrvZ8PYc9JbsVUttqiPV1zXt6DDtf7lhepEStqE8LhGs8922ZYmGT7CYjMH5uSx23pL6Q) to don't miss any update regarding Chevereto.
 
-![Chevereto](LOGO.svg)
+![Chevereto](https://github.com/chevereto/docker/raw/main/LOGO.svg)
 
 [![Discord](https://img.shields.io/discord/759137550312407050?style=flat-square)](https://chv.to/discord)
 
-This repository is for the official [Chevereto V3](https://chevereto.com/pricing) / [Chevereto-Free](https://github.com/chevereto/chevereto-free) Docker images, providing the servicing required to run any existing or new Chevereto installation.
+This repository is for the official [Chevereto](https://chevereto.com) Docker images.
 
-## Dockerfile
-
-This repository provides PHP and webserver servicing. For database use any MariaDB/MySQL image.
-
-### `demo`
-
-The [demo](demo/README.md) image provides a one-click deployable demo.
-
-### `httpd-php`
-
-The [httpd-php](httpd-php/README.md) image provides Apache HTTP webserver built-in with PHP (mod_php).
-
-### `php-fpm`
-
-The [php-fpm](php-fpm/README.md) image provides PHP-FPM to be used with a proxy pass server (to use with `httpd`, `nginx` or anything else).
-
-## Setup Project
-
-A Chevereto project could be either the [Installer](https://github.com/chevereto/installer), [Chevereto V3](https://chevereto.com/pricing) or [Chevereto-Free](https://github.com/chevereto/chevereto-free).
-
-* The project is a folder intended to be served under an HTTP server
-* This guide assumes `/var/www/html/chevereto.loc` as project folder
-
-```sh
-cd /var/www/html/chevereto.loc/
-```
-
-Create the volumes (if required) at `/var/www/html/chevereto.loc/`:
-
-```sh
-mkdir public_html
-mkdir -p database/{dev,demo,demo-free}
-mkdir -p importing/{no-parse,parse-albums,parse-users}
-```
-
-* The application will be at `public_html/`
-* Local uploads will be stored at `images/`
-
-> All these directories are for reference, you can customize the volumes with the `--mount` option.
-
-### Installer project (recommended)
-
-* Download the Installer at your project's public folder:
-
-```sh
-wget -O public_html/installer.php https://chevereto.com/download/file/installer
-```
-
-### Existing project
-
-Take note on the host path to your Chevereto installation, it will be used to mount the application at that path.
-
-## Building images
-
-The script at [bin/imaginery.sh](bin/imaginery.sh) contains the build steps for the images provides by this repo.
-
-## Automatic setup
-
-The folder at [bin/](bin/) contains shell scripts that automates the provisioning process.
-
-| Script                           | Stack                  | Description                                                                                         |
-| -------------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------- |
-| [demo.sh](bin/demo.sh)           | `mariadb`, `httpd-php` | Chevereto V3 (requires license) demo with [dummy data](https://github.com/chevereto/demo-importing) |
-| [demo-free.sh](bin/demo-free.sh) | `mariadb`, `httpd-php` | Chevereto-Free demo with [dummy data](https://github.com/chevereto/demo-importing)                  |
-| [dev.sh](bin/dev.sh)             | `mariadb`, `httpd-php` | Dev stack (install and account opts)                                                                |
-
-## Manual database setup
-
-### Setup `chv-network`
+## Network setup
 
 Create the `chv-network` that containers will use to communicate each other.
 
 ```sh
 docker network create chv-network
 ```
+
+## Database setup
 
 ### Setup `chv-mariadb`
 
@@ -110,8 +44,6 @@ docker run -itd \
     -e MYSQL_ROOT_PASSWORD=password \
     mariadb:focal
 ```
-
-**Note:** Use your own password at `password`.
 
 * Enter the `chv-mariadb` container SQL console:
 
@@ -146,3 +78,121 @@ Disallow root login remotely? [Y/n] y
 Remove test database and access to it? [Y/n] y
 Reload privilege tables now? [Y/n] y
 ```
+
+## `httpd-php`
+
+```sh
+docker run -d \
+    -p 8008:80 \
+    --name chv-dev \
+    --network chv-network \
+    --network-alias dev \
+    -e "CHEVERETO_DB_HOST=mariadb" \
+    -e "CHEVERETO_DB_USER=chevereto" \
+    -e "CHEVERETO_DB_PASS=user_database_password" \
+    -e "CHEVERETO_DB_NAME=chevereto" \
+    -e "CHEVERETO_DB_TABLE_PREFIX=chv_" \
+    -e "CHEVERETO_DB_PORT=3306" \
+    -e "CHEVERETO_DB_DRIVER=mysql" \
+    -e "CHEVERETO_SOFTWARE=chevereto" \
+    -e "CHEVERETO_TAG=latest" \
+    -e "CHEVERETO_LICENSE=license_key" \
+    --mount src="/var/www/html/chevereto.loc/public_html/images",target=/var/www/html/images,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
+    chevereto/chevereto:latest-httpd-php
+```
+
+## `php-fpm`
+
+```sh
+docker run -d \
+    -p :9000 \
+    --name chv-php-fpm \
+    --network chv-network \
+    --network-alias php \
+    -e "CHEVERETO_DB_HOST=mariadb" \
+    -e "CHEVERETO_DB_USER=chevereto" \
+    -e "CHEVERETO_DB_PASS=user_database_password" \
+    -e "CHEVERETO_DB_NAME=chevereto" \
+    -e "CHEVERETO_DB_TABLE_PREFIX=chv_" \
+    -e "CHEVERETO_DB_PORT=3306" \
+    -e "CHEVERETO_DB_DRIVER=mysql" \
+    -e "CHEVERETO_SOFTWARE=chevereto" \
+    -e "CHEVERETO_TAG=latest" \
+    -e "CHEVERETO_LICENSE=license_key" \
+    --mount src="/var/www/html/chevereto.loc/public_html/images",target=/var/www/html/images,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
+    chevereto/chevereto:latest-php-fpm
+```
+
+## Chevereto-Free users
+
+Chevereto-Free users need to override `docker run` command with the following environment options.
+
+```sh
+-e "CHEVERETO_SOFTWARE=chevereto-free" \
+-e "CHEVERETO_LICENSE=" \
+```
+
+## `demo`
+
+```sh
+docker run -d \
+    -p 8000:80 \
+    --name chv-demo-free \
+    --network chv-network \
+    -e "CHEVERETO_DB_HOST=demo-mariadb" \
+    -e "CHEVERETO_DB_USER=chevereto" \
+    -e "CHEVERETO_DB_PASS=user_database_password" \
+    -e "CHEVERETO_DB_NAME=chevereto" \
+    -e "CHEVERETO_DB_TABLE_PREFIX=chv_" \
+    -e "CHEVERETO_DB_PORT=3306" \
+    -e "CHEVERETO_DB_DRIVER=mysql" \
+    --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/images",target=/var/www/html/images,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
+    chevereto/demo
+```
+
+See working examples at [demo.sh](../bin/demo.sh) & [demo-free.sh](../bin/demo-free.sh).
+
+## Dev setup
+
+A Chevereto project could be either the [Installer](https://github.com/chevereto/installer), [Chevereto V3](https://chevereto.com/pricing) or [Chevereto-Free](https://github.com/chevereto/chevereto-free).
+
+* The project is a folder intended to be served under an HTTP server
+* This guide assumes `/var/www/html/chevereto.loc` as project folder
+
+```sh
+cd /var/www/html/chevereto.loc/
+```
+
+Create the volumes (if required) at `/var/www/html/chevereto.loc/`:
+
+```sh
+mkdir public_html
+mkdir -p database/{dev,demo,demo-free}
+mkdir -p importing/{no-parse,parse-albums,parse-users}
+```
+
+* The application will be at `public_html/`
+* Local uploads will be stored at `images/`
+
+> All these directories are for reference, you can customize the volumes with the `--mount` option.
+
+## Automatic setup
+
+The folder at [bin/](bin/) contains shell scripts that automates the provisioning process based on provided Dockerimages.
+
+| Script                           | Stack                  | Description                                                                                         |
+| -------------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------- |
+| [demo.sh](bin/demo.sh)           | `mariadb`, `httpd-php` | Chevereto V3 (requires license) demo with [dummy data](https://github.com/chevereto/demo-importing) |
+| [demo-free.sh](bin/demo-free.sh) | `mariadb`, `httpd-php` | Chevereto-Free demo with [dummy data](https://github.com/chevereto/demo-importing)                  |
+| [dev.sh](bin/dev.sh)             | `mariadb`, `httpd-php` | Dev stack (install and account opts)                                                                |
+

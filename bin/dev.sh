@@ -79,7 +79,7 @@ docker run -d \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
-    chevereto/servicing:v3-httpd-php >/dev/null 2>&1
+    chevereto/chevereto:latest-httpd-php >/dev/null 2>&1
 echo '* Applying permissions'
 docker exec -it chv-dev bash -c "chown www-data: . -R"
 if [ "$createDev" != "${createDev#[Yy]}" ]; then
