@@ -19,7 +19,17 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable imagick opcache \
     && php -m
 
-ENV CHEVERETO_SERVICING=docker \
+ARG CHEVERETO_SOFTWARE=chevereto
+ARG CHEVERETO_TAG=latest
+ARG CHEVERETO_INSTALLER_TAG=2.2.0
+ARG CHEVERETO_SERVICING=docker
+
+ENV CHEVERETO_SOFTWARE=$CHEVERETO_SOFTWARE \
+    CHEVERETO_TAG=$CHEVERETO_TAG \
+    CHEVERETO_INSTALLER_TAG=$CHEVERETO_INSTALLER_TAG \
+    CHEVERETO_PROCESS=$CHEVERETO_PROCESS \
+    CHEVERETO_SERVICING=$CHEVERETO_SERVICING \
+    CHEVERETO_LICENSE= \
     CHEVERETO_DB_HOST=mariadb \
     CHEVERETO_DB_USER=chevereto \
     CHEVERETO_DB_PASS=user_database_password \
@@ -40,8 +50,7 @@ ENV CHEVERETO_SERVICING=docker \
     CHEVERETO_MAX_EXECUTION_TIME=30 \
     CHEVERETO_MEMORY_LIMIT=512M
 
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
-    && set -eux; \
+RUN set -eux; \
     { \
     echo "log_errors = On"; \
     echo "error_log = /dev/stderr"; \
@@ -51,8 +60,36 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
     echo "memory_limit = \${CHEVERETO_MEMORY_LIMIT}"; \
     } > $PHP_INI_DIR/conf.d/php.ini
 
+RUN mkdir -p /var/www/html/app/ && \
+    set -eux; \
+    { \
+    echo "<?php"; \
+    echo "\$settings = ["; \
+    echo "  'db_host' => getenv('CHEVERETO_DB_HOST'),"; \
+    echo "  'db_name' => getenv('CHEVERETO_DB_NAME'),"; \
+    echo "  'db_user' => getenv('CHEVERETO_DB_USER'),"; \
+    echo "  'db_pass' => getenv('CHEVERETO_DB_PASS'),"; \
+    echo "  'db_port' => getenv('CHEVERETO_DB_PORT'),"; \
+    echo "  'db_table_prefix' => getenv('CHEVERETO_DB_TABLE_PREFIX'),"; \
+    echo "  'db_driver' => getenv('CHEVERETO_DB_DRIVER'),"; \
+    echo "  'db_pdo_attrs' => getenv('CHEVERETO_DB_PDO_ATTRS'),"; \
+    echo "  'image_formats_available' => getenv('CHEVERETO_IMAGE_FORMATS_AVAILABLE'),"; \
+    echo "  'hostname' => getenv('CHEVERETO_HOSTNAME'),"; \
+    echo "  'hostname_path' => getenv('CHEVERETO_HOSTNAME_PATH'),"; \
+    echo "  'debug_level' => getenv('CHEVERETO_DEBUG_LEVEL'),"; \
+    echo "  'session.save_handler' => getenv('CHEVERETO_SESSION_SAVE_HANDLER'),"; \
+    echo "  'session.save_path' => getenv('CHEVERETO_SESSION_SAVE_PATH'),"; \
+    echo "  'https' => getenv('CHEVERETO_HTTPS'),"; \
+    echo "  'disable_php_pages' => getenv('CHEVERETO_DISABLE_PHP_PAGES'),"; \
+    echo "];"; \
+    } > /var/www/html/app/settings.php
+
 VOLUME /var/www/html/
 VOLUME /var/www/html/images
 VOLUME /var/www/html/importing/no-parse
 VOLUME /var/www/html/importing/parse-albums
 VOLUME /var/www/html/importing/parse-users
+
+ADD bootstrap.sh /var/www/bootstrap.sh
+RUN chmod +x /var/www/bootstrap.sh
+CMD ["/bin/bash", "/var/www/bootstrap.sh", "php-fpm"]

@@ -23,12 +23,14 @@ RUN apt-get update && apt-get install -y \
 ARG CHEVERETO_SOFTWARE=chevereto
 ARG CHEVERETO_TAG=latest
 ARG CHEVERETO_INSTALLER_TAG=2.2.0
+ARG CHEVERETO_SERVICING=docker
 
 ENV CHEVERETO_SOFTWARE=$CHEVERETO_SOFTWARE \
     CHEVERETO_TAG=$CHEVERETO_TAG \
     CHEVERETO_INSTALLER_TAG=$CHEVERETO_INSTALLER_TAG \
+    CHEVERETO_PROCESS=$CHEVERETO_PROCESS \
+    CHEVERETO_SERVICING=$CHEVERETO_SERVICING \
     CHEVERETO_LICENSE= \
-    CHEVERETO_SERVICING=docker \
     CHEVERETO_DB_HOST=mariadb \
     CHEVERETO_DB_USER=chevereto \
     CHEVERETO_DB_PASS=user_database_password \
@@ -91,4 +93,4 @@ VOLUME /var/www/html/importing/parse-users
 
 ADD bootstrap.sh /var/www/bootstrap.sh
 RUN chmod +x /var/www/bootstrap.sh
-CMD ["/bin/bash", "/var/www/bootstrap.sh"]
+CMD ["/bin/bash", "/var/www/bootstrap.sh", "apache2-foreground"]
