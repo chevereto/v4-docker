@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
+# set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 PROJECT="$(dirname $DIR)"
-SOFTWARE="X"
+SOFTWARE="chevereto-dev"
 PORT="8008"
 DB_DIR="$PROJECT/build/database/dev"
 echo "Build Chevereto dev [httpd (mpm_prefork), mod_php] at port $PORT"
@@ -62,7 +63,6 @@ if [ $RESULT -eq 1 ]; then
     CREATE USER 'chevereto' IDENTIFIED BY 'user_database_password'; \
     GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
 fi
-SOFTWARE="Chevereto Source"
 echo "* Provide v3-httpd-php"
 docker run -d \
     -p "$PORT:80" \
@@ -70,15 +70,16 @@ docker run -d \
     -e "CHEVERETO_DB_USER=chevereto" \
     -e "CHEVERETO_DB_PASS=user_database_password" \
     -e "CHEVERETO_DB_NAME=chevereto" \
+    -e "CHEVERETO_TAG=dev" \
     --name chv-dev \
     --network chv-network \
     --network-alias dev \
+    --mount src="/var/www/html/chevereto.loc/public_html/images",target=/var/www/html/images,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
     chevereto/servicing:v3-httpd-php >/dev/null 2>&1
-# --mount src="/var/www/html/chevereto.loc/public_html/images",target=/var/www/html/images,type=bind \
-# --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
 echo '* Applying permissions'
 docker exec -it chv-dev bash -c "chown www-data: . -R"
 if [ "$createDev" != "${createDev#[Yy]}" ]; then
