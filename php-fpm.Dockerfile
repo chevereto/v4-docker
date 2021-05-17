@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
     && php -m
 
 ARG CHEVERETO_SOFTWARE=chevereto
-ARG CHEVERETO_TAG=latest
+ARG CHEVERETO_TAG=3.20.0
 ARG CHEVERETO_INSTALLER_TAG=2.2.0
 ARG CHEVERETO_SERVICING=docker
 
