@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 PROJECT="$(dirname $DIR)"
 SOFTWARE="Chevereto"
@@ -6,11 +7,7 @@ PORT="8001"
 DB_DIR="$PROJECT/build/database/demo"
 echo "Build $SOFTWARE [httpd (mpm_prefork), mod_php] at port $PORT"
 echo "* Pull demo image"
-docker pull chevereto/demo
-RESULT=$?
-if [ $RESULT -ne 0 ]; then
-    exit $RESULT
-fi
+docker pull chevereto/chevereto:latest-httpd-php
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 1 ]; then
@@ -27,16 +24,9 @@ if [ -d "$DB_DIR" ]; then
     echo "* Need to remove $DB_DIR"
     rm -rf $DB_DIR
     RESULT=$?
-    if [ $RESULT -ne 0 ]; then
-        exit $RESULT
-    fi
 fi
 echo "* Need to create $DB_DIR"
 mkdir -p $DB_DIR
-RESULT=$?
-if [ $RESULT -ne 0 ]; then
-    exit $RESULT
-fi
 docker container inspect chv-demo-mariadb >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 0 ]; then
@@ -72,7 +62,7 @@ docker run -d \
     --network chv-network \
     -e "CHEVERETO_DB_HOST=chv-demo-mariadb" \
     -p "$PORT:80" \
-    chevereto/demo >/dev/null 2>&1
+    chevereto/chevereto:latest-httpd-php >/dev/null 2>&1
 echo -n "* $SOFTWARE key:"
 read -s license
 echo

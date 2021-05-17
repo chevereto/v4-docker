@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# set -e
+set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 PROJECT="$(dirname $DIR)"
 SOFTWARE="chevereto-dev"
@@ -26,10 +26,6 @@ if [ $RESULT -eq 0 ]; then
 fi
 echo "* Need to create $DB_DIR"
 mkdir -p $DB_DIR
-RESULT=$?
-if [ $RESULT -ne 0 ]; then
-    exit $RESULT
-fi
 docker container inspect chv-dev-mariadb >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 0 ]; then
