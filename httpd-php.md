@@ -1,11 +1,5 @@
 # httpd-php
 
-## Build
-
-```sh
-docker build -t chevereto/servicing:v3-httpd-php . 
-```
-
 ## Run
 
 ```sh

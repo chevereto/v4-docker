@@ -1,20 +1,13 @@
-# php-fpm
-
-## Build
-
-```sh
-docker build -t chevereto/servicing:v3-php-fpm . 
-```
+# demo
 
 ## Run
 
 ```sh
 docker run -d \
-    -p :9000 \
-    --name chv-php-fpm \
+    -p 8000:80 \
+    --name chv-demo-free \
     --network chv-network \
-    --network-alias php \
-    -e "CHEVERETO_DB_HOST=mariadb" \
+    -e "CHEVERETO_DB_HOST=demo-mariadb" \
     -e "CHEVERETO_DB_USER=chevereto" \
     -e "CHEVERETO_DB_PASS=user_database_password" \
     -e "CHEVERETO_DB_NAME=chevereto" \
@@ -26,5 +19,9 @@ docker run -d \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
-    chevereto/servicing:v3-php-fpm
+    chevereto/demo
 ```
+
+## Deploy
+
+See working examples at [demo.sh](../bin/demo.sh) & [demo-free.sh](../bin/demo-free.sh).
