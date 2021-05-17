@@ -19,7 +19,7 @@ if [ "$CHEVERETO_TAG" != "$DEV_TAG" ] && [ ! -e $CONTAINER_STARTED ]; then
     echo "[cd] /chevereto/installer"
     cd /chevereto/installer
     echo "* Downloading $CHEVERETO_SOFTWARE $CHEVERETO_TAG"
-    php installer.php -a download -s $CHEVERETO_SOFTWARE -t=$CHEVERETO_TAG -l="$CHEVERETO_LICENSE"
+    php installer.php -a download -s $CHEVERETO_SOFTWARE -t=$CHEVERETO_TAG -l=$CHEVERETO_LICENSE
     echo "* Extracting downloaded file"
     php installer.php -a extract -s $CHEVERETO_SOFTWARE -f chevereto-pkg-*.zip -p $WORKING_DIR
     echo "* chown www-data: $WORKING_DIR -R"

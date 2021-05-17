@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-set -e
+# set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 PROJECT="$(dirname $DIR)"
 SOFTWARE="Chevereto"
 PORT="8001"
 DB_DIR="$PROJECT/build/database/demo"
 echo "Build $SOFTWARE [httpd (mpm_prefork), mod_php] at port $PORT"
-echo "* Pull demo image"
+echo "* Pull chevereto/chevereto:latest-httpd-php"
 docker pull chevereto/chevereto:latest-httpd-php
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
@@ -23,7 +23,6 @@ fi
 if [ -d "$DB_DIR" ]; then
     echo "* Need to remove $DB_DIR"
     rm -rf $DB_DIR
-    RESULT=$?
 fi
 echo "* Need to create $DB_DIR"
 mkdir -p $DB_DIR
@@ -57,29 +56,19 @@ if [ $RESULT -eq 1 ]; then
     GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
 fi
 echo "* Provide chv-demo"
-docker run -d \
-    --name chv-demo \
-    --network chv-network \
-    -e "CHEVERETO_DB_HOST=chv-demo-mariadb" \
-    -p "$PORT:80" \
-    chevereto/chevereto:latest-httpd-php >/dev/null 2>&1
 echo -n "* $SOFTWARE key:"
 read -s license
 echo
-docker exec -it \
-    --user www-data \
-    chv-demo php installer.php -a download -s chevereto -l=$license
-RESULT=$?
-if [ $RESULT -eq 0 ]; then
-    echo '[OK] License valid'
-else
-    echo "Not a valid license key. Go to http://chv.to/pricing if you haven't one already"
-    exit 1
-fi
-echo "* Installing paid edition"
-docker exec -it \
-    --user www-data \
-    chv-demo bash -c "php installer.php -a extract -s chevereto -p /var/www/html -f chevereto-pkg-*.zip"
+docker run -it \
+    -p "$PORT:80" \
+    -e "CHEVERETO_DB_HOST=chv-demo-mariadb" \
+    -e "CHEVERETO_SOFTWARE=chevereto" \
+    -e "CHEVERETO_TAG=latest" \
+    -e "CHEVERETO_LICENSE=$license" \
+    --name chv-demo \
+    --network chv-network \
+    chevereto/chevereto:latest-httpd-php
+sleep 45
 echo "* Creating demo:password"
 docker exec -it \
     --user www-data \
@@ -89,6 +78,14 @@ docker exec -it \
     -e demo@chevereto.loc \
     -x password
 echo "[OK] $SOFTWARE is running at localhost:$PORT"
+docker exec chv-demo-free mkdir -p /var/www/html/importing
+docker exec chv-demo-free curl -S -o /var/www/html/importing/importing.tar.gz -L 'https://codeload.github.com/chevereto/demo-importing/tar.gz/refs/heads/main'
+docker exec chv-demo-free tar -xvzf /var/www/html/importing/importing.tar.gz -C /var/www/html/importing/
+docker exec chv-demo-free sh -c "mv /var/www/html/importing/demo-importing-main/no-parse/* /var/www/html/importing/no-parse"
+docker exec chv-demo-free sh -c "mv /var/www/html/importing/demo-importing-main/parse-albums/* /var/www/html/importing/parse-albums"
+docker exec chv-demo-free sh -c "mv /var/www/html/importing/demo-importing-main/parse-users/* /var/www/html/importing/parse-users"
+docker exec chv-demo-free rm -rf /var/www/html/importing/demo-importing-main
+docker exec chv-demo-free sh -c "chown www-data: /var/www/html -R"
 echo "* About to import demo data"
 sleep 2
 count=4
