@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
-# set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 PROJECT="$(dirname $DIR)"
 SOFTWARE="Chevereto"
 PORT="8001"
 DB_DIR="$PROJECT/build/database/demo"
 echo "Build $SOFTWARE [httpd (mpm_prefork), mod_php] at port $PORT"
+echo -n "* $SOFTWARE key:"
+read -s license
+echo
+if [ $(curl -X POST -F "license=$license" -s -o /dev/null -w "%{http_code}" "https://chevereto.com/api/license/check") != 200 ]; then
+    echo '[ERROR] Invalid license key'
+    exit 1
+fi
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 1 ]; then
@@ -54,9 +60,6 @@ if [ $RESULT -eq 1 ]; then
     GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
 fi
 echo "* Provide chv-demo"
-echo -n "* $SOFTWARE key:"
-read -s license
-echo
 docker run -d \
     -p "$PORT:80" \
     -e "CHEVERETO_DB_HOST=chv-demo-mariadb" \
@@ -65,8 +68,13 @@ docker run -d \
     -e "CHEVERETO_LICENSE=$license" \
     --name chv-demo \
     --network chv-network \
-    chevereto/chevereto:demo
-sleep 30
+    chevereto/chevereto:demo >/dev/null 2>&1
+printf "* Starting chv-demo"
+until docker exec -it chv-demo test -f /var/www/CONTAINER_STARTED_PLACEHOLDER; do
+    printf "."
+    sleep 1
+done
+echo ""
 echo "* Creating demo:password"
 docker exec -it \
     --user www-data \

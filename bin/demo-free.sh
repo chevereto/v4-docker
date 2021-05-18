@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 PROJECT="$(dirname $DIR)"
 SOFTWARE="Chevereto-Free"
@@ -61,8 +60,13 @@ docker run -d \
     -e "CHEVERETO_DB_HOST=chv-demo-free-mariadb" \
     -e "CHEVERETO_SOFTWARE=chevereto-free" \
     -e "CHEVERETO_TAG=latest" \
-    chevereto/chevereto:demo
-sleep 15
+    chevereto/chevereto:demo >/dev/null 2>&1
+printf "* Starting chv-demo-free"
+until docker exec -it chv-demo-free test -f /var/www/CONTAINER_STARTED_PLACEHOLDER; do
+    printf "."
+    sleep 1
+done
+echo ""
 echo "* Creating demo:password"
 docker exec -it chv-demo-free \
     curl -X POST http://localhost:80/install \

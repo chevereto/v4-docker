@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 PROJECT="$(dirname $DIR)"
 SOFTWARE="chevereto-dev"
@@ -70,11 +69,9 @@ docker run -d \
     --name chv-dev \
     --network chv-network \
     --network-alias dev \
-    --mount src="/var/www/html/chevereto.loc/public_html/images",target=/var/www/html/images,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
-    --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
-    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
-    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/images",target=/var/www/html/images,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/importing",target=/var/www/html/importing,type=bind \
     chevereto/chevereto:latest-httpd-php >/dev/null 2>&1
 echo '* Applying permissions'
 docker exec -it chv-dev bash -c "chown www-data: . -R"
