@@ -99,11 +99,14 @@ RUN mkdir -p /var/www/html/importing && \
     mkdir -p /var/www/html/importing/parse-album && \
     mkdir -p /var/www/html/importing/parse-users
 
-VOLUME /var/www/html
-VOLUME /var/www/html/images
-VOLUME /var/www/html/importing/no-parse
-VOLUME /var/www/html/importing/parse-albums
-VOLUME /var/www/html/importing/parse-users
+ARG CACHEBUST=1
+RUN echo "$CACHEBUST"
+RUN curl -S -o /var/www/html/importing/importing.tar.gz -L "https://codeload.github.com/Chevereto/demo-importing/tar.gz/refs/heads/main"
+
+RUN tar -xf /var/www/html/importing/importing.tar.gz -C /var/www/html/importing/ \
+    && rm -rf /var/www/html/importing/importing.tar.gz \
+    && mv /var/www/html/importing/demo-importing-main/* /var/www/html/importing \
+    && rm -rf /var/www/html/importing/demo-importing-main
 
 ADD bootstrap.sh /var/www/bootstrap.sh
 RUN chmod +x /var/www/bootstrap.sh

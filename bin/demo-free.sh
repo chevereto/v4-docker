@@ -6,8 +6,6 @@ SOFTWARE="Chevereto-Free"
 PORT="8002"
 DB_DIR="$PROJECT/build/database/demo-free"
 echo "Build $SOFTWARE [httpd (mpm_prefork), mod_php] at port $PORT"
-echo "* Pull chevereto/chevereto:latest-httpd-php"
-docker pull chevereto/chevereto:latest-httpd-php
 docker network inspect chv-network >/dev/null 2>&1
 RESULT=$?
 if [ $RESULT -eq 1 ]; then
@@ -63,27 +61,18 @@ docker run -d \
     -e "CHEVERETO_DB_HOST=chv-demo-free-mariadb" \
     -e "CHEVERETO_SOFTWARE=chevereto-free" \
     -e "CHEVERETO_TAG=latest" \
-    chevereto/chevereto:latest-httpd-php
-sleep 10
+    chevereto/chevereto:demo
+sleep 15
 echo "* Creating demo:password"
-docker exec -d chv-demo-free \
+docker exec -it chv-demo-free \
     curl -X POST http://localhost:80/install \
     --data "username=demo" \
     --data "email=demo@chevereto.loc" \
     --data "password=password" \
     --data "email_from_email=no-reply@chevereto.loc" \
     --data "email_incoming_email=inbox@chevereto.loc" \
-    --data "website_mode=community"
+    --data "website_mode=community" >/dev/null 2>&1
 echo "[OK] $SOFTWARE is running at localhost:$PORT"
-echo "* Prepare importing project"
-docker exec chv-demo-free mkdir -p /var/www/html/importing
-docker exec chv-demo-free curl -S -o /var/www/html/importing/importing.tar.gz -L 'https://codeload.github.com/chevereto/demo-importing/tar.gz/refs/heads/main'
-docker exec chv-demo-free tar -xvzf /var/www/html/importing/importing.tar.gz -C /var/www/html/importing/
-docker exec chv-demo-free sh -c "mv /var/www/html/importing/demo-importing-main/no-parse/* /var/www/html/importing/no-parse"
-docker exec chv-demo-free sh -c "mv /var/www/html/importing/demo-importing-main/parse-albums/* /var/www/html/importing/parse-albums"
-docker exec chv-demo-free sh -c "mv /var/www/html/importing/demo-importing-main/parse-users/* /var/www/html/importing/parse-users"
-docker exec chv-demo-free rm -rf /var/www/html/importing/demo-importing-main
-docker exec chv-demo-free sh -c "chown www-data: /var/www/html -R"
 echo "* About to import demo data"
 count=4
 for i in $(seq $count); do
