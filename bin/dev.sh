@@ -59,6 +59,13 @@ if [ $RESULT -eq 1 ]; then
     GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
 fi
 echo "* Provide v3-httpd-php"
+# -e "CHEVERETO_ASSET_STORAGE_NAME=aws-us-west-1" \
+# -e "CHEVERETO_ASSET_STORAGE_TYPE=s3" \
+# -e "CHEVERETO_ASSET_STORAGE_KEY=key" \
+# -e "CHEVERETO_ASSET_STORAGE_SECRET=secret" \
+# -e "CHEVERETO_ASSET_STORAGE_BUCKET=bucket" \
+# -e "CHEVERETO_ASSET_STORAGE_URL=https://s3-us-west-1.amazonaws.com/bucket/" \
+# -e "CHEVERETO_ASSET_STORAGE_REGION=us-west-1" \
 docker run -d \
     -p "$PORT:80" \
     -e "CHEVERETO_DB_HOST=dev-mariadb" \
@@ -66,12 +73,16 @@ docker run -d \
     -e "CHEVERETO_DB_PASS=user_database_password" \
     -e "CHEVERETO_DB_NAME=chevereto" \
     -e "CHEVERETO_TAG=dev" \
+    -e "CHEVERETO_ASSET_STORAGE_NAME=assets" \
+    -e "CHEVERETO_ASSET_STORAGE_TYPE=local" \
     --name chv-dev \
     --network chv-network \
     --network-alias dev \
     --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/images",target=/var/www/html/images,type=bind \
-    --mount src="/var/www/html/chevereto.loc/public_html/importing",target=/var/www/html/importing,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
+    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
     chevereto/chevereto:latest-httpd-php >/dev/null 2>&1
 echo '* Applying permissions'
 docker exec -it chv-dev bash -c "chown www-data: . -R"
