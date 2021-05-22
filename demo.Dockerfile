@@ -71,30 +71,6 @@ RUN set -eux; \
     echo "memory_limit = \${CHEVERETO_MEMORY_LIMIT}"; \
     } > $PHP_INI_DIR/conf.d/php.ini
 
-RUN mkdir -p /var/www/html/app/ && \
-    set -eux; \
-    { \
-    echo "<?php"; \
-    echo "\$settings = ["; \
-    echo "  'db_host' => getenv('CHEVERETO_DB_HOST'),"; \
-    echo "  'db_name' => getenv('CHEVERETO_DB_NAME'),"; \
-    echo "  'db_user' => getenv('CHEVERETO_DB_USER'),"; \
-    echo "  'db_pass' => getenv('CHEVERETO_DB_PASS'),"; \
-    echo "  'db_port' => (int) getenv('CHEVERETO_DB_PORT'),"; \
-    echo "  'db_table_prefix' => getenv('CHEVERETO_DB_TABLE_PREFIX'),"; \
-    echo "  'db_driver' => getenv('CHEVERETO_DB_DRIVER'),"; \
-    echo "  'db_pdo_attrs' => getenv('CHEVERETO_DB_PDO_ATTRS'),"; \
-    echo "  'image_formats_available' => explode(',', getenv('CHEVERETO_IMAGE_FORMATS_AVAILABLE')),"; \
-    echo "  'hostname' => getenv('CHEVERETO_HOSTNAME'),"; \
-    echo "  'hostname_path' => getenv('CHEVERETO_HOSTNAME_PATH'),"; \
-    echo "  'debug_level' => (int) getenv('CHEVERETO_DEBUG_LEVEL'),"; \
-    echo "  'session.save_handler' => getenv('CHEVERETO_SESSION_SAVE_HANDLER'),"; \
-    echo "  'session.save_path' => getenv('CHEVERETO_SESSION_SAVE_PATH'),"; \
-    echo "  'https' => (bool) getenv('CHEVERETO_HTTPS'),"; \
-    echo "  'disable_php_pages' => (bool) getenv('CHEVERETO_DISABLE_PHP_PAGES'),"; \
-    echo "];"; \
-    } > /var/www/html/app/settings.php
-
 RUN mkdir -p /var/www/html/importing && \
     mkdir -p /var/www/html/importing/no-parse && \
     mkdir -p /var/www/html/importing/parse-album && \
