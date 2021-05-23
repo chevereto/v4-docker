@@ -73,7 +73,7 @@ docker run -d \
     -e "CHEVERETO_DB_PASS=user_database_password" \
     -e "CHEVERETO_DB_NAME=chevereto" \
     -e "CHEVERETO_TAG=dev" \
-    -e "CHEVERETO_ASSET_STORAGE_NAME=assets" \
+    -e "CHEVERETO_ASSET_STORAGE_NAME=dev-assets" \
     -e "CHEVERETO_ASSET_STORAGE_TYPE=local" \
     --name chv-dev \
     --network chv-network \
