@@ -26,7 +26,7 @@ if [ $RESULT -eq 0 ]; then
 fi
 if [ -d "$DB_DIR" ]; then
     echo "* Need to remove $DB_DIR"
-    rm -rf $DB_DIR
+    sudo rm -rf $DB_DIR
 fi
 echo "* Need to create $DB_DIR"
 mkdir -p $DB_DIR
