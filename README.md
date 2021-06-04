@@ -2,7 +2,7 @@
 
 > 🔔 [Subscribe](https://newsletter.chevereto.com/subscription?f=PmL892XuTdfErVq763PCycJQrvZ8PYc9JbsVUttqiPV1zXt6DDtf7lhepEStqE8LhGs8922ZYmGT7CYjMH5uSx23pL6Q) to don't miss any update regarding Chevereto.
 
-![Chevereto](https://github.com/chevereto/docker/raw/main/LOGO.svg)
+![Chevereto](LOGO.svg)
 
 [![Community](https://img.shields.io/badge/chv.to-community-blue?style=flat-square)](https://chv.to/community)
 [![Discord](https://img.shields.io/discord/759137550312407050?style=flat-square)](https://chv.to/discord)
@@ -87,7 +87,7 @@ Containers take the following `-e` options:
 | Key                  | Values                    | Default   |
 | -------------------- | ------------------------- | --------- |
 | `CHEVERETO_SOFTWARE` | chevereto, chevereto-free | chevereto |
-| `CHEVERETO_TAG`      | 3.2.0, latest, dev        | 3.2.0     |
+| `CHEVERETO_TAG`      | 3.20.2, latest, dev       | 3.20.2    |
 | `CHEVERETO_LICENSE`  | license key               |           |
 
 ### Hostname
