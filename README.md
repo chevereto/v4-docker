@@ -87,7 +87,7 @@ Containers take the following `-e` options:
 | Key                  | Values                    | Default   |
 | -------------------- | ------------------------- | --------- |
 | `CHEVERETO_SOFTWARE` | chevereto, chevereto-free | chevereto |
-| `CHEVERETO_TAG`      | 3.20.2, latest, dev       | 3.20.2    |
+| `CHEVERETO_TAG`      | 3.20.3, latest, dev       | 3.20.3    |
 | `CHEVERETO_LICENSE`  | license key               |           |
 
 ### Hostname
