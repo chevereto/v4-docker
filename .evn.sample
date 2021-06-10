@@ -1,0 +1,8 @@
+CHEVERETO_TAG=latest
+CHEVERETO_SOFTWARE=chevereto
+CHEVERETO_LICENSE=put_license_here
+CHEVERETO_HOSTNAME=example.com
+CHEVERETO_DB_HOST=db
+CHEVERETO_DB_USER=chevereto
+CHEVERETO_DB_NAME=chevereto
+CHEVERETO_DB_PASS=user_database_password
