@@ -55,6 +55,7 @@ if [ ! -e $CONTAINER_STARTED ]; then
         echo "  'hostname' => getenv('CHEVERETO_HOSTNAME'),"
         echo "  'https' => (bool) getenv('CHEVERETO_HTTPS'),"
         echo "  'image_formats_available' => explode(',', getenv('CHEVERETO_IMAGE_FORMATS_AVAILABLE')),"
+        echo "  'image_library' => getenv('CHEVERETO_IMAGE_LIBRARY'),"
         echo "  'session.save_handler' => getenv('CHEVERETO_SESSION_SAVE_HANDLER'),"
         echo "  'session.save_path' => getenv('CHEVERETO_SESSION_SAVE_PATH'),"
         echo "];"
