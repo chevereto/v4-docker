@@ -23,19 +23,16 @@ if [ $RESULT -eq 0 ]; then
     echo "* Removing existing chv-dev"
     docker rm -f chv-dev >/dev/null 2>&1
 fi
-echo "* Need to create $DB_DIR"
+echo "* Create $DB_DIR"
 mkdir -p $DB_DIR
-docker container inspect chv-dev-mariadb >/dev/null 2>&1
-RESULT=$?
-if [ $RESULT -eq 0 ]; then
-    echo "* Removing existing chv-dev-mariadb"
-    docker rm -f chv-dev-mariadb >/dev/null 2>&1
-fi
 echo "* Provide MariaDB Server"
 if [ "$cleanInstall" != "${cleanInstall#[Yy]}" ]; then
+    echo "* Removing existing chv-dev-mariadb"
+    docker rm -f chv-dev-mariadb >/dev/null 2>&1
     echo "* Remove existing database at $DB_DIR/*"
     sudo rm -rf $DB_DIR/*
 fi
+
 docker run -d \
     -e MYSQL_ROOT_PASSWORD=password \
     --name chv-dev-mariadb \
@@ -75,6 +72,7 @@ docker run -d \
     -e "CHEVERETO_TAG=dev" \
     -e "CHEVERETO_ASSET_STORAGE_NAME=dev-assets" \
     -e "CHEVERETO_ASSET_STORAGE_TYPE=local" \
+    -e "CHEVERETO_IMAGE_LIBRARY=gd" \
     --name chv-dev \
     --network chv-network \
     --network-alias dev \

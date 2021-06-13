@@ -19,6 +19,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable imagick opcache \
     && php -m
 
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
 ARG CHEVERETO_SOFTWARE=chevereto
 ARG CHEVERETO_TAG=3.20.4
 ARG CHEVERETO_INSTALLER_TAG=2.2.2
