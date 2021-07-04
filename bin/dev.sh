@@ -55,6 +55,8 @@ if [ $RESULT -eq 1 ]; then
     CREATE USER 'chevereto' IDENTIFIED BY 'user_database_password'; \
     GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
 fi
+echo "* Create chv-dev-assets volume"
+docker volume create chv-dev-assets
 echo "* Provide v3-httpd-php"
 docker run -d \
     -p "$PORT:80" \
@@ -67,11 +69,13 @@ docker run -d \
     -e "CHEVERETO_ASSET_STORAGE_TYPE=local" \
     -e "CHEVERETO_ASSET_STORAGE_URL=http://localhost:$PORT/public_assets" \
     -e "CHEVERETO_ASSET_STORAGE_BUCKET=/var/www/html/public_assets/" \
-    -e "CHEVERETO_IMAGE_LIBRARY=gd" \
+    -e "CHEVERETO_HTTPS=0" \
+    -e "CHEVERETO_DISABLE_PHP_PAGES=1" \
+    -e "CHEVERETO_IMAGE_LIBRARY=imagick" \
     --name chv-dev \
     --network chv-network \
     --network-alias dev \
-    --mount src="/var/www/html/chevereto.loc/public_assets",target=/var/www/html/public_assets,type=bind \
+    --mount src="chv-dev-assets",target=/var/www/html/public_assets,type=volume \
     --mount src="/var/www/html/chevereto.loc/public_html",target=/var/www/html,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/images",target=/var/www/html/images,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
@@ -79,17 +83,19 @@ docker run -d \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
     chevereto/chevereto:latest-httpd-php >/dev/null 2>&1
 echo '* Applying permissions'
-# docker exec -it chv-dev bash -c "chown www-data: . -R"
+docker exec -it chv-dev bash -c "chown www-data: . -R"
 if [ "$createDev" != "${createDev#[Yy]}" ]; then
     echo "* Creating dev:password"
-    docker exec -d chv-dev \
-        curl -X POST http://localhost:80/install \
-        --data "username=dev" \
-        --data "email=dev@chevereto.loc" \
-        --data "password=password" \
-        --data "email_from_email=dev@chevereto.loc" \
-        --data "email_incoming_email=dev@chevereto.loc" \
-        --data "website_mode=community" >/dev/null 2>&1
+    docker exec -it \
+        --user www-data \
+        chv-dev php /var/www/html/cli.php -C install \
+        -u dev \
+        -e dev@chevereto.loc \
+        -x password >/dev/null 2>&1
+    RESULT=$?
+    if [ $RESULT -eq 1 ]; then
+        echo "[!] Unable to create user"
+    fi
 fi
 echo "[OK] $SOFTWARE is running at localhost:$PORT"
 echo "-------------------------------------------"
