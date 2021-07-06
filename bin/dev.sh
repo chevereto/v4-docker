@@ -71,6 +71,8 @@ docker run -d \
     -e "CHEVERETO_ASSET_STORAGE_BUCKET=/var/www/html/public_assets/" \
     -e "CHEVERETO_HTTPS=0" \
     -e "CHEVERETO_DISABLE_PHP_PAGES=1" \
+    -e "CHEVERETO_DISABLE_UPDATE_HTTP=1" \
+    -e "CHEVERETO_DISABLE_UPDATE_CLI=1" \
     -e "CHEVERETO_IMAGE_LIBRARY=imagick" \
     --name chv-dev \
     --network chv-network \
