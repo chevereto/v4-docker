@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 ARG CHEVERETO_SOFTWARE=chevereto
-ARG CHEVERETO_TAG=3.20.5
+ARG CHEVERETO_TAG=3.20.9
 ARG CHEVERETO_INSTALLER_TAG=2.2.3
 ARG CHEVERETO_SERVICING=docker
 
@@ -90,6 +90,6 @@ RUN tar -xf /var/www/html/importing/importing.tar.gz -C /var/www/html/importing/
     && mv /var/www/html/importing/demo-importing-main/* /var/www/html/importing \
     && rm -rf /var/www/html/importing/demo-importing-main
 
-ADD bootstrap.sh /var/www/bootstrap.sh
+COPY bootstrap.sh /var/www/bootstrap.sh
 RUN chmod +x /var/www/bootstrap.sh
 CMD ["/bin/bash", "/var/www/bootstrap.sh", "apache2-foreground"]
