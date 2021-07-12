@@ -18,19 +18,19 @@ services:
 
   chv-bootstrap:
     image: chevereto/chevereto:latest-httpd-php
+    networks:
+      - chv-network
     volumes:
       - chv-storage:/var/www/html/images/
       - chv-assets:/var/www/html/_assets/
       - type: bind
         source: /var/www/html/chevereto.loc/public_html
         target: /var/www/html
-    networks:
-      - chv-network
     ports:
       - 8008:80
     restart: always
     environment:
-      CHEVERETO_LICENSE: license
+      CHEVERETO_LICENSE: yourLicenseKey
       CHEVERETO_DB_HOST: chv-database
       CHEVERETO_DB_USER: chevereto
       CHEVERETO_DB_PASS: user_database_password

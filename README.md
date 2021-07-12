@@ -35,74 +35,15 @@ For disposable container-based provisioning (application provided at image layer
 ## Compose
 
 * [httpd-php](compose/httpd-php.yml)
-* [Portainer](compose/portainer.yml)
 * php-fpm
 
-### Network setup
+### Manual setup
 
-Create the `chv-network`.
+Check the scripts at [bin/](bin/).
 
-```sh
-docker network create chv-network
-```
+## Demo
 
-### Database setup
-
-Create the `chv-mariadb` container connected to `chv-network`.
-
-```sh
-docker run -itd \
-    --name chv-mariadb \
-    --network chv-network \
-    --network-alias mariadb \
-    --health-cmd='mysqladmin ping --silent' \
-    -e MYSQL_ROOT_PASSWORD=password \
-    mariadb:focal
-```
-
-Create the `chevereto` database and its user binding:
-
-```sh
-docker exec chv-mariadb mysql -uroot -ppassword -e "CREATE DATABASE chevereto; \
-    CREATE USER 'chevereto' IDENTIFIED BY 'user_database_password'; \
-    GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
-```
-
-## Run
-
-Check the [Environment](https://v3-docs.chevereto.com/setup/system/environment.html) reference for all the variables that you can pass using the `-e` option.
-
-### `httpd-php`
-
-```sh
-docker run -d \
-    -p 8008:80 \
-    --name chv-httpd-php \
-    --network chv-network \
-    --network-alias chv-httpd-php \
-    --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
-    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
-    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
-    chevereto/chevereto:latest-httpd-php
-```
-
-## `php-fpm`
-
-```sh
-docker run -d \
-    -p :9000 \
-    --name chv-php-fpm \
-    --network chv-network \
-    --network-alias chv-php-fpm \
-    --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
-    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
-    --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
-    chevereto/chevereto:latest-php-fpm
-```
-
-## `demo`
-
-See working one-click demos at [demo.sh](../bin/demo.sh).
+See working one-click demo at [demo.sh](../bin/demo.sh).
 
 ## Dev setup
 
@@ -115,7 +56,7 @@ Pass `CHEVERETO_TAG=dev` and bind mount `/var/www/html/` to the development work
 cd /var/www/html/chevereto.loc/
 ```
 
-Create the volumes (if required) at `/var/www/html/chevereto.loc/`:
+Create the dirs (if required) at `/var/www/html/chevereto.loc/`:
 
 ```sh
 mkdir public_html
@@ -125,9 +66,3 @@ mkdir -p importing/{no-parse,parse-albums,parse-users}
 
 * The application will be at `public_html/`
 * Local uploads will be stored at `images/`
-
-> All these directories are for reference, you can customize the volumes with the `--mount` option.
-
-## Automatic setup
-
-The folder at [bin/](bin/) contains shell scripts that automates the provisioning process based on provided Dockerimages.
