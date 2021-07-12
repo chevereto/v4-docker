@@ -2,7 +2,7 @@
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 PROJECT="$(dirname $DIR)"
 SOFTWARE="chevereto-dev"
-PORT="8008"
+PORT="8009"
 DB_DIR="$PROJECT/build/database/dev"
 echo "Build Chevereto dev [httpd (mpm_prefork), mod_php] at port $PORT"
 echo -n "* Clean install (y/n)?"
@@ -40,7 +40,7 @@ docker run -d \
     --network-alias dev-mariadb \
     --health-cmd='mysqladmin ping --silent' \
     --mount src="$DB_DIR",target=/var/lib/mysql,type=bind \
-    mariadb:focal >/dev/null 2>&1
+    mariadb:focal
 printf "* Starting mysqld"
 while [ $(docker inspect --format "{{json .State.Health.Status }}" chv-dev-mariadb) != "\"healthy\"" ]; do
     printf "."
@@ -83,7 +83,7 @@ docker run -d \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/no-parse",target=/var/www/html/importing/no-parse,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-users",target=/var/www/html/importing/parse-users,type=bind \
     --mount src="/var/www/html/chevereto.loc/public_html/importing/parse-albums",target=/var/www/html/importing/parse-albums,type=bind \
-    chevereto/chevereto:latest-httpd-php >/dev/null 2>&1
+    chevereto-boot
 echo '* Applying permissions'
 docker exec -it chv-dev bash -c "chown www-data: . -R"
 if [ "$createDev" != "${createDev#[Yy]}" ]; then
@@ -93,7 +93,7 @@ if [ "$createDev" != "${createDev#[Yy]}" ]; then
         chv-dev php /var/www/html/cli.php -C install \
         -u dev \
         -e dev@chevereto.loc \
-        -x password >/dev/null 2>&1
+        -x password
     RESULT=$?
     if [ $RESULT -eq 1 ]; then
         echo "[!] Unable to create user"
@@ -102,8 +102,8 @@ fi
 echo "[OK] $SOFTWARE is running at localhost:$PORT"
 echo "-------------------------------------------"
 echo "All done!"
-echo "- Front http://localhost:8008"
-echo "- Dashboard http://localhost:8008/dashboard"
+echo "- Front http://localhost:$PORT"
+echo "- Dashboard http://localhost:$PORT/dashboard"
 if [ "$createDev" != "${createDev#[Yy]}" ]; then
     echo "(username dev)"
     echo "(password password)"
