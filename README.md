@@ -44,6 +44,12 @@ You will need to modify the volume mounting for `/var/www/html/chevereto.loc/pub
         target: /var/www/html
 ```
 
+You will also require to pass your Chevereto License key.
+
+```yaml
+      CHEVERETO_LICENSE: yourLicenseKey
+```
+
 ### Manual setup
 
 Check the scripts at [bin/](bin/).
@@ -51,3 +57,5 @@ Check the scripts at [bin/](bin/).
 ## Dev setup
 
 Pass `CHEVERETO_TAG=dev` and bind mount `/var/www/html/` to the development working directory. By doing this the `bootstrap.sh` script will only spawn services at the Chevereto project, which could be either the [Installer](https://github.com/chevereto/installer), [Chevereto V3](https://chevereto.com/pricing).
+
+Note that when using `CHEVERETO_TAG=dev` the system ignores `CHEVERETO_LICENSE`.
