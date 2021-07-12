@@ -30,39 +30,24 @@ For disposable container-based provisioning (application provided at image layer
 
 * A MariaDB/MySQL container
 * A Docker network that containers will use to communicate each other
-* Persistent storage
+* Persistent storage for application files
 
 ## Compose
 
 * [httpd-php](compose/httpd-php.yml)
-* php-fpm
+
+You will need to modify the volume mounting for `/var/www/html/chevereto.loc/public_html` path as you must use a path in your own host system.
+
+```yaml
+      - type: bind
+        source: /var/www/html/chevereto.loc/public_html
+        target: /var/www/html
+```
 
 ### Manual setup
 
 Check the scripts at [bin/](bin/).
 
-## Demo
-
-See working one-click demo at [demo.sh](../bin/demo.sh).
-
 ## Dev setup
 
 Pass `CHEVERETO_TAG=dev` and bind mount `/var/www/html/` to the development working directory. By doing this the `bootstrap.sh` script will only spawn services at the Chevereto project, which could be either the [Installer](https://github.com/chevereto/installer), [Chevereto V3](https://chevereto.com/pricing).
-
-* The project is a folder intended to be served under an HTTP server
-* This guide assumes `/var/www/html/chevereto.loc` as project folder
-
-```sh
-cd /var/www/html/chevereto.loc/
-```
-
-Create the dirs (if required) at `/var/www/html/chevereto.loc/`:
-
-```sh
-mkdir public_html
-mkdir -p database/{dev,demo}
-mkdir -p importing/{no-parse,parse-albums,parse-users}
-```
-
-* The application will be at `public_html/`
-* Local uploads will be stored at `images/`
