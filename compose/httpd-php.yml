@@ -42,7 +42,6 @@ services:
       CHEVERETO_ASSET_STORAGE_BUCKET: /var/www/html/_assets/
 
 volumes:
-  chv-app:
   chv-data:
   chv-assets:
   chv-storage:
