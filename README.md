@@ -8,7 +8,7 @@
 [![Discord](https://img.shields.io/discord/759137550312407050?style=flat-square)](https://chv.to/discord)
 [![Twitter Follow](https://img.shields.io/twitter/follow/chevereto?style=social)](https://twitter.com/chevereto)
 
-This repository is for the official [Chevereto](https://chevereto.com) Docker images used for development/production base standard required to run Chevereto.
+This repository is for the [Chevereto](https://chevereto.com) Docker images used for development base standard required to run Chevereto.
 
 ## Dockerfile
 
@@ -24,12 +24,19 @@ The `./bootstrap.sh` script is executed on container run and it contains logic t
 
 The containers are intend to be used in systems where once the container gets created, it is then either stopped or started (not removed).
 
-For disposable container-based provisioning (application provided at image layer) check our `chevereto/docker-builder` repository.
+For disposable container-based provisioning (application provided at image layer) check our [chevereto/container-builder](https://github.com/chevereto/container-builder) repository.
 
 ## Requirements
 
 * A MariaDB/MySQL container
 * A Docker network that containers will use to communicate each other
+* Persistent storage
+
+## Compose
+
+* [httpd-php](compose/httpd-php.yml)
+* [Portainer](compose/portainer.yml)
+* php-fpm
 
 ### Network setup
 
@@ -59,23 +66,6 @@ Create the `chevereto` database and its user binding:
 docker exec chv-mariadb mysql -uroot -ppassword -e "CREATE DATABASE chevereto; \
     CREATE USER 'chevereto' IDENTIFIED BY 'user_database_password'; \
     GRANT ALL ON chevereto.* TO 'chevereto' IDENTIFIED BY 'user_database_password';"
-```
-
-Secure database installation:
-
-```sh
-docker exec -it chv-mariadb mysql_secure_installation
-```
-
-Answer wisely:
-
-```sh
-Switch to unix_socket authentication [Y/n] n
-Change the root password? [Y/n] (up to you?)
-Remove anonymous users? [Y/n] y
-Disallow root login remotely? [Y/n] y
-Remove test database and access to it? [Y/n] y
-Reload privilege tables now? [Y/n] y
 ```
 
 ## Run
