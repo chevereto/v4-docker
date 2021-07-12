@@ -18,6 +18,12 @@ services:
 
   chv-bootstrap:
     image: chevereto/chevereto:latest-httpd-php
+    volumes:
+      - chv-storage:/var/www/html/images/
+      - chv-assets:/var/www/html/_assets/
+      - type: bind
+        source: /var/www/html/chevereto.loc/public_html
+        target: /var/www/html
     networks:
       - chv-network
     ports:
