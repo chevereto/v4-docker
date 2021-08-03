@@ -2,7 +2,7 @@
 
 > 🔔 [Subscribe](https://newsletter.chevereto.com/subscription?f=PmL892XuTdfErVq763PCycJQrvZ8PYc9JbsVUttqiPV1zXt6DDtf7lhepEStqE8LhGs8922ZYmGT7CYjMH5uSx23pL6Q) to don't miss any update regarding Chevereto.
 
-![Chevereto](LOGO.svg)
+![Chevereto](https://github.com/chevereto/docker/raw/main/LOGO.svg)
 
 [![Community](https://img.shields.io/badge/chv.to-community-blue?style=flat-square)](https://chv.to/community)
 [![Discord](https://img.shields.io/discord/759137550312407050?style=flat-square)](https://chv.to/discord)
@@ -34,7 +34,7 @@ For disposable container-based provisioning (application provided at image layer
 
 ## Compose
 
-* [httpd-php](compose/httpd-php.yml)
+* [httpd-php](docker-compose/httpd-php.yml)
 
 You will need to modify the volume mounting for `/var/www/html/chevereto.loc/public_html` path as you must use a path in your own host system.
 
@@ -49,10 +49,6 @@ You will also require to pass your Chevereto License key.
 ```yaml
       CHEVERETO_LICENSE: yourLicenseKey
 ```
-
-### Manual setup
-
-Check the scripts at [bin/](bin/).
 
 ## Dev setup
 
