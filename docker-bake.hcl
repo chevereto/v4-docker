@@ -13,6 +13,7 @@ group "default" {
 }
 
 target "image" {
+  dockerfile = "./httpd-php.Dockerfile"
   inherits = ["docker-metadata-action"]
 }
 
