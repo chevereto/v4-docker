@@ -31,11 +31,6 @@ jobs:
       - name: Set up QEMU
         id: qemu
         uses: docker/setup-qemu-action@v1
-        with:
-          platforms: all
-
-      - name: Available platforms
-        run: echo ${{ steps.qemu.outputs.platforms }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -47,22 +42,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build artifacts
-        uses: docker/bake-action@v1
-        with:
-          targets: artifact-all
-
-      - name: Move artifacts
-        run: |
-          mv ./dist/**/* ./dist/
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: diun
-          path: ./dist/*
-          if-no-files-found: error
-
       - name: Build
         uses: docker/bake-action@v1
         with:
@@ -71,17 +50,6 @@ jobs:
             ${{ steps.meta.outputs.bake-file }}
           targets: image-all
           push: true
-
-      - name: GitHub Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          draft: true
-          files: |
-            dist/*.tar.gz
-            dist/*.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check manifest
         run: |
