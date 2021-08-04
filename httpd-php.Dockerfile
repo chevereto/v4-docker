@@ -1,6 +1,6 @@
 ARG ARCH
-FROM docker.io/$ARCH/composer:latest as base
-FROM docker.io/$ARCH/php:7.4-apache
+FROM composer:latest as base
+FROM php:7.4-apache
 COPY --from=base /usr/bin/composer /usr/local/bin/composer
 
 RUN apt-get update && apt-get install -y \
