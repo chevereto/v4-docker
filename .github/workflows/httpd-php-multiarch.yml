@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  GHCR_SLUG: ghcr.io/chevereto/docker
+  GHCR_SLUG: ghcr.io/chevereto/httpd-php
 
 jobs:
   buildx:
