@@ -7,7 +7,7 @@
 
 ## Up
 
-http://localhost:8008
+[localhost:8008](http://localhost:8008z)
 
 ```sh
 CHEVERETO_LICENSE=yourLicenseKey \

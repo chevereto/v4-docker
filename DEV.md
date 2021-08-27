@@ -12,7 +12,7 @@ To develop Chevereto it will require to install Chevereto source.
 
 ### Up
 
-http://localhost:8009
+[localhost:8009](http://localhost:8009)
 
 ```sh
 CHEVERETO_SOURCE=/Users/rodolfo/git/chevereto/v3 \
