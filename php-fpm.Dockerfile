@@ -1,7 +1,7 @@
 ARG ARCH
-FROM docker.io/$ARCH/composer:latest as base
+FROM docker.io/$ARCH/composer:latest as composer
 FROM docker.io/$ARCH/php:7.4-fpm
-COPY --from=base /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
@@ -20,12 +20,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) exif gd pdo_mysql zip opcache \
     && pecl install imagick \
     && docker-php-ext-enable imagick opcache \
-    && php -m
-
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+    && php -m 
 
 ARG CHEVERETO_SOFTWARE=chevereto
-ARG CHEVERETO_TAG=3.20.10
+ARG CHEVERETO_TAG=3.20.11
 ARG CHEVERETO_INSTALLER_TAG=2.3.0
 ARG CHEVERETO_SERVICING=docker
 
