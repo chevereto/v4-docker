@@ -10,24 +10,13 @@ To develop Chevereto it will require to install Chevereto source.
 
 * `CHEVERETO_SOURCE` is the absolute path to the chevereto project.
 
-### Up
-
 [localhost:8009](http://localhost:8009)
 
 ```sh
 CHEVERETO_SOURCE=/Users/rodolfo/git/chevereto/v3 \
 docker-compose \
     -f docker-compose/httpd-php-dev.yml \
-    up -d
-```
-
-### Stop
-
-```sh
-CHEVERETO_SOURCE=/Users/rodolfo/git/chevereto/v3 \
-docker-compose \
-    -f docker-compose/httpd-php-dev.yml \
-    stop
+    up
 ```
 
 ## Sync with application code
