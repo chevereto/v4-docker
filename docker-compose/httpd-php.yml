@@ -2,6 +2,7 @@ version: "3"
 
 services:
   chv-database:
+    container_name: chv-database
     image: mariadb:focal
     networks:
       - chv-network
@@ -17,14 +18,15 @@ services:
       MYSQL_PASSWORD: user_database_password
 
   chv-bootstrap:
-    image: chevereto/chevereto:latest-httpd-php
+    container_name: chv-bootstrap
+    image: ghcr.io/chevereto/httpd-php:edge
     networks:
       - chv-network
     volumes:
       - chv-storage:/var/www/html/images/
       - chv-assets:/var/www/html/_assets/
       - type: bind
-        source: /var/www/html/chevereto.loc/public_html
+        source: ${CHEVERETO_SOURCE}
         target: /var/www/html
     ports:
       - 8008:80
