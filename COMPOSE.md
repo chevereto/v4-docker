@@ -7,10 +7,11 @@
 
 ## Up
 
+http://localhost:8008
+
 ```sh
-CHEVERETO_SOURCE=/Users/rodolfo/git/chevereto/v3
 CHEVERETO_LICENSE=yourLicenseKey \
-docker compose \
+docker-compose \
     -f docker-compose/httpd-php.yml \
     up -d
 ```
@@ -18,9 +19,8 @@ docker compose \
 ## Stop
 
 ```sh
-CHEVERETO_SOURCE=/Users/rodolfo/git/chevereto/v3
 CHEVERETO_LICENSE=yourLicenseKey \
-docker compose \
+docker-compose \
     -f docker-compose/httpd-php.yml \
     stop
 ```

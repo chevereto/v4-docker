@@ -1,4 +1,4 @@
-version: "3"
+version: "3.2"
 
 services:
   chv-database:
@@ -6,8 +6,6 @@ services:
     image: mariadb:focal
     networks:
       - chv-network
-    healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping --silent"]
     volumes:
       - chv-data:/var/lib/mysql
     restart: always
@@ -25,13 +23,12 @@ services:
     volumes:
       - chv-storage:/var/www/html/images/
       - chv-assets:/var/www/html/_assets/
-      - type: bind
-        source: ${CHEVERETO_SOURCE}
-        target: /var/www/html
+      - chv-app:/var/www/html/
     ports:
       - 8008:80
     restart: always
     environment:
+      CHEVERETO_TAG: latest
       CHEVERETO_LICENSE: ${CHEVERETO_LICENSE}
       CHEVERETO_DB_HOST: chv-database
       CHEVERETO_DB_USER: chevereto
@@ -47,6 +44,7 @@ volumes:
   chv-data:
   chv-assets:
   chv-storage:
+  chv-app:
 
 networks:
   chv-network:

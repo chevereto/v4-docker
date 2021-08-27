@@ -1,4 +1,4 @@
-version: "3"
+version: "3.2"
 
 services:
   chv-dev-database:
@@ -6,8 +6,6 @@ services:
     image: mariadb:focal
     networks:
       - chv-dev-network
-    healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping --silent"]
     volumes:
       - chv-dev-data:/var/lib/mysql
     restart: always
@@ -49,7 +47,6 @@ volumes:
   chv-dev-assets:
   chv-dev-storage:
   chv-dev-app:
-    external: true
 
 networks:
   chv-dev-network:
