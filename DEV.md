@@ -1,4 +1,4 @@
-# Dev guide
+# Dev
 
 To develop Chevereto it will require to install Chevereto source.
 
@@ -18,12 +18,13 @@ docker volume create chv-dev-app
 
 [httpd-php-dev.yml](docker-compose/httpd-php-dev.yml)
 
-Where `CHEVERETO_SOURCE` is the absolute path to the chevereto project.
+* `CHEVERETO_SOURCE` is the absolute path to the chevereto project.
 
 ### Up
 
 ```sh
-CHEVERETO_SOURCE=/Users/rodolfo/git/chevereto/v3 docker compose \
+CHEVERETO_SOURCE=/Users/rodolfo/git/chevereto/v3 \
+docker compose \
     -f docker-compose/httpd-php-dev.yml \
     up -d
 ```
@@ -31,7 +32,8 @@ CHEVERETO_SOURCE=/Users/rodolfo/git/chevereto/v3 docker compose \
 ### Stop
 
 ```sh
-CHEVERETO_SOURCE=/Users/rodolfo/git/chevereto/v3 docker compose \
+CHEVERETO_SOURCE=/Users/rodolfo/git/chevereto/v3 \
+docker compose \
     -f docker-compose/httpd-php-dev.yml \
     stop
 ```
