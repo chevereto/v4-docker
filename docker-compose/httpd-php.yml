@@ -32,7 +32,7 @@ services:
       - 8008:80
     restart: always
     environment:
-      CHEVERETO_LICENSE: yourLicenseKey
+      CHEVERETO_LICENSE: ${CHEVERETO_LICENSE}
       CHEVERETO_DB_HOST: chv-database
       CHEVERETO_DB_USER: chevereto
       CHEVERETO_DB_PASS: user_database_password
