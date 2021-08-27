@@ -19,7 +19,7 @@ services:
 
   chv-dev-bootstrap:
     container_name: chv-dev-bootstrap
-    image: ghcr.io/chevereto/httpd-php:edge
+    image: chevereto/httpd-php:edge
     networks:
       - chv-dev-network
     volumes:
