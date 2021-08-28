@@ -6,11 +6,9 @@ To develop Chevereto it will require to install Chevereto source.
 
 ## docker-compose
 
-[httpd-php-dev.yml](docker-compose/httpd-php-dev.yml)
+Compose file: [httpd-php-dev.yml](docker-compose/httpd-php-dev.yml)
 
-* `CHEVERETO_SOURCE` is the absolute path to the chevereto project.
-
-[localhost:8009](http://localhost:8009)
+* `CHEVERETO_SOURCE` is the absolute path to the chevereto source project.
 
 ```sh
 CHEVERETO_SOURCE=/Users/rodolfo/git/chevereto/v3 \
@@ -19,7 +17,11 @@ docker-compose \
     up
 ```
 
+[localhost:8009](http://localhost:8009)
+
 ## Sync with application code
+
+Run this command from the Docker host:
 
 ```sh
 docker exec -it chv-dev-bootstrap rsync -r -I -og \
