@@ -48,7 +48,7 @@ jobs:
           files: |
             ./docker-bake.hcl
             ${{ steps.meta.outputs.bake-file }}
-          targets: image-all
+          targets: build
           push: true
 
       - name: Check manifest
