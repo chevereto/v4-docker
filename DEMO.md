@@ -11,7 +11,7 @@ docker exec -it chv-bootstrap \
 
 ## Import
 
-Run the [Bulk Content Importer](https://v3-docs.chevereto.com/features/content/bulk-content-importer.html).
+Run the [Bulk Content Importer](https://v4-docs.chevereto.com/features/content/bulk-content-importer.html).
 
 ```sh
 docker exec -it chv-bootstrap \
