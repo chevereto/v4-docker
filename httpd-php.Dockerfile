@@ -1,5 +1,5 @@
 FROM composer:latest as composer
-FROM php:7.4-apache
+FROM php:8.0-apache
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 RUN apt-get update && apt-get install -y \
@@ -25,7 +25,7 @@ RUN apt-get install -y rsync \
     && a2enmod rewrite
 
 ARG CHEVERETO_SOFTWARE=chevereto
-ARG CHEVERETO_TAG=3.20.11
+ARG CHEVERETO_TAG=4.0.0
 ARG CHEVERETO_INSTALLER_TAG=2.3.0
 ARG CHEVERETO_SERVICING=docker
 

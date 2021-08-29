@@ -17,7 +17,7 @@ services:
 
   chv-bootstrap:
     container_name: chv-bootstrap
-    image: ghcr.io/chevereto/httpd-php:3.20
+    image: ghcr.io/chevereto/httpd-php:4.0
     networks:
       - chv-network
     volumes:
@@ -28,7 +28,7 @@ services:
       - 8008:80
     restart: always
     environment:
-      CHEVERETO_TAG: "3.20"
+      CHEVERETO_TAG: "4.0"
       CHEVERETO_LICENSE: ${LICENSE}
       CHEVERETO_DB_HOST: chv-database
       CHEVERETO_DB_USER: chevereto
