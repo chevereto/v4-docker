@@ -20,9 +20,7 @@ jobs:
           images: |
             ${{ env.GHCR_SLUG }}
           tags: |
-            type=match,pattern=(.*)-r,group=1
-            type=ref,event=pr
-            type=edge
+            type=semver,pattern={{version}}
           labels: |
             org.opencontainers.image.title=Chevereto
             org.opencontainers.image.description=Chevereto bootstrapped
