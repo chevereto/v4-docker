@@ -2,10 +2,10 @@
 
 Compose file: [httpd-php.yml](docker-compose/httpd-php.yml)
 
-* `CHEVERETO_LICENSE` your [Chevereto license key](https://chevereto.com/pricing).
+* `LICENSE` your [Chevereto license key](https://chevereto.com/pricing).
 
 ```sh
-CHEVERETO_LICENSE=yourLicenseKey \
+LICENSE=yourLicenseKey \
 docker-compose \
     -f docker-compose/httpd-php.yml \
     up

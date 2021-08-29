@@ -89,6 +89,8 @@ VOLUME /var/www/html/importing/no-parse
 VOLUME /var/www/html/importing/parse-albums
 VOLUME /var/www/html/importing/parse-users
 
+COPY sync.sh /var/www/sync.sh
+RUN chmod +x /var/www/sync.sh
 COPY bootstrap.sh /var/www/bootstrap.sh
 RUN chmod +x /var/www/bootstrap.sh
 CMD ["/bin/bash", "/var/www/bootstrap.sh", "php-fpm"]

@@ -92,6 +92,10 @@ VOLUME /var/www/html/importing/no-parse
 VOLUME /var/www/html/importing/parse-albums
 VOLUME /var/www/html/importing/parse-users
 
+COPY demo-importing.sh /var/www/demo-importing.sh
+RUN chmod +x /var/www/demo-importing.sh
+COPY sync.sh /var/www/sync.sh
+RUN chmod +x /var/www/sync.sh
 COPY bootstrap.sh /var/www/bootstrap.sh
 RUN chmod +x /var/www/bootstrap.sh
 CMD ["/bin/bash", "/var/www/bootstrap.sh", "apache2-foreground"]

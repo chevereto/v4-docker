@@ -11,4 +11,5 @@ This repository is for the [Chevereto](https://chevereto.com) Docker images used
 
 * [REFERENCE](REFERENCE.md)
 * [COMPOSE](COMPOSE.md)
+* [DEMO](DEMO.md)
 * [DEV](DEV.md)

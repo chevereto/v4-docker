@@ -1,6 +1,8 @@
 # Build
 
+* Replace `tag` with your own.
+
 ```sh
-docker build -t chevereto/httpd-php:edge . \
+docker build -it chevereto/httpd-php:tag . \
     -f httpd-php.Dockerfile
 ```
