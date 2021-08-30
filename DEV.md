@@ -25,7 +25,7 @@ docker-compose \
 Run this command from the Docker host:
 
 ```sh
-docker exec -it chv-dev-bootstrap \
+docker exec -it chevereto-v4-dev_bootstrap \
     bash /var/www/sync.sh
 ```
 
@@ -36,11 +36,11 @@ docker exec -it chv-dev-bootstrap \
 Use `composer` to manage dependencies.
 
 ```sh
-docker exec -t chv-dev-bootstrap \
+docker exec -t chevereto-v4-dev_bootstrap \
     composer install
 ```
 
 ```sh
-docker exec -t chv-dev-bootstrap \
+docker exec -t chevereto-v4-dev_bootstrap \
     composer update
 ```
