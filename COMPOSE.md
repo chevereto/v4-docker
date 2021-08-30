@@ -7,6 +7,7 @@ Compose file: [httpd-php.yml](docker-compose/httpd-php.yml)
 ```sh
 LICENSE=yourLicenseKey \
 docker-compose \
+    -p chevereto-v4 \
     -f docker-compose/httpd-php.yml \
     up
 ```

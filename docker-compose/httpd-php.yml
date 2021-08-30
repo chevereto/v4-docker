@@ -2,7 +2,7 @@ version: "3.2"
 
 services:
   chv-database:
-    container_name: chv-database
+    container_name: chevereto-v4_httpd-php_database
     image: mariadb:focal
     networks:
       - chv-network
@@ -16,7 +16,7 @@ services:
       MYSQL_PASSWORD: user_database_password
 
   chv-bootstrap:
-    container_name: chv-bootstrap
+    container_name: chevereto-v4_httpd-php_bootstrap
     image: ghcr.io/chevereto/httpd-php:4.0
     networks:
       - chv-network

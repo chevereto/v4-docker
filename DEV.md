@@ -13,6 +13,7 @@ Compose file: [httpd-php-dev.yml](docker-compose/httpd-php-dev.yml)
 ```sh
 SOURCE=/Users/rodolfo/git/chevereto/v4 \
 docker-compose \
+    -p chevereto-v4-dev \
     -f docker-compose/httpd-php-dev.yml \
     up
 ```
