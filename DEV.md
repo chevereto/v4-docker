@@ -39,7 +39,7 @@ docker exec -it chevereto-v4-dev_bootstrap \
     bash /var/www/sync.sh
 ```
 
-> TIP: press up arrow key to call the command again.
+> TIP: This sync is automatic with your project code changes.
 
 ## Composer
 

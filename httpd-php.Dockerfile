@@ -21,7 +21,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable imagick opcache \
     && php -m 
 
-RUN apt-get install -y rsync \
+RUN apt-get install -y \
+    rsync \
+    inotify-tools \
     && a2enmod rewrite
 
 ARG CHEVERETO_SOFTWARE=chevereto
