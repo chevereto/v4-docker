@@ -20,6 +20,16 @@ docker-compose \
 
 [localhost:8940](http://localhost:8940)
 
+* Clear volumes
+
+```sh
+SOURCE=/Users/rodolfo/git/chevereto/v4 \
+docker-compose \
+    -p chevereto-v4-dev \
+    -f docker-compose/httpd-php-dev.yml \
+    down --volumes
+```
+
 ## Sync with application code
 
 Run this command from the Docker host:
