@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     --with-jpeg=/usr/include/ \
     --with-webp=/usr/include/ \
     && docker-php-ext-configure opcache --enable-opcache \
-    && docker-php-ext-install -j$(nproc) exif gd pdo_mysql zip opcache \
+    && docker-php-ext-install -j$(nproc) exif gd pdo_mysql zip opcache bcmath \
     && pecl install imagick \
     && docker-php-ext-enable imagick opcache \
     && php -m 
