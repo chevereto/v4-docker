@@ -48,7 +48,7 @@ ENV CHEVERETO_SOFTWARE=$CHEVERETO_SOFTWARE \
     CHEVERETO_DISABLE_PHP_PAGES=1 \
     CHEVERETO_DISABLE_UPDATE_HTTP=1 \
     CHEVERETO_DISABLE_UPDATE_CLI=1 \
-    CHEVERETO_ERROR_LOG= \
+    CHEVERETO_ERROR_LOG=/dev/stderr \
     CHEVERETO_IMAGE_FORMATS_AVAILABLE='["JPG","PNG","BMP","GIF","WEBP"]' \
     CHEVERETO_IMAGE_LIBRARY=imagick \
     CHEVERETO_HTTPS=1 \
@@ -74,12 +74,16 @@ ENV CHEVERETO_SOFTWARE=$CHEVERETO_SOFTWARE \
 
 RUN set -eux; \
     { \
+    echo "default_charset = UTF-8"; \
+    echo "error_log = \${CHEVERETO_ERROR_LOG}"; \
     echo "log_errors = On"; \
-    echo "error_log = /dev/stderr"; \
-    echo "upload_max_filesize = \${CHEVERETO_UPLOAD_MAX_FILESIZE}"; \
-    echo "post_max_size = \${CHEVERETO_POST_MAX_SIZE}"; \
     echo "max_execution_time = \${CHEVERETO_MAX_EXECUTION_TIME}"; \
     echo "memory_limit = \${CHEVERETO_MEMORY_LIMIT}"; \
+    echo "post_max_size = \${CHEVERETO_POST_MAX_SIZE}"; \
+    echo "session.cookie_httponly = On"; \
+    echo "session.save_handler = \${CHEVERETO_SESSION_SAVE_HANDLER}"; \
+    echo "session.save_path = \${CHEVERETO_SESSION_SAVE_PATH}"; \
+    echo "upload_max_filesize = \${CHEVERETO_UPLOAD_MAX_FILESIZE}"; \
     } > $PHP_INI_DIR/conf.d/php.ini
 
 RUN mkdir -p /var/www/html/importing && \
