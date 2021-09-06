@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -e
-cp /var/www/chevereto/.gitignore /var/www/html/.gitignore
+SOURCE=/var/www/chevereto/
+TARGET=/var/www/html/
+cp "${SOURCE}".gitignore "${TARGET}".gitignore
+EXCLUDE=$(
+    readarray -t ARRAY <"${SOURCE}".gitignore
+    IFS='|'
+    echo "${ARRAY[*]}"
+)"|\.git"
 function sync() {
     rsync -r -I -og \
         --chown=www-data:www-data \
@@ -8,14 +15,9 @@ function sync() {
         --filter=':- .gitignore' \
         --exclude '.git' \
         --delete \
-        /var/www/chevereto/ /var/www/html/
+        $SOURCE $TARGET
 }
 sync
-EXCLUDE=$(
-    readarray -t ARRAY </var/www/chevereto/.gitignore
-    IFS='|'
-    echo "${ARRAY[*]}"
-)"|\.git"
-while inotifywait --exclude ${EXCLUDE} -r -e modify,create,delete /var/www/chevereto/; do
+while inotifywait --exclude ${EXCLUDE} -r -e modify,create,delete ${SOURCE}; do
     sync
 done
