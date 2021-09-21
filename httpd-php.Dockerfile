@@ -75,6 +75,7 @@ ENV CHEVERETO_SOFTWARE=$CHEVERETO_SOFTWARE \
 RUN set -eux; \
     { \
     echo "default_charset = UTF-8"; \
+    echo "display_errors = Off"; \
     echo "error_log = \${CHEVERETO_ERROR_LOG}"; \
     echo "log_errors = On"; \
     echo "max_execution_time = \${CHEVERETO_MAX_EXECUTION_TIME}"; \

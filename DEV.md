@@ -35,7 +35,7 @@ docker-compose \
 Run this command from the Docker host:
 
 ```sh
-docker exec -it chevereto-v4-dev_bootstrap \
+docker exec -it **chevereto**-v4-dev_bootstrap \
     bash /var/www/sync.sh
 ```
 
@@ -46,11 +46,51 @@ docker exec -it chevereto-v4-dev_bootstrap \
 Use `composer` to manage dependencies.
 
 ```sh
-docker exec -t chevereto-v4-dev_bootstrap \
+docker exec -it chevereto-v4-dev_bootstrap \
     composer install
 ```
 
 ```sh
-docker exec -t chevereto-v4-dev_bootstrap \
+docker exec -it chevereto-v4-dev_bootstrap \
     composer update
+```
+
+## Run Chevereto
+
+Run application commands under `www-data` user.
+
+```sh
+docker exec --user www-data \
+    -it chevereto-v4-dev_bootstrap \
+    command_name
+```
+
+* Run `index.php` entry point at the given path.
+
+```sh
+docker exec --user www-data \
+    -it chevereto-v4-dev_bootstrap \
+    php index.php -p=/
+```
+
+* Run `-C` CLI commands:
+
+```sh
+docker exec --user www-data \
+    -it chevereto-v4-dev_bootstrap \
+    php cli.php -C cron
+```
+
+## Viewing logs
+
+* Errors
+
+```sh
+docker logs chevereto-v4-dev_bootstrap -f 1>/dev/null
+```
+
+* Access
+
+```sh
+docker logs chevereto-v4-dev_bootstrap -f 2>/dev/null
 ```

@@ -25,13 +25,15 @@ Run the [Bulk Content Importer](https://v3-docs.chevereto.com/features/content/b
 * chevereto-v4_bootstrap
 
 ```sh
-docker exec -it --user www-data chevereto-v4_bootstrap \
+docker exec --user www-data \
+    -it chevereto-v4_bootstrap \
     php cli.php -C importing
 ```
 
 * chevereto-v4-dev_bootstrap
 
 ```sh
-docker exec -it --user www-data chevereto-v4-dev_bootstrap \
+docker exec --user www-data \
+    -it chevereto-v4-dev_bootstrap \
     php cli.php -C importing
 ```
