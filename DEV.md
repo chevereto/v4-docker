@@ -1,26 +1,55 @@
 # Dev
 
-To develop Chevereto it will require to install Chevereto source.
+## Quick start
 
-* chevereto-source [v4](https://github.com/chevereto/v4)
+* Clone [chevereto/docker](https://github.com/chevereto/docker)
+  * Use `4.0` branch `git switch 4.0`
+* Clone [chevereto/v4](https://github.com/chevereto/v4)
+  * Your clone path will be your `SOURCE`
+* Run [docker-compose up](#up)
+* [Sync code](#sync-code)
+* [Install dependencies](#dependencies)
+
+## Reference
+
+* `SOURCE` is the absolute path to the cloned chevereto project
+* You need to replace `SOURCE=~/git/chevereto/v4` with your own path
+* `SOURCE` will be mounted at `/var/www/chevereto/` inside the container
+* Chevereto will be available at [localhost:8940](http://localhost:8940)
+
+✨ This dev setup mounts `SOURCE` to provide the application files to the container. We provide a sync system that copies these files on-the-fly to the actual application runner for better isolation.
 
 ## docker-compose
 
 Compose file: [httpd-php-dev.yml](docker-compose/httpd-php-dev.yml)
 
-* `SOURCE` is the absolute path to the chevereto source project.
+### Up
+
+Run this command to spawn (start) Chevereto.
 
 ```sh
 SOURCE=~/git/chevereto/v4 \
 docker-compose \
     -p chevereto-v4-dev \
     -f docker-compose/httpd-php-dev.yml \
-    up
+    up -d
 ```
 
-[localhost:8940](http://localhost:8940)
+### Stop
 
-* Clear volumes
+Run this command to stop Chevereto.
+
+```sh
+SOURCE=~/git/chevereto/v4 \
+docker-compose \
+    -p chevereto-v4-dev \
+    -f docker-compose/httpd-php-dev.yml \
+    stop
+```
+
+### Down (uninstall)
+
+Run this command to down Chevereto (stop containers, remove networks and volumes created by it).
 
 ```sh
 SOURCE=~/git/chevereto/v4 \
@@ -30,42 +59,49 @@ docker-compose \
     down --volumes
 ```
 
-## Sync with application code
+## Sync code
 
-Run this command from the Docker host:
-
-```sh
-docker exec -it **chevereto**-v4-dev_bootstrap \
-    bash /var/www/sync.sh
-```
-
-> TIP: This sync is automatic with your project code changes.
-
-## Composer
-
-Use `composer` to manage dependencies.
+Run this command to sync the application code with your working project.
 
 ```sh
 docker exec -it chevereto-v4-dev_bootstrap \
-    composer install
+    bash /var/www/sync.sh
 ```
+
+This system will observe for changes in your working project filesystem and it will automatically sync the files inside the container.
+
+**Note:** This command must keep running to provide the sync functionality. You should close it once you stop working with the source.
+
+## Dependencies
+
+We use [composer](https://getcomposer.org) to manage dependencies.
+
+Run this command to provide the vendor dependencies.
 
 ```sh
 docker exec -it chevereto-v4-dev_bootstrap \
     composer update
 ```
 
-## Run Chevereto
+## Logs
 
-Run application commands under `www-data` user.
+Run this command to retrieve and follow the error logs.
 
 ```sh
-docker exec --user www-data \
-    -it chevereto-v4-dev_bootstrap \
-    command_name
+docker logs chevereto-v4-dev_bootstrap -f 1>/dev/null
 ```
 
-* Run `index.php` entry point at the given path.
+Run this command to retrieve and follow the access logs.
+
+```sh
+docker logs chevereto-v4-dev_bootstrap -f 2>/dev/null
+```
+
+## Running Chevereto commands
+
+Chevereto application commands must run under `www-data` user.
+
+Run the command below to phony `index.php` request at the given path.
 
 ```sh
 docker exec --user www-data \
@@ -73,24 +109,10 @@ docker exec --user www-data \
     php index.php -p=/
 ```
 
-* Run `-C` CLI commands:
+Run the command below to execute `-C` CLI commands.
 
 ```sh
 docker exec --user www-data \
     -it chevereto-v4-dev_bootstrap \
     php cli.php -C cron
-```
-
-## Viewing logs
-
-* Errors
-
-```sh
-docker logs chevereto-v4-dev_bootstrap -f 1>/dev/null
-```
-
-* Access
-
-```sh
-docker logs chevereto-v4-dev_bootstrap -f 2>/dev/null
 ```
