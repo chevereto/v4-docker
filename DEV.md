@@ -4,10 +4,17 @@
 
 * Clone [chevereto/docker](https://github.com/chevereto/docker)
   * Use `4.0` branch `git switch 4.0`
-* Clone [chevereto/v4](https://github.com/chevereto/v4)
+  * Run [docker-compose up](#up)
+
+* Using [chevereto/v4](https://github.com/chevereto/v4) repository:
+  * Clone the repository
   * Your clone path will be your `SOURCE`
-* Run [docker-compose up](#up)
-* [Sync code](#sync-code)
+
+* Using [chevereto.com/panel/downloads](https://chevereto.com/panel/downloads):
+  * Download the target V4 release
+  * Your extract path will be your `SOURCE`
+
+* [Sync code](#sync-code) to bootstrap the application files and sync changes
 * [Install dependencies](#dependencies)
 
 ## Reference
@@ -22,6 +29,8 @@
 ## docker-compose
 
 Compose file: [httpd-php-dev.yml](docker-compose/httpd-php-dev.yml)
+
+Alter `SOURCE` in the commands below to reflect your project path.
 
 ### Up
 
@@ -101,7 +110,7 @@ docker logs chevereto-v4-dev_bootstrap -f 2>/dev/null
 
 Chevereto application commands must run under `www-data` user.
 
-Run the command below to phony `index.php` request at the given path.
+Run the command below to phony `index.php` requests at the given path.
 
 ```sh
 docker exec --user www-data \
@@ -109,10 +118,12 @@ docker exec --user www-data \
     php index.php -p=/
 ```
 
-Run the command below to execute `-C` CLI commands.
+Run the command below to execute `cron` `-C` CLI commands.
 
 ```sh
 docker exec --user www-data \
     -it chevereto-v4-dev_bootstrap \
     php cli.php -C cron
 ```
+
+Available commands: `cron` `langs` `importing`
