@@ -5,7 +5,6 @@ WORKING_DIR="/var/www/html"
 CONTAINER_STARTED="/var/CONTAINER_STARTED_PLACEHOLDER"
 CHEVERETO_PACKAGE=$CHEVERETO_TAG"-lite"
 CHEVERETO_API_DOWNLOAD="https://chevereto.com/api/download/"
-
 chv_install() {
     rm -rf /chevereto/download
     echo "Making working dir /chevereto/download"
@@ -26,14 +25,12 @@ chv_install() {
         --classmap-authoritative \
         --ignore-platform-reqs
 }
-
 chv_provide() {
     echo "* chown www-data: $WORKING_DIR -R"
     chown www-data: $WORKING_DIR -R
     echo "$CHEVERETO_TAG" >$CONTAINER_STARTED
     echo "[OK] $CHEVERETO_SOFTWARE $CHEVERETO_TAG provisioned"
 }
-
 echo $CONTAINER_STARTED
 if [ ! -e $CONTAINER_STARTED ]; then
     if [ "$CHEVERETO_TAG" != "dev" ]; then
