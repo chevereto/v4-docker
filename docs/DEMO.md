@@ -7,14 +7,16 @@ Run this command to import [demo-importing](https://github.com/chevereto/demo-im
 * chevereto-v4_bootstrap
 
 ```sh
-docker exec -it chevereto-v4_bootstrap \
+docker exec -it \
+    chevereto-v4_bootstrap \
     bash /var/www/demo-importing.sh
 ```
 
 * chevereto-v4-dev_bootstrap
 
 ```sh
-docker exec -it chevereto-v4-dev_bootstrap \
+docker exec -it \
+    chevereto-v4-dev_bootstrap \
     bash /var/www/demo-importing.sh
 ```
 

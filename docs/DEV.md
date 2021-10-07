@@ -28,7 +28,7 @@
 
 ## docker-compose
 
-Compose file: [httpd-php-dev.yml](docker-compose/httpd-php-dev.yml)
+Compose file: [httpd-php-dev.yml](../httpd-php-dev.yml)
 
 Alter `SOURCE` in the commands below to reflect your project path.
 
@@ -40,7 +40,7 @@ Run this command to spawn (start) Chevereto.
 SOURCE=~/git/chevereto/v4 \
 docker-compose \
     -p chevereto-v4-dev \
-    -f docker-compose/httpd-php-dev.yml \
+    -f httpd-php-dev.yml \
     up -d
 ```
 
@@ -52,7 +52,7 @@ Run this command to stop Chevereto.
 SOURCE=~/git/chevereto/v4 \
 docker-compose \
     -p chevereto-v4-dev \
-    -f docker-compose/httpd-php-dev.yml \
+    -f httpd-php-dev.yml \
     stop
 ```
 
@@ -64,7 +64,7 @@ Run this command to down Chevereto (stop containers, remove networks and volumes
 SOURCE=~/git/chevereto/v4 \
 docker-compose \
     -p chevereto-v4-dev \
-    -f docker-compose/httpd-php-dev.yml \
+    -f httpd-php-dev.yml \
     down --volumes
 ```
 
@@ -73,7 +73,8 @@ docker-compose \
 Run this command to sync the application code with your working project.
 
 ```sh
-docker exec -it chevereto-v4-dev_bootstrap \
+docker exec -it \
+    chevereto-v4-dev_bootstrap \
     bash /var/www/sync.sh
 ```
 
@@ -88,7 +89,8 @@ We use [composer](https://getcomposer.org) to manage dependencies.
 Run this command to provide the vendor dependencies.
 
 ```sh
-docker exec -it chevereto-v4-dev_bootstrap \
+docker exec -it \
+    chevereto-v4-dev_bootstrap \
     composer update
 ```
 

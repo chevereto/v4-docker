@@ -9,7 +9,9 @@
 
 This repository is for the [Chevereto](https://chevereto.com) Docker images used for development base standard.
 
-* [REFERENCE](REFERENCE.md)
-* [COMPOSE](COMPOSE.md)
-* [DEMO](DEMO.md)
-* [DEV](DEV.md)
+## Documentation
+
+* [REFERENCE](docs/REFERENCE.md)
+* [COMPOSE](docs/COMPOSE.md)
+* [DEMO](docs/DEMO.md)
+* [DEV](docs/DEV.md)

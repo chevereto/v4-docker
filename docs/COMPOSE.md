@@ -1,6 +1,6 @@
 # Compose
 
-Compose file: [httpd-php.yml](docker-compose/httpd-php.yml)
+Compose file: [httpd-php.yml](../httpd-php.yml)
 
 ## Up
 
@@ -12,7 +12,7 @@ Run this command to spawn (start) Chevereto.
 LICENSE=YOUR_V4_LICENSE_KEY \
 docker-compose \
     -p chevereto-v4 \
-    -f docker-compose/httpd-php.yml \
+    -f httpd-php.yml \
     up --abort-on-container-exit
 ```
 
@@ -25,7 +25,7 @@ Run this command to stop Chevereto.
 ```sh
 docker-compose \
     -p chevereto-v4 \
-    -f docker-compose/httpd-php.yml \
+    -f httpd-php.yml \
     stop
 ```
 
@@ -36,6 +36,6 @@ Run this command to down Chevereto (stop containers, remove networks and volumes
 ```sh
 docker-compose \
     -p chevereto-v4 \
-    -f docker-compose/httpd-php.yml \
+    -f httpd-php.yml \
     down --volumes
 ```
