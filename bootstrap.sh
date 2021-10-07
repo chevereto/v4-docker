@@ -12,9 +12,9 @@ chv_install() {
     echo "cd /chevereto/download"
     cd /chevereto/download
     echo "* Downloading chevereto/v4 $CHEVERETO_PACKAGE package"
-    curl -SOJL "https://chevereto.com/api/download/$CHEVERETO_PACKAGE/?license=$CHEVERETO_LICENSE"
-    echo "* Extracting downloaded file"
-    unzip -q ${CHEVERETO_SOFTWARE}*.zip -d $WORKING_DIR
+    curl -SOJL -X GET -H "License: $CHEVERETO_LICENSE" "https://chevereto.com/api/download/$CHEVERETO_PACKAGE"
+    echo "* Extracting package"
+    unzip -oq ${CHEVERETO_SOFTWARE}*.zip -d $WORKING_DIR
     echo "* Installing dependencies"
     composer install --working-dir=$WORKING_DIR --prefer-dist --no-progress --classmap-authoritative --ignore-platform-reqs
 }
