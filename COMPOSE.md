@@ -4,12 +4,12 @@ Compose file: [httpd-php.yml](docker-compose/httpd-php.yml)
 
 ## Up
 
-* `LICENSE` your [Chevereto license key](https://chevereto.com/pricing).
+* Replace `YOUR_V4_LICENSE_KEY` with your [Chevereto license](https://chevereto.com/panel/license) key.
 
 Run this command to spawn (start) Chevereto.
 
 ```sh
-LICENSE=yourLicenseKey \
+LICENSE=YOUR_V4_LICENSE_KEY \
 docker-compose \
     -p chevereto-v4 \
     -f docker-compose/httpd-php.yml \
