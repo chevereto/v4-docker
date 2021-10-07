@@ -4,6 +4,7 @@ DIR="/var/www"
 WORKING_DIR="/var/www/html"
 CONTAINER_STARTED="/var/CONTAINER_STARTED_PLACEHOLDER"
 CHEVERETO_PACKAGE=$CHEVERETO_TAG"-lite"
+CHEVERETO_API_DOWNLOAD="https://chevereto.com/api/download/"
 
 chv_install() {
     rm -rf /chevereto/download
@@ -12,11 +13,18 @@ chv_install() {
     echo "cd /chevereto/download"
     cd /chevereto/download
     echo "* Downloading chevereto/v4 $CHEVERETO_PACKAGE package"
-    curl -SOJL -X GET -H "License: $CHEVERETO_LICENSE" "https://chevereto.com/api/download/$CHEVERETO_PACKAGE"
+    curl -f -SOJL \
+        -H "License: $CHEVERETO_LICENSE" \
+        "${CHEVERETO_API_DOWNLOAD}${CHEVERETO_PACKAGE}"
     echo "* Extracting package"
     unzip -oq ${CHEVERETO_SOFTWARE}*.zip -d $WORKING_DIR
     echo "* Installing dependencies"
-    composer install --working-dir=$WORKING_DIR --prefer-dist --no-progress --classmap-authoritative --ignore-platform-reqs
+    composer install \
+        --working-dir=$WORKING_DIR \
+        --prefer-dist \
+        --no-progress \
+        --classmap-authoritative \
+        --ignore-platform-reqs
 }
 
 chv_provide() {
