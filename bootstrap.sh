@@ -3,6 +3,7 @@ set -e
 DIR="/var/www"
 WORKING_DIR="/var/www/html"
 CONTAINER_STARTED="/var/CONTAINER_STARTED_PLACEHOLDER"
+CHEVERETO_PACKAGE=$CHEVERETO_TAG"-lite"
 
 chv_install() {
     rm -rf /chevereto/download
@@ -10,8 +11,8 @@ chv_install() {
     mkdir -p /chevereto/download
     echo "cd /chevereto/download"
     cd /chevereto/download
-    echo "* Downloading chevereto/v4 dev package $CHEVERETO_TAG-dev"
-    curl -SOJL "https://chevereto.com/api/download/${CHEVERETO_TAG}-dev/?license=$CHEVERETO_LICENSE"
+    echo "* Downloading chevereto/v4 $CHEVERETO_PACKAGE package"
+    curl -SOJL "https://chevereto.com/api/download/$CHEVERETO_PACKAGE/?license=$CHEVERETO_LICENSE"
     echo "* Extracting downloaded file"
     unzip -q ${CHEVERETO_SOFTWARE}*.zip -d $WORKING_DIR
     echo "* Installing dependencies"
