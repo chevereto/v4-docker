@@ -39,3 +39,17 @@ docker-compose \
     -f httpd-php.yml \
     down --volumes
 ```
+
+## Logs
+
+Run this command to retrieve and follow the error logs.
+
+```sh
+docker logs chevereto-v4_bootstrap -f 1>/dev/null
+```
+
+Run this command to retrieve and follow the access logs.
+
+```sh
+docker logs chevereto-v4_bootstrap -f 2>/dev/null
+```
