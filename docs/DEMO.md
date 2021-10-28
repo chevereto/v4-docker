@@ -37,5 +37,5 @@ docker exec --user www-data \
 ```sh
 docker exec --user www-data \
     -it chevereto-v4-dev_bootstrap \
-    php cli.php -C importing
+    app/bin/legacy -C importing
 ```
