@@ -9,6 +9,14 @@
 
 This repository is for the [Chevereto](https://chevereto.com) Docker images used for development base standard.
 
+## ⚠️ Beta notice
+
+**Important:** Chevereto V4 is still beta software. We don't recommend using this software except for development/testing purposes.
+
+If the software doesn't work for you please don't panic and [Open a Ticket](https://chv.to/open-ticket).
+
+Happy testing!
+
 ## Documentation
 
 * [REFERENCE](docs/REFERENCE.md)
