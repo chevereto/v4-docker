@@ -53,3 +53,25 @@ Run this command to retrieve and follow the access logs.
 ```sh
 docker logs chevereto-v4_bootstrap -f 2>/dev/null
 ```
+
+## Commands
+
+### Demo
+
+Run this command to import [demo-importing](https://github.com/chevereto/demo-importing) project assets to `/var/www/html/importing`.
+
+```sh
+docker exec -it \
+    chevereto-v4_bootstrap \
+    bash /var/www/demo-importing.sh
+```
+
+### Import
+
+Run this command to import content using the [Bulk Content Importer](https://v3-docs.chevereto.com/features/content/bulk-content-importer.html).
+
+```sh
+docker exec --user www-data \
+    -it chevereto-v4_bootstrap \
+    app/bin/legacy -C importing
+```

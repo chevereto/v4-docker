@@ -1,28 +1,29 @@
 # Dev
 
-## Quick start
-
-* Clone [chevereto/docker](https://github.com/chevereto/docker)
-  * Use `4.0` branch `git switch 4.0`
-  * Run [docker-compose up](#up)
-
-* Using [chevereto/v4](https://github.com/chevereto/v4) repository:
-  * Clone the repository
-  * Your clone path will be your `SOURCE`
-
-* Using [chevereto.com/panel/downloads](https://chevereto.com/panel/downloads):
-  * Download the target V4 release
-  * Your extract path will be your `SOURCE`
-
-* [Sync code](#sync-code) to bootstrap the application files and sync changes
-* [Install dependencies](#dependencies)
-
 ## Reference
 
 * `SOURCE` is the absolute path to the cloned chevereto project
 * You need to replace `SOURCE=~/git/chevereto/v4` with your own path
 * `SOURCE` will be mounted at `/var/www/chevereto/` inside the container
 * Chevereto will be available at [localhost:8940](http://localhost:8940)
+
+## Quick start
+
+* Clone [chevereto/docker](https://github.com/chevereto/docker)
+  * Use `4.0` branch `git switch 4.0`
+  * Run [docker-compose up](#up)
+
+You will need a Chevereto V4 project, which you can provide as a git repo or as a package.
+
+* Git repo alternative:
+  * Clone the [chevereto/v4](https://github.com/chevereto/v4) repository (your clone path will be your `SOURCE`)
+* Package alternative:
+  * Download the target V4 release from [chevereto.com/panel/downloads](https://chevereto.com/panel/downloads) (your extract path will be your `SOURCE`)
+
+To work with dev resources you will require to sync and install dependencies.
+
+* [Sync code](#sync-code) to bootstrap the application files and sync changes
+* [Install dependencies](#dependencies)
 
 ✨ This dev setup mounts `SOURCE` to provide the application files to the container. We provide a sync system that copies these files on-the-fly to the actual application runner for better isolation.
 
@@ -68,32 +69,6 @@ docker-compose \
     down --volumes
 ```
 
-## Sync code
-
-Run this command to sync the application code with your working project.
-
-```sh
-docker exec -it \
-    chevereto-v4-dev_bootstrap \
-    bash /var/www/sync.sh
-```
-
-This system will observe for changes in your working project filesystem and it will automatically sync the files inside the container.
-
-**Note:** This command must keep running to provide the sync functionality. You should close it once you stop working with the source.
-
-## Dependencies
-
-We use [composer](https://getcomposer.org) to manage dependencies.
-
-Run this command to provide the vendor dependencies.
-
-```sh
-docker exec -it \
-    chevereto-v4-dev_bootstrap \
-    composer update
-```
-
 ## Logs
 
 Run this command to retrieve and follow the error logs.
@@ -108,24 +83,48 @@ Run this command to retrieve and follow the access logs.
 docker logs chevereto-v4-dev_bootstrap -f 2>/dev/null
 ```
 
-## Running Chevereto commands
+## Commands
 
-Chevereto application commands must run under `www-data` user.
+### Sync code
 
-Run the command below to phony `index.php` requests at the given path.
+Run this command to sync the application code with your working project.
+
+```sh
+docker exec -it \
+    chevereto-v4-dev_bootstrap \
+    bash /var/www/sync.sh
+```
+
+This system will observe for changes in your working project filesystem and it will automatically sync the files inside the container.
+
+**Note:** This command must keep running to provide the sync functionality. You should close it once you stop working with the source.
+
+### Dependencies
+
+Run this command to provide the vendor dependencies.
+
+```sh
+docker exec -it \
+    chevereto-v4-dev_bootstrap \
+    composer update
+```
+
+### Demo
+
+Run this command to import [demo-importing](https://github.com/chevereto/demo-importing) project assets to `/var/www/html/importing`.
+
+```sh
+docker exec -it \
+    chevereto-v4-dev_bootstrap \
+    bash /var/www/demo-importing.sh
+```
+
+### Import
+
+Run this command to import content using the [Bulk Content Importer](https://v3-docs.chevereto.com/features/content/bulk-content-importer.html).
 
 ```sh
 docker exec --user www-data \
     -it chevereto-v4-dev_bootstrap \
-    php index.php -p=/
+    app/bin/legacy -C importing
 ```
-
-Run the command below to execute `cron` `-C` CLI commands.
-
-```sh
-docker exec --user www-data \
-    -it chevereto-v4-dev_bootstrap \
-    php cli.php -C cron
-```
-
-Available commands: `cron` `langs` `importing`
