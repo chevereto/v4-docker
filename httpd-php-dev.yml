@@ -15,7 +15,7 @@ services:
       MYSQL_USER: chevereto
       MYSQL_PASSWORD: user_database_password
 
-  bootstrap:
+  chevereto:
     container_name: chevereto-v4-dev_bootstrap
     image: ghcr.io/chevereto/httpd-php:4.0
     networks:

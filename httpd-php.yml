@@ -15,7 +15,7 @@ services:
       MYSQL_USER: chevereto
       MYSQL_PASSWORD: user_database_password
 
-  bootstrap:
+  chevereto:
     container_name: chevereto-v4_bootstrap
     image: ghcr.io/chevereto/httpd-php:4.0
     networks:
@@ -35,6 +35,8 @@ services:
       CHEVERETO_DB_PASS: user_database_password
       CHEVERETO_DB_PORT: 3306
       CHEVERETO_DB_NAME: chevereto
+      CHEVERETO_DISABLE_UPDATE_HTTP: 0
+      CHEVERETO_DISABLE_UPDATE_CLI: 0
       CHEVERETO_HTTPS: 0
       CHEVERETO_ASSET_STORAGE_TYPE: local
       CHEVERETO_ASSET_STORAGE_URL: http://localhost:8840/_assets/
