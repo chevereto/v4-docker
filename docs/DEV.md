@@ -104,7 +104,7 @@ This system will observe for changes in your working project filesystem and it w
 Run this command to provide the vendor dependencies.
 
 ```sh
-docker exec -it \
+docker exec --user www-data -it \
     chevereto-v4-dev_bootstrap \
     composer update
 ```
@@ -124,7 +124,7 @@ docker exec -it \
 Run this command to import content using the [Bulk Content Importer](https://v3-docs.chevereto.com/features/content/bulk-content-importer.html).
 
 ```sh
-docker exec --user www-data \
-    -it chevereto-v4-dev_bootstrap \
+docker exec --user www-data -it \
+    chevereto-v4-dev_bootstrap \
     app/bin/legacy -C importing
 ```
