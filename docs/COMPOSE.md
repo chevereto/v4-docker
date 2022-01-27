@@ -1,6 +1,6 @@
 # Compose
 
-Compose file: [httpd-php.yml](../httpd-php.yml)
+Compose file: [php/8.0/prod.yml](../php/8.0/prod.yml)
 
 ## Up
 
@@ -11,12 +11,12 @@ Run this command to spawn (start) Chevereto.
 ```sh
 LICENSE=YOUR_V4_LICENSE_KEY \
 docker-compose \
-    -p chevereto-v4 \
-    -f httpd-php.yml \
+    -p chevereto4.0-php8.0 \
+    -f php/8.0/prod.yml \
     up --abort-on-container-exit
 ```
 
-[localhost:8840](http://localhost:8840)
+[localhost:40800](http://localhost:40800)
 
 ## Stop
 
@@ -24,8 +24,8 @@ Run this command to stop Chevereto.
 
 ```sh
 docker-compose \
-    -p chevereto-v4 \
-    -f httpd-php.yml \
+    -p chevereto4.0-php8.0 \
+    -f php/8.0/prod.yml \
     stop
 ```
 
@@ -35,8 +35,8 @@ Run this command to start Chevereto if stopped.
 
 ```sh
 docker-compose \
-    -p chevereto-v4 \
-    -f httpd-php.yml \
+    -p chevereto4.0-php8.0 \
+    -f php/8.0/prod.yml \
     start
 ```
 
@@ -46,8 +46,8 @@ Run this command to down Chevereto (stop containers, remove networks and volumes
 
 ```sh
 docker-compose \
-    -p chevereto-v4 \
-    -f httpd-php.yml \
+    -p chevereto4.0-php8.0 \
+    -f php/8.0/prod.yml \
     down --volumes
 ```
 
@@ -56,13 +56,13 @@ docker-compose \
 Run this command to retrieve and follow the error logs.
 
 ```sh
-docker logs chevereto-v4_bootstrap -f 1>/dev/null
+docker logs chevereto4.0-php8.0 -f 1>/dev/null
 ```
 
 Run this command to retrieve and follow the access logs.
 
 ```sh
-docker logs chevereto-v4_bootstrap -f 2>/dev/null
+docker logs chevereto4.0-php8.0 -f 2>/dev/null
 ```
 
 ## Commands
@@ -73,7 +73,7 @@ Run this command to import [demo-importing](https://github.com/chevereto/demo-im
 
 ```sh
 docker exec -it \
-    chevereto-v4_bootstrap \
+    chevereto4.0-php8.0 \
     bash /var/www/demo-importing.sh
 ```
 
@@ -83,6 +83,6 @@ Run this command to import content using the [Bulk Content Importer](https://v3-
 
 ```sh
 docker exec --user www-data \
-    -it chevereto-v4_bootstrap \
+    -it chevereto4.0-php8.0 \
     app/bin/legacy -C importing
 ```

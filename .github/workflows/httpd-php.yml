@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        php-versions: [8.0, 8.1]
+        php-versions: ["8.0", "8.1"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -51,7 +51,7 @@ jobs:
         uses: docker/bake-action@v1
         with:
           files: |
-            ./${{ matrix.php-version }}/docker-bake.hcl
+            ./php/${{ matrix.php-version }}/docker-bake.hcl
             ${{ steps.meta.outputs.bake-file }}
           targets: build
           push: true

@@ -2,14 +2,14 @@ version: "3.2"
 
 services:
   database:
-    container_name: chevereto-4-dev-php80_database
+    container_name: chevereto4.0-dev-php8.0_database
     image: mariadb:focal
     networks:
       - chevereto
     volumes:
       - database:/var/lib/mysql
     ports:
-      - 80043:3306
+      - 40806:3306
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -18,7 +18,7 @@ services:
       MYSQL_PASSWORD: user_database_password
 
   chevereto:
-    container_name: chevereto-4-dev-php80_bootstrap
+    container_name: chevereto4.0-dev-php8.0
     image: ghcr.io/chevereto/docker:4.0-php8.0
     networks:
       - chevereto

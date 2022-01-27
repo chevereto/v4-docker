@@ -12,9 +12,10 @@ Ports used in this project follow a 5-char convention.
 
 `12 34 5`
 
-* Chars `1` and `2` are for Chevereto version: `40`.
-* Chars `3` and `4` are for PHP version: `80`.
+* Chars `1` and `2` are for Chevereto version: `40` for 4.0.
+* Chars `3` and `4` are for PHP version: `80` for 8.0.
 * Char `5` is for purpose:
-  * 0: Prod
+  * 0: Production
   * 1: Demo
-  * 9: dev
+  * 6: Development database
+  * 9: Development

@@ -5,7 +5,7 @@
 * `SOURCE` is the absolute path to the cloned chevereto project
 * You need to replace `SOURCE=~/git/chevereto/v4` with your own path
 * `SOURCE` will be mounted at `/var/www/chevereto/` inside the container
-* Chevereto will be available at [localhost:8940](http://localhost:8940)
+* Chevereto will be available at [localhost:40809](http://localhost:40809)
 
 ## Quick start
 
@@ -29,7 +29,7 @@ To work with dev resources you will require to sync and install dependencies.
 
 ## docker-compose
 
-Compose file: [httpd-php-dev.yml](../httpd-php-dev.yml)
+Compose file: [php/8.0/dev.yml](../php/8.0/dev.yml)
 
 Alter `SOURCE` in the commands below to reflect your project path.
 
@@ -40,8 +40,8 @@ Run this command to spawn (start) Chevereto.
 ```sh
 SOURCE=~/git/chevereto/v4 \
 docker-compose \
-    -p chevereto-v4-dev \
-    -f httpd-php-dev.yml \
+    -p chevereto4.0-dev-php8.0 \
+    -f php/8.0/dev.yml \
     up -d
 ```
 
@@ -52,8 +52,8 @@ Run this command to stop Chevereto.
 ```sh
 SOURCE=~/git/chevereto/v4 \
 docker-compose \
-    -p chevereto-v4-dev \
-    -f httpd-php-dev.yml \
+    -p chevereto4.0-dev-php8.0 \
+    -f php/8.0/dev.yml \
     stop
 ```
 
@@ -64,8 +64,8 @@ Run this command to down Chevereto (stop containers, remove networks and volumes
 ```sh
 SOURCE=~/git/chevereto/v4 \
 docker-compose \
-    -p chevereto-v4-dev \
-    -f httpd-php-dev.yml \
+    -p chevereto4.0-dev-php8.0 \
+    -f php/8.0/dev.yml \
     down --volumes
 ```
 
@@ -74,13 +74,13 @@ docker-compose \
 Run this command to retrieve and follow the error logs.
 
 ```sh
-docker logs chevereto-v4-dev_bootstrap -f 1>/dev/null
+docker logs chevereto4.0-dev-php8.0 -f 1>/dev/null
 ```
 
 Run this command to retrieve and follow the access logs.
 
 ```sh
-docker logs chevereto-v4-dev_bootstrap -f 2>/dev/null
+docker logs chevereto4.0-dev-php8.0 -f 2>/dev/null
 ```
 
 ## Commands
@@ -91,7 +91,7 @@ Run this command to sync the application code with your working project.
 
 ```sh
 docker exec -it \
-    chevereto-v4-dev_bootstrap \
+    chevereto4.0-dev-php8.0 \
     bash /var/www/sync.sh
 ```
 
@@ -105,7 +105,7 @@ Run this command to provide the vendor dependencies.
 
 ```sh
 docker exec --user www-data -it \
-    chevereto-v4-dev_bootstrap \
+    chevereto4.0-dev-php8.0 \
     composer update
 ```
 
@@ -115,7 +115,7 @@ Run this command to import [demo-importing](https://github.com/chevereto/demo-im
 
 ```sh
 docker exec -it \
-    chevereto-v4-dev_bootstrap \
+    chevereto4.0-dev-php8.0 \
     bash /var/www/demo-importing.sh
 ```
 
@@ -125,6 +125,6 @@ Run this command to import content using the [Bulk Content Importer](https://v3-
 
 ```sh
 docker exec --user www-data -it \
-    chevereto-v4-dev_bootstrap \
+    chevereto4.0-dev-php8.0 \
     app/bin/legacy -C importing
 ```

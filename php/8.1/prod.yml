@@ -2,7 +2,7 @@ version: "3.2"
 
 services:
   database:
-    container_name: chevereto4.0-demo-php8.0_database
+    container_name: chevereto4.0-prod-php8.1_database
     image: mariadb:focal
     networks:
       - chevereto
@@ -16,8 +16,8 @@ services:
       MYSQL_PASSWORD: user_database_password
 
   chevereto:
-    container_name: chevereto4.0-demo-php8.0
-    image: ghcr.io/chevereto/docker/4.0-php8.0
+    container_name: chevereto4.0-prod-php8.1
+    image: ghcr.io/chevereto/docker:4.0-php8.1
     networks:
       - chevereto
     volumes:
@@ -25,7 +25,7 @@ services:
       - assets:/var/www/html/_assets/
       - app:/var/www/html/
     ports:
-      - 40801:80
+      - 40810:80
     restart: always
     environment:
       CHEVERETO_TAG: "4.0"
@@ -39,7 +39,7 @@ services:
       CHEVERETO_DISABLE_UPDATE_CLI: 0
       CHEVERETO_HTTPS: 0
       CHEVERETO_ASSET_STORAGE_TYPE: local
-      CHEVERETO_ASSET_STORAGE_URL: http://localhost:40801/_assets/
+      CHEVERETO_ASSET_STORAGE_URL: http://localhost:40810/_assets/
       CHEVERETO_ASSET_STORAGE_BUCKET: /var/www/html/_assets/
 
 volumes:
