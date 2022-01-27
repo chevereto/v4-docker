@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  GHCR_SLUG: ghcr.io/${{ github.repository }}
 
 jobs:
   build:
@@ -17,8 +16,6 @@ jobs:
             tag: "80"
           - php-version: 8.1
             tag: "81"
-    env:
-      GHCR_SLUG: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
