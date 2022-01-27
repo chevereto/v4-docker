@@ -17,7 +17,7 @@ services:
 
   chevereto:
     container_name: chevereto-4-demo-php80_bootstrap
-    image: ghcr.io/chevereto/docker-php80:4.0
+    image: ghcr.io/chevereto/docker/4.0-php8.0
     networks:
       - chevereto
     volumes:
