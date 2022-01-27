@@ -20,6 +20,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
+          context: ./php/${{ matrix.php-versions }}
           flavor: |
             suffix=-php${{ matrix.php-versions }}
           images: |
