@@ -8,14 +8,14 @@ For disposable container-based provisioning (application provided at image layer
 
 ## Port reference
 
-Ports used in this project follow a 5-char convention.
+Ports used in this project follow a 5-char convention. For example, `14080` represents `production 4.0 php 8.0`.
 
-`12 34 5`
+`1 23 45`
 
-* Chars `1` and `2` are for Chevereto version: `40` for 4.0.
-* Chars `3` and `4` are for PHP version: `80` for 8.0.
-* Char `5` is for purpose:
-  * 0: Production
-  * 1: Demo
-  * 6: Development database
-  * 9: Development
+* Char at pos `1` is for purpose:
+  * 1: Prod
+  * 2: Demo
+  * 3: Dev database
+  * 4: Dev app
+* Chars at post `2` and pos `3` are for Chevereto version: `40` for 4.0.
+* Chars at post `4` and pos `5` are for PHP version: `80` for 8.0.

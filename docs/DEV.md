@@ -5,7 +5,7 @@
 * `SOURCE` is the absolute path to the cloned chevereto project
 * You need to replace `SOURCE=~/git/chevereto/v4` with your own path
 * `SOURCE` will be mounted at `/var/www/chevereto/` inside the container
-* Chevereto will be available at [localhost:40809](http://localhost:40809)
+* Chevereto will be available at [localhost:44080](http://localhost:44080)
 
 ## Quick start
 

@@ -25,7 +25,7 @@ services:
       - assets:/var/www/html/_assets/
       - app:/var/www/html/
     ports:
-      - 40800:80
+      - 14080:80
     restart: always
     environment:
       CHEVERETO_TAG: "4.0"
@@ -39,7 +39,7 @@ services:
       CHEVERETO_DISABLE_UPDATE_CLI: 0
       CHEVERETO_HTTPS: 0
       CHEVERETO_ASSET_STORAGE_TYPE: local
-      CHEVERETO_ASSET_STORAGE_URL: http://localhost:40800/_assets/
+      CHEVERETO_ASSET_STORAGE_URL: http://localhost:14080/_assets/
       CHEVERETO_ASSET_STORAGE_BUCKET: /var/www/html/_assets/
 
 volumes:
