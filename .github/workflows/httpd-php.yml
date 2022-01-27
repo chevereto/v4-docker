@@ -1,14 +1,24 @@
-name: buildx
+name: Build
 
 on:
   workflow_dispatch:
 
 env:
-  GHCR_SLUG: ghcr.io/chevereto/httpd-php
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  buildx:
+  build:
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - php-version: 8.0
+            tag: "80"
+          - php-version: 8.1
+            tag: "81"
+    env:
+      GHCR_SLUG: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -17,6 +27,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
+          flavor: |
+            suffix=-php${{ matrix.tag }}
           images: |
             ${{ env.GHCR_SLUG }}
           tags: |
@@ -46,7 +58,7 @@ jobs:
         uses: docker/bake-action@v1
         with:
           files: |
-            ./docker-bake.hcl
+            ./${{ matrix.php-version }}/docker-bake.hcl
             ${{ steps.meta.outputs.bake-file }}
           targets: build
           push: true

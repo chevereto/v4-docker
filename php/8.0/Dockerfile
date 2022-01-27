@@ -29,12 +29,10 @@ RUN apt-get install -y \
 
 ARG CHEVERETO_SOFTWARE=chevereto
 ARG CHEVERETO_TAG=4.0
-ARG CHEVERETO_INSTALLER_TAG=3.0.0
 ARG CHEVERETO_SERVICING=docker
 
 ENV CHEVERETO_SOFTWARE=$CHEVERETO_SOFTWARE \
     CHEVERETO_TAG=$CHEVERETO_TAG \
-    CHEVERETO_INSTALLER_TAG=$CHEVERETO_INSTALLER_TAG \
     CHEVERETO_SERVICING=$CHEVERETO_SERVICING \
     CHEVERETO_LICENSE= \
     CHEVERETO_ASSET_STORAGE_ACCOUNT_ID= \
@@ -91,7 +89,7 @@ RUN set -eux; \
 
 RUN mkdir -p /var/www/html/importing && \
     mkdir -p /var/www/html/importing/no-parse && \
-    mkdir -p /var/www/html/importing/parse-album && \
+    mkdir -p /var/www/html/importing/parse-albums && \
     mkdir -p /var/www/html/importing/parse-users
 
 VOLUME /var/www/html
