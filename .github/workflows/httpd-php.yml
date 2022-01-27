@@ -47,14 +47,14 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Prepare scripts
-        run: cp -r .docker-files/* php/${{ matrix.php-versions }}
+      - name: Prepare Dockerfile
+        run: cp ./php/${{ matrix.php-versions }}/Dockerfile .
 
       - name: Build
         uses: docker/bake-action@v1
         with:
           files: |
-            ./php/${{ matrix.php-versions }}/docker-bake.hcl
+            ./docker-bake.hcl
             ${{ steps.meta.outputs.bake-file }}
           targets: build
           push: true
