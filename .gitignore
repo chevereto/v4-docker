@@ -1,5 +1,5 @@
 .DS_Store
-build/
 *.dev.yml
 *.dev.sh
 php/**/*.sh
+/Dockerfile

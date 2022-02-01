@@ -1,0 +1,7 @@
+.dockerignore
+.git
+.github
+**/*.DS_Store
+docker-bake.hcl
+/docs
+/php

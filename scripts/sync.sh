@@ -15,16 +15,3 @@ function sync() {
         $SOURCE $TARGET
 }
 sync
-inotifywait \
-    --event create \
-    --event delete \
-    --event modify \
-    --event move \
-    --format "%e %w%f" \
-    --exclude $EXCLUDE \
-    --monitor \
-    --recursive \
-    $SOURCE |
-    while read CHANGED; do
-        sync
-    done

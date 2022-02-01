@@ -18,6 +18,8 @@ services:
   chevereto:
     container_name: chevereto4.0-prod-php8.1
     image: ghcr.io/chevereto/docker:4.0-php8.1
+    depends_on:
+      - database
     networks:
       - chevereto
     volumes:
@@ -27,6 +29,12 @@ services:
     ports:
       - 14081:80
     restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-L", "http://localhost:80"]
+      interval: 15s
+      timeout: 30s
+      retries: 5
+      start_period: 15s
     environment:
       CHEVERETO_TAG: "4.0"
       CHEVERETO_LICENSE: ${LICENSE}

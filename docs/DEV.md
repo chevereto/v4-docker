@@ -106,7 +106,7 @@ Run this command to provide the vendor dependencies.
 ```sh
 docker exec --user www-data -it \
     chevereto4.0-dev-php8.0 \
-    composer update
+    composer update --ignore-platform-reqs
 ```
 
 ### Demo
