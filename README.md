@@ -20,4 +20,5 @@ Happy testing!
 
 * [REFERENCE](docs/REFERENCE.md)
 * [COMPOSE](docs/COMPOSE.md)
+* [MAKE](docs/MAKE.md)
 * [DEV](docs/DEV.md)
