@@ -1,15 +1,9 @@
 # Build
 
-* **Tip:** Tag `ghcr.io/chevereto/docker/4.0-php8.0` to override the [ghcr package](https://github.com/orgs/chevereto/packages?repo_name=docker) with local
+The Dockerfile are at `php/{VERSION}/Dockerfile`, you need to take the Dockerfile for your target PHP 
 
 ```sh
-cp php/8.0/Dockerfile .
-docker build -t ghcr.io/chevereto/docker:4.0-php8.0 .
-```
-
-* For custom tag: Replace `docker:4.0-php8.0` with your own.
-
-```sh
-cp php/8.0/Dockerfile .
-docker build -t chevereto/docker:tag . \
+docker build . \
+    -f php/8.0/Dockerfile \
+    -t ghcr.io/chevereto/docker:4.0-php8.0
 ```
