@@ -74,6 +74,18 @@ make dev--down v=4.0 php=8.0
 make dev--demo v=4.0 php=8.0
 ```
 
+* To run composer `update` on dev:
+
+```sh
+make dev--composer run=update v=4.0 php=8.0
+```
+
+* To run composer `install` on dev:
+
+```sh
+make dev--composer run=install v=4.0 php=8.0
+```
+
 * To run `sync` script on dev instance:
 
 💡 It syncs your `SOURCE` with the code running in the container.

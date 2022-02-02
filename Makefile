@@ -88,6 +88,11 @@ dev--demo:
 		app/bin/legacy -C importing
 	@echo "👉 http://localhost:${FLAG_DEV}${VERSION_PORT}"
 
+dev--composer:
+	@docker exec -it --user www-data \
+		chevereto${v}-dev-php${php} \
+		composer ${run} --ignore-platform-reqs
+
 dev--sh:
 	@docker exec -it \
 		chevereto${v}-dev-php${php} \
