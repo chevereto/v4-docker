@@ -10,13 +10,7 @@ prod: prod--down
 		-f php/${php}/prod.yml \
 		up -d
 	@./wait.sh chevereto${v}-prod-php${php}
-	@docker exec -it --user www-data \
-		chevereto${v}-prod-php${php} \
-		app/bin/legacy -C install \
-			-u admin \
-			-e admin@chevereto.loc \
-			-x password
-	@echo "👉 admin:password http://localhost:${FLAG_PROD}${VERSION_PORT}"
+	@echo "👉 http://localhost:${FLAG_PROD}${VERSION_PORT}"
 
 prod--down:
 	@LICENSE="" docker-compose \
