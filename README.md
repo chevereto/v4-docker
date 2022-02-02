@@ -8,17 +8,20 @@
 
 This repository is for the [Chevereto](https://chevereto.com) Docker images used for development base standard.
 
-## ⚠️ Beta notice
+## Quick-start
 
-**Important:** Chevereto V4 is still beta software. We don't recommend using this software except for development/testing purposes.
+* Get Docker in your system
+* Clone (or download) the repository in your system [chevereto/docker](https://github.com/chevereto/docker)
+* From the repository root folder run: `make demo v=4.0 php=8.0`
 
-If the software doesn't work for you please don't panic and [Open a Ticket](https://chv.to/open-ticket).
+## Features
 
-Happy testing!
+* One-liner commands
+* Provides production, demo and development instances
+* Supports spawning multiple versioned instances for Chevereto and PHP
 
 ## Documentation
 
-* [REFERENCE](docs/REFERENCE.md)
-* [COMPOSE](docs/COMPOSE.md)
 * [MAKE](docs/MAKE.md)
 * [DEV](docs/DEV.md)
+* [REFERENCE](docs/REFERENCE.md)

@@ -4,11 +4,7 @@ FLAG_DEV = 4
 VERSION_PORT=$(shell echo \${v}\${php} | tr -d '.')
 LICENSE ?= $(shell stty -echo; read -p "License key: " license; stty echo; echo $$license)
 
-prod:
-	@LICENSE="" docker-compose \
-		-p chevereto${v}-prod-php${php} \
-		-f php/${php}/prod.yml \
-		down --volumes
+prod: prod--down
 	@LICENSE=$(LICENSE) docker-compose \
 		-p chevereto${v}-prod-php${php} \
 		-f php/${php}/prod.yml \
@@ -22,6 +18,12 @@ prod:
 			-x password
 	@echo "👉 admin:password http://localhost:${FLAG_PROD}${VERSION_PORT}"
 
+prod--down:
+	@LICENSE="" docker-compose \
+		-p chevereto${v}-prod-php${php} \
+		-f php/${php}/prod.yml \
+		down --volumes
+
 prod--demo:
 	@docker exec -it \
     	chevereto${v}-prod-php${php} \
@@ -31,11 +33,7 @@ prod--demo:
 		app/bin/legacy -C importing
 	@echo "👉 http://localhost:${FLAG_PROD}${VERSION_PORT}"
 
-demo:
-	@LICENSE="" docker-compose \
-		-p chevereto${v}-demo-php${php} \
-		-f php/${php}/demo.yml \
-		down --volumes
+demo: demo--down
 	@LICENSE=$(LICENSE) docker-compose \
 		-p chevereto${v}-demo-php${php} \
 		-f php/${php}/demo.yml \
@@ -55,11 +53,13 @@ demo:
 		app/bin/legacy -C importing
 	@echo "👉 admin:password http://localhost:${FLAG_DEMO}${VERSION_PORT}"
 
-dev:
-	@docker-compose \
-		-p chevereto${v}-dev-php${php} \
-		-f php/${php}/dev.yml \
+demo--down:
+	@LICENSE="" docker-compose \
+		-p chevereto${v}-demo-php${php} \
+		-f php/${php}/demo.yml \
 		down --volumes
+
+dev: dev--down
 	@docker-compose \
 		-p chevereto${v}-dev-php${php} \
 		-f php/${php}/dev.yml \
@@ -79,6 +79,12 @@ dev:
 			-x password
 	@echo "👉 admin:password http://localhost:${FLAG_DEV}${VERSION_PORT}"
 
+dev--down:
+	@docker-compose \
+		-p chevereto${v}-dev-php${php} \
+		-f php/${php}/dev.yml \
+		down --volumes
+
 dev--demo:
 	@docker exec -it \
     	chevereto${v}-dev-php${php} \
@@ -92,3 +98,9 @@ dev--sh:
 	@docker exec -it \
 		chevereto${v}-dev-php${php} \
 		bash /var/scripts/${run}.sh
+
+log--error:
+	@docker logs chevereto${v}-php${php} -f 1>/dev/null
+
+log--access:
+	@docker logs chevereto${v}-php${php} -f 2>/dev/null

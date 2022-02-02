@@ -49,3 +49,17 @@ To run a shell script on dev instance:
 ```sh
 make dev--sh run=sync v=4.0 php=8.0
 ```
+
+## Logs
+
+To retrieve and follow the error log:
+
+```sh
+make log--error v=4.0 php=8.0
+```
+
+To retrieve and follow the access log:
+
+```sh
+make log--access v=4.0 php=8.0
+```
