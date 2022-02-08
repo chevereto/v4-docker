@@ -26,12 +26,6 @@ make prod v=4.0 php=8.0
 make prod--down v=4.0 php=8.0
 ```
 
-* To implement demo on the production instance:
-
-```sh
-make prod--demo v=4.0 php=8.0
-```
-
 ## Demo
 
 A demo instance is *already installed*, with an admin user and with content provided by [demo-importing](https://github.com/chevereto/demo-importing). It is used for demo, to spawn an instance with content for end-users.
@@ -107,11 +101,11 @@ make dev--sh run=observe v=4.0 php=8.0
 To retrieve and follow the error log:
 
 ```sh
-make log--error v=4.0 php=8.0
+make log-error v=4.0 php=8.0
 ```
 
 To retrieve and follow the access log:
 
 ```sh
-make log--access v=4.0 php=8.0
+make log-access v=4.0 php=8.0
 ```

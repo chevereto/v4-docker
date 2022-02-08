@@ -1,8 +1,24 @@
+# Default arguments
+p ?= dev
+v ?= 4.0
+u ?= www-data
+php ?= 8.0
+
+# Ports
 FLAG_PROD = 1
 FLAG_DEMO = 2
 FLAG_DEV = 4
-VERSION_PORT=$(shell echo \${v}\${php} | tr -d '.')
+VERSION_PORT = $(shell echo \${v}\${php} | tr -d '.')
+
+# License ask
 LICENSE ?= $(shell stty -echo; read -p "License key: " license; stty echo; echo $$license)
+
+FEEDBACK = $(shell echo 👉 V\${v} \${p} [PHP \${php}] \(\${u}\))
+
+bash: arguments
+	@docker exec -it --user ${u} \
+		chevereto${v}-${p}-php${php} \
+		bash
 
 prod: prod--down
 	@LICENSE=$(LICENSE) docker-compose \
@@ -12,20 +28,11 @@ prod: prod--down
 	@./wait.sh chevereto${v}-prod-php${php}
 	@echo "👉 http://localhost:${FLAG_PROD}${VERSION_PORT}"
 
-prod--down:
+prod--down: arguments
 	@LICENSE="" docker-compose \
 		-p chevereto${v}-prod-php${php} \
 		-f php/${php}/prod.yml \
 		down --volumes
-
-prod--demo:
-	@docker exec -it \
-    	chevereto${v}-prod-php${php} \
-    	bash /var/scripts/demo-importing.sh
-	@docker exec --user www-data \
-		-it chevereto${v}-prod-php${php} \
-		app/bin/legacy -C importing
-	@echo "👉 http://localhost:${FLAG_PROD}${VERSION_PORT}"
 
 demo: demo--down
 	@LICENSE=$(LICENSE) docker-compose \
@@ -33,7 +40,7 @@ demo: demo--down
 		-f php/${php}/demo.yml \
 		up -d
 	@./wait.sh chevereto${v}-demo-php${php}
-	@docker exec -it --user www-data \
+	@docker exec -it --user ${u} \
 		chevereto${v}-demo-php${php} \
 		app/bin/legacy -C install \
 			-u admin \
@@ -42,12 +49,12 @@ demo: demo--down
 	@docker exec -it \
     	chevereto${v}-demo-php${php} \
     	bash /var/scripts/demo-importing.sh
-	@docker exec --user www-data \
+	@docker exec --user ${u} \
 		-it chevereto${v}-demo-php${php} \
 		app/bin/legacy -C importing
 	@echo "👉 admin:password http://localhost:${FLAG_DEMO}${VERSION_PORT}"
 
-demo--down:
+demo--down: arguments
 	@LICENSE="" docker-compose \
 		-p chevereto${v}-demo-php${php} \
 		-f php/${php}/demo.yml \
@@ -62,10 +69,10 @@ dev: dev--down
 	@docker exec -it \
 		chevereto${v}-dev-php${php} \
 		bash /var/scripts/sync.sh
-	@docker exec --user www-data -it \
+	@docker exec --user ${u} -it \
 		chevereto${v}-dev-php${php} \
 		composer update --ignore-platform-reqs
-	@docker exec -it --user www-data \
+	@docker exec -it --user ${u} \
 		chevereto${v}-dev-php${php} \
 		app/bin/legacy -C install \
 			-u admin \
@@ -73,33 +80,36 @@ dev: dev--down
 			-x password
 	@echo "👉 admin:password http://localhost:${FLAG_DEV}${VERSION_PORT}"
 
-dev--down:
+dev--down: arguments
 	@docker-compose \
 		-p chevereto${v}-dev-php${php} \
 		-f php/${php}/dev.yml \
 		down --volumes
 
-dev--demo:
+dev--demo: arguments
 	@docker exec -it \
     	chevereto${v}-dev-php${php} \
     	bash /var/scripts/demo-importing.sh
-	@docker exec --user www-data \
+	@docker exec --user ${u} \
 		-it chevereto${v}-dev-php${php} \
 		app/bin/legacy -C importing
 	@echo "👉 http://localhost:${FLAG_DEV}${VERSION_PORT}"
 
-dev--composer:
-	@docker exec -it --user www-data \
+dev--composer: arguments
+	@docker exec -it --user ${u} \
 		chevereto${v}-dev-php${php} \
 		composer ${run} --ignore-platform-reqs
 
-dev--sh:
+dev--sh: arguments
 	@docker exec -it \
 		chevereto${v}-dev-php${php} \
 		bash /var/scripts/${run}.sh
 
-log--error:
-	@docker logs chevereto${v}-php${php} -f 1>/dev/null
+log-error: arguments
+	@docker logs chevereto${v}-${p}-php${php} -f 1>/dev/null
 
-log--access:
-	@docker logs chevereto${v}-php${php} -f 2>/dev/null
+log-access: arguments
+	@docker logs chevereto${v}-${p}-php${php} -f 2>/dev/null
+
+arguments:
+	@echo "${FEEDBACK}"
