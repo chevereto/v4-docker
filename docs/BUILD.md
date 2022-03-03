@@ -1,6 +1,6 @@
 # Build
 
-The Dockerfile are at `php/{VERSION}/Dockerfile`, you need to take the Dockerfile for your target PHP 
+The Dockerfile are at `php/{VERSION}/Dockerfile`, you need to take the Dockerfile for your target PHP.
 
 ```sh
 docker build . \
