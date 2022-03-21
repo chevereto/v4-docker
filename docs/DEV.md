@@ -20,5 +20,5 @@ You will need a Chevereto V4 project:
 From the root folder run the following [Make](./MAKE.md) command:
 
 ```sh
-make dev v=4.0 php=8.0
+make dev SOURCE=/my/path v=4.0 php=8.0
 ```

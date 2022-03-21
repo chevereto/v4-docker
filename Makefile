@@ -3,8 +3,8 @@ project ?= dev
 version ?= 4.0
 user ?= www-data
 php ?= 8.1
-
-# Ports
+source ?= ~/git/chevereto/v4
+# Port
 FLAG_PROD = 1
 FLAG_DEMO = 2
 FLAG_DEV = 4
@@ -66,7 +66,7 @@ demo--down: arguments
 		down --volumes
 
 dev: dev--down
-	@docker-compose \
+	@SOURCE=$(source) docker-compose \
 		-p chevereto${version}-dev-php${php} \
 		-f php/${php}/dev.yml \
 		up -d
@@ -88,7 +88,7 @@ dev: dev--down
 	@echo "👉 admin:password http://localhost:${FLAG_DEV}${VERSION_PORT}"
 
 dev--down: arguments
-	@docker-compose \
+	@SOURCE='' docker-compose \
 		-p chevereto${version}-dev-php${php} \
 		-f php/${php}/dev.yml \
 		down --volumes
