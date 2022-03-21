@@ -19,8 +19,7 @@ chv_install() {
     unzip -oq ${CHEVERETO_SOFTWARE}*.zip -d $WORKING_DIR
     echo "* Installing dependencies"
     composer install \
-        --working-dir=$WORKING_DIR \
-        --prefer-dist \
+        --working-dir=$WORKING_DIR/app \
         --no-progress \
         --classmap-authoritative \
         --ignore-platform-reqs

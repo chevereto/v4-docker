@@ -76,7 +76,9 @@ dev: dev--down
 		bash /var/scripts/sync.sh
 	@docker exec --user ${user} -it \
 		chevereto${version}-dev-php${php} \
-		composer update --ignore-platform-reqs --working-dir app
+		composer update \
+			--working-dir app \
+			--ignore-platform-reqs 
 	@docker exec -it --user ${user} \
 		chevereto${version}-dev-php${php} \
 		app/bin/legacy -C install \
@@ -103,7 +105,9 @@ dev--demo: arguments
 dev--composer: arguments
 	@docker exec -it --user ${user} \
 		chevereto${version}-dev-php${php} \
-		composer ${run} --ignore-platform-reqs --working-dir app
+		composer ${run} \
+			--working-dir app \
+			--ignore-platform-reqs
 
 dev--sh: arguments
 	@docker exec -it \
