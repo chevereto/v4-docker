@@ -122,7 +122,7 @@ make bash version=4.0 php=8.1
 
 ## Build container image
 
-To re-source `httpd.conf` and appending `chevereto.conf`:
+To build a container image:
 
 ```sh
 make build version=4.0 php=8.1

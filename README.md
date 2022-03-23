@@ -12,7 +12,7 @@ This repository is for the [Chevereto](https://chevereto.com) Docker images used
 
 * Get Docker in your system
 * Clone (or download) the repository in your system [chevereto/docker](https://github.com/chevereto/docker)
-* From the repository root folder run: `make demo v=4.0 php=8.0`
+* From the repository root folder run: `make demo v=4.0 php=8.1`
 
 ## Features
 
