@@ -123,7 +123,7 @@ log-error: arguments
 log-access: arguments
 	@docker logs chevereto${version}-${project}-php${php} -f 2>/dev/null
 
-source--httpd: 
+build-httpd: 
 	@echo "👉 Downloading source httpd.conf"
 	@docker run --rm httpd:2.4 cat /usr/local/apache2/conf/httpd.conf > httpd.conf
 	@echo "👉 Adding chevereto.conf to httpd.conf"

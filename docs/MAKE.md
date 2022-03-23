@@ -130,8 +130,8 @@ make build version=4.0 php=8.1
 
 ## Build httpd.conf
 
-To re-source `httpd.conf` and appending `chevereto.conf`:
+To re-build `httpd.conf` and appending `chevereto.conf`:
 
 ```sh
-make source--httpd
+make build-httpd
 ```
