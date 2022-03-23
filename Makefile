@@ -8,14 +8,17 @@ source ?= ~/git/chevereto/v4
 FLAG_PROD = 1
 FLAG_DEMO = 2
 FLAG_DEV = 4
-VERSION_PORT = $(shell echo \${version}\${php} | tr -d '.')
-
+VERSION_DOTLESS = $(shell echo \${version} | tr -d '.')
+PHP_DOTLESS = $(shell echo \${php} | tr -d '.')
+VERSION_PORT = ${VERSION_DOTLESS}${PHP_DOTLESS}
 # License ask
 LICENSE ?= $(shell stty -echo; read -p "License key: " license; stty echo; echo $$license)
-
+# Echo doing
 FEEDBACK = $(shell echo 👉 V\${version} \${project} [PHP \${php}] \(\${user}\))
+FEEDBACK_SHORT = $(shell echo 👉 V\${version} [PHP \${php}] \(\${user}\))
 
-build: arguments
+build:
+	@echo "${FEEDBACK_SHORT}"
 	@docker build . \
     	-f php/${php}/Dockerfile \
     	-t ghcr.io/chevereto/docker:${version}-php${php}
@@ -27,7 +30,7 @@ bash: arguments
 
 prod: prod--down
 	@LICENSE=$(LICENSE) docker-compose \
-		-p chevereto${version}-prod-php${php} \
+		-p chevereto${VERSION_DOTLESS}-prod-php${PHP_DOTLESS} \
 		-f php/${php}/prod.yml \
 		up -d
 	@./wait.sh chevereto${version}-prod-php${php}
@@ -35,13 +38,13 @@ prod: prod--down
 
 prod--down: arguments
 	@LICENSE="" docker-compose \
-		-p chevereto${version}-prod-php${php} \
+		-p chevereto${VERSION_DOTLESS}-prod-php${PHP_DOTLESS} \
 		-f php/${php}/prod.yml \
 		down --volumes
 
 demo: demo--down
 	@LICENSE=$(LICENSE) docker-compose \
-		-p chevereto${version}-demo-php${php} \
+		-p chevereto${VERSION_DOTLESS}-demo-php${PHP_DOTLESS} \
 		-f php/${php}/demo.yml \
 		up -d
 	@./wait.sh chevereto${version}-demo-php${php}
@@ -61,13 +64,13 @@ demo: demo--down
 
 demo--down: arguments
 	@LICENSE="" docker-compose \
-		-p chevereto${version}-demo-php${php} \
+		-p chevereto${VERSION_DOTLESS}-demo-php${PHP_DOTLESS} \
 		-f php/${php}/demo.yml \
 		down --volumes
 
 dev: dev--down
 	@SOURCE=$(source) docker-compose \
-		-p chevereto${version}-dev-php${php} \
+		-p chevereto${VERSION_DOTLESS}-dev-php${PHP_DOTLESS} \
 		-f php/${php}/dev.yml \
 		up -d
 	@./wait.sh chevereto${version}-dev-php${php}
@@ -89,7 +92,7 @@ dev: dev--down
 
 dev--down: arguments
 	@SOURCE='' docker-compose \
-		-p chevereto${version}-dev-php${php} \
+		-p chevereto${VERSION_DOTLESS}-dev-php${PHP_DOTLESS} \
 		-f php/${php}/dev.yml \
 		down --volumes
 
@@ -119,6 +122,13 @@ log-error: arguments
 
 log-access: arguments
 	@docker logs chevereto${version}-${project}-php${php} -f 2>/dev/null
+
+source--httpd: 
+	@echo "👉 Downloading source httpd.conf"
+	@docker run --rm httpd:2.4 cat /usr/local/apache2/conf/httpd.conf > httpd.conf
+	@echo "👉 Adding chevereto.conf to httpd.conf"
+	@cat chevereto.conf >> httpd.conf
+	@echo "✅ httpd.conf updated"
 
 arguments:
 	@echo "${FEEDBACK}"

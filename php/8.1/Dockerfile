@@ -1,5 +1,5 @@
 FROM composer:latest as composer
-FROM php:8.1-apache
+FROM php:8.1-fpm
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 RUN apt-get update && apt-get install -y \
@@ -24,8 +24,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN apt-get install -y \
     rsync \
-    inotify-tools \
-    && a2enmod rewrite
+    inotify-tools
 
 ARG CHEVERETO_SOFTWARE=chevereto
 ARG CHEVERETO_TAG=4.0
@@ -105,4 +104,5 @@ RUN chmod +x \
     /var/scripts/demo-importing.sh \
     /var/scripts/observe.sh \
     /var/scripts/sync.sh
-CMD ["/bin/bash", "/var/scripts/bootstrap.sh", "apache2-foreground"]
+
+CMD ["/bin/bash", "/var/scripts/bootstrap.sh", "php-fpm"]

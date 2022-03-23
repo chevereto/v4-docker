@@ -17,7 +17,7 @@ services:
       MYSQL_USER: chevereto
       MYSQL_PASSWORD: user_database_password
 
-  chevereto:
+  php:
     container_name: chevereto4.0-dev-php8.1
     image: ghcr.io/chevereto/docker:4.0-php8.1
     depends_on:
@@ -32,7 +32,7 @@ services:
         source: ${SOURCE}
         target: /var/www/chevereto
     ports:
-      - 44081:80
+      - 9000
     restart: always
     healthcheck:
       test: ["CMD", "stat", "/var/CONTAINER_STARTED_PLACEHOLDER"]
@@ -51,6 +51,23 @@ services:
       CHEVERETO_ASSET_STORAGE_TYPE: local
       CHEVERETO_ASSET_STORAGE_URL: http://localhost:44081/_assets/
       CHEVERETO_ASSET_STORAGE_BUCKET: /var/www/html/_assets/
+
+  server:
+    container_name: chevereto4.0-dev-php8.1_server
+    image: httpd:2.4
+    depends_on:
+      - php
+    networks:
+      - chevereto
+    volumes:
+      - storage:/var/www/html/images/
+      - assets:/var/www/html/_assets/
+      - app:/var/www/html/
+      - type: bind
+        source: ${PWD}/httpd.conf
+        target: /usr/local/apache2/conf/httpd.conf
+    ports:
+      - 44081:80
 
 volumes:
   database:

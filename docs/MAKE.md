@@ -5,7 +5,7 @@
 *Note:* Pass `user=<user>` to set the user for run commands. Default `www-data`.
 
 ```sh
-make <command> version=4.0 php=8.0
+make <command> version=4.0 php=8.1
 ```
 
 💡 The `make` commands are destructive. Use it only to spawn new disposable instances.
@@ -19,13 +19,13 @@ A production instance is *ready to be installed*. It is used in production and t
 * To build a production instance:
 
 ```sh
-make prod version=4.0 php=8.0
+make prod version=4.0 php=8.1
 ```
 
 * To takedown a production instance:
 
 ```sh
-make prod--down version=4.0 php=8.0
+make prod--down version=4.0 php=8.1
 ```
 
 ## Demo
@@ -37,13 +37,13 @@ A demo instance is *already installed*, with an admin user and with content prov
 * To build a demo instance:
 
 ```sh
-make demo version=4.0 php=8.0
+make demo version=4.0 php=8.1
 ```
 
 * To takedown a demo instance:
 
 ```sh
-make demo--down version=4.0 php=8.0
+make demo--down version=4.0 php=8.1
 ```
 
 ## Dev
@@ -55,31 +55,31 @@ A dev instance is used when you have a Chevereto project in your system (`source
 * To build a dev instance:
 
 ```sh
-make dev source=~/git/chevereto/v4 version=4.0 php=8.0
+make dev source=~/git/chevereto/v4 version=4.0 php=8.1
 ```
 
 * To takedown a dev instance:
 
 ```sh
-make dev--down version=4.0 php=8.0
+make dev--down version=4.0 php=8.1
 ```
 
 * To implement demo on dev:
 
 ```sh
-make dev--demo version=4.0 php=8.0
+make dev--demo version=4.0 php=8.1
 ```
 
 * To run composer `update` on dev:
 
 ```sh
-make dev--composer run=update version=4.0 php=8.0
+make dev--composer run=update version=4.0 php=8.1
 ```
 
 * To run composer `install` on dev:
 
 ```sh
-make dev--composer run=install version=4.0 php=8.0
+make dev--composer run=install version=4.0 php=8.1
 ```
 
 * To run `sync` script on dev instance:
@@ -87,7 +87,7 @@ make dev--composer run=install version=4.0 php=8.0
 💡 It syncs your `SOURCE` with the code running in the container.
 
 ```sh
-make dev--sh run=sync version=4.0 php=8.0
+make dev--sh run=sync version=4.0 php=8.1
 ```
 
 * To run `observe` script on dev instance:
@@ -95,7 +95,7 @@ make dev--sh run=sync version=4.0 php=8.0
 💡 Same as sync, but observe `SOURCE` for auto re-sync.
 
 ```sh
-make dev--sh run=observe version=4.0 php=8.0
+make dev--sh run=observe version=4.0 php=8.1
 ```
 
 ## Logs
@@ -103,11 +103,35 @@ make dev--sh run=observe version=4.0 php=8.0
 To retrieve and follow the error log:
 
 ```sh
-make log-error version=4.0 php=8.0
+make log-error version=4.0 php=8.1
 ```
 
 To retrieve and follow the access log:
 
 ```sh
-make log-access version=4.0 php=8.0
+make log-access version=4.0 php=8.1
+```
+
+## Bash
+
+To enter a container's bash shell:
+
+```sh
+make bash version=4.0 php=8.1
+```
+
+## Build container image
+
+To re-source `httpd.conf` and appending `chevereto.conf`:
+
+```sh
+make build version=4.0 php=8.1
+```
+
+## Build httpd.conf
+
+To re-source `httpd.conf` and appending `chevereto.conf`:
+
+```sh
+make source--httpd
 ```
