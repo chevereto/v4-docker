@@ -48,11 +48,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Prepare Dockerfile
-        run: cp ./php/${{ matrix.php-versions }}/Dockerfile .
-
+        run: cp ./chevereto/4.0/Dockerfile .
       - name: Build
         uses: docker/bake-action@v1
         with:
+          set: build.args.PHP=${{ matrix.php-versions }}
           files: |
             ./docker-bake.hcl
             ${{ steps.meta.outputs.bake-file }}

@@ -2,12 +2,12 @@ version: "3.4"
 
 services:
   database:
-    container_name: chevereto4.0-demo-php8.1_database
+    container_name: chevereto${VERSION}-${PROJECT}-php${PHP}_database
     image: mariadb:focal
     networks:
       - chevereto
     volumes:
-      - data:/var/lib/mysql
+      - database:/var/lib/mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -15,9 +15,9 @@ services:
       MYSQL_USER: chevereto
       MYSQL_PASSWORD: user_database_password
 
-  chevereto:
-    container_name: chevereto4.0-demo-php8.1
-    image: ghcr.io/chevereto/docker:4.0-php8.1
+  php:
+    container_name: chevereto${VERSION}-${PROJECT}-php${PHP}
+    image: ghcr.io/chevereto/docker:${VERSION}-php${PHP}
     depends_on:
       - database
     networks:
@@ -27,31 +27,47 @@ services:
       - assets:/var/www/html/_assets/
       - app:/var/www/html/
     ports:
-      - 24081:80
+      - 9000
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "-f", "-L", "http://localhost:80"]
+      test: ["CMD", "stat", "/var/CONTAINER_STARTED_PLACEHOLDER"]
       interval: 15s
       timeout: 30s
       retries: 5
       start_period: 15s
     environment:
-      CHEVERETO_TAG: "4.0"
+      CHEVERETO_TAG: ${VERSION}
       CHEVERETO_LICENSE: ${LICENSE}
       CHEVERETO_DB_HOST: database
       CHEVERETO_DB_USER: chevereto
       CHEVERETO_DB_PASS: user_database_password
       CHEVERETO_DB_PORT: 3306
       CHEVERETO_DB_NAME: chevereto
-      CHEVERETO_DISABLE_UPDATE_HTTP: 0
-      CHEVERETO_DISABLE_UPDATE_CLI: 0
       CHEVERETO_HTTPS: 0
       CHEVERETO_ASSET_STORAGE_TYPE: local
-      CHEVERETO_ASSET_STORAGE_URL: http://localhost:24081/_assets/
+      CHEVERETO_ASSET_STORAGE_URL: http://localhost:${FLAG_DEMO}${VERSION_DOTLESS}${PHP_DOTLESS}/_assets/
       CHEVERETO_ASSET_STORAGE_BUCKET: /var/www/html/_assets/
 
+  server:
+    container_name: chevereto${VERSION}-${PROJECT}-php${PHP}_server
+    image: httpd:2.4
+    depends_on:
+      - php
+    networks:
+      - chevereto
+    volumes:
+      - storage:/var/www/html/images/
+      - assets:/var/www/html/_assets/
+      - app:/var/www/html/
+      - type: bind
+        source: ${PWD}/httpd.conf
+        target: /usr/local/apache2/conf/httpd.conf
+    ports:
+      - ${FLAG_DEMO}${VERSION_DOTLESS}${PHP_DOTLESS}:80
+    restart: always
+
 volumes:
-  data:
+  database:
   assets:
   storage:
   app:

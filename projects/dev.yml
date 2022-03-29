@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   database:
-    container_name: chevereto${VERSION}-dev-php${PHP}_database
+    container_name: chevereto${VERSION}-${PROJECT}-php${PHP}_database
     image: mariadb:focal
     networks:
       - chevereto
@@ -18,7 +18,7 @@ services:
       MYSQL_PASSWORD: user_database_password
 
   php:
-    container_name: chevereto${VERSION}-dev-php${PHP}
+    container_name: chevereto${VERSION}-${PROJECT}-php${PHP}
     image: ghcr.io/chevereto/docker:${VERSION}-php${PHP}
     depends_on:
       - database
@@ -41,7 +41,7 @@ services:
       retries: 5
       start_period: 15s
     environment:
-      CHEVERETO_TAG: dev
+      CHEVERETO_TAG: ${PROJECT}
       CHEVERETO_DB_HOST: database
       CHEVERETO_DB_USER: chevereto
       CHEVERETO_DB_PASS: user_database_password
@@ -53,7 +53,7 @@ services:
       CHEVERETO_ASSET_STORAGE_BUCKET: /var/www/html/_assets/
 
   server:
-    container_name: chevereto${VERSION}-dev-php${PHP}_server
+    container_name: chevereto${VERSION}-${PROJECT}-php${PHP}_server
     image: httpd:2.4
     depends_on:
       - php

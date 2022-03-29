@@ -31,30 +31,45 @@ bash: arguments
 		bash
 
 prod: down--volumes
-	@LICENSE=$(LICENSE) docker-compose \
-		-p chevereto${VERSION_DOTLESS}-${PROJECT}-php${PHP_DOTLESS} \
-		-f projects/${PROJECT}.yml \
-		up -d
-	@./wait.sh chevereto${VERSION}-${PROJECT}-php${PHP}
+	@SOURCE=$(SOURCE) \
+	FLAG_PROD=$(FLAG_PROD) \
+	LICENSE=$(LICENSE) \
+	PHP_DOTLESS=$(PHP_DOTLESS) \
+	PHP=$(PHP) \
+	PROJECT=prod \
+	VERSION_DOTLESS=$(VERSION_DOTLESS) \
+	VERSION=$(VERSION) \
+		docker-compose \
+			-p chevereto${VERSION_DOTLESS}-prod-php${PHP_DOTLESS} \
+			-f projects/prod.yml \
+			up -d
+	@./wait.sh chevereto${VERSION}-prod-php${PHP}
 	@echo "👉 http://localhost:${FLAG_PROD}${VERSION_PORT}"
 
 demo: down--volumes
-	@LICENSE=$(LICENSE) docker-compose \
-		-p chevereto${VERSION_DOTLESS}-${PROJECT}-php${PHP_DOTLESS} \
-		-f projects/${PROJECT}.yml \
-		up -d
-	@./wait.sh chevereto${VERSION}-${PROJECT}-php${PHP}
+	@FLAG_DEMO=$(FLAG_DEMO) \
+	LICENSE=$(LICENSE) \
+	PHP_DOTLESS=$(PHP_DOTLESS) \
+	PHP=$(PHP) \
+	PROJECT=demo \
+	VERSION_DOTLESS=$(VERSION_DOTLESS) \
+	VERSION=$(VERSION) \
+		docker-compose \
+			-p chevereto${VERSION_DOTLESS}-demo-php${PHP_DOTLESS} \
+			-f projects/demo.yml \
+			up -d
+	@./wait.sh chevereto${VERSION}-demo-php${PHP}
 	@docker exec -it --user ${DOCKER_USER} \
-		chevereto${VERSION}-${PROJECT}-php${PHP} \
+		chevereto${VERSION}-demo-php${PHP} \
 		app/bin/legacy -C install \
 			-u admin \
 			-e admin@chevereto.loc \
 			-x password
 	@docker exec -it \
-    	chevereto${VERSION}-${PROJECT}-php${PHP} \
-    	bash /var/scripts/${PROJECT}-importing.sh
+    	chevereto${VERSION}-demo-php${PHP} \
+    	bash /var/scripts/demo-importing.sh
 	@docker exec --user ${DOCKER_USER} \
-		-it chevereto${VERSION}-${PROJECT}-php${PHP} \
+		-it chevereto${VERSION}-demo-php${PHP} \
 		app/bin/legacy -C importing
 	@echo "👉 admin:password http://localhost:${FLAG_DEMO}${VERSION_PORT}"
 
@@ -62,25 +77,26 @@ dev: down--volumes
 	@SOURCE=$(SOURCE) \
 	FLAG_DEV_DB=$(FLAG_DEV_DB) \
 	FLAG_DEV=$(FLAG_DEV) \
-	VERSION_DOTLESS=$(VERSION_DOTLESS) \
 	PHP_DOTLESS=$(PHP_DOTLESS) \
-	VERSION=$(VERSION) \
 	PHP=$(PHP) \
+	PROJECT=dev \
+	VERSION_DOTLESS=$(VERSION_DOTLESS) \
+	VERSION=$(VERSION) \
 		docker-compose \
-			-p chevereto${VERSION_DOTLESS}-${PROJECT}-php${PHP_DOTLESS} \
-			-f projects/${PROJECT}.yml \
+			-p chevereto${VERSION_DOTLESS}-dev-php${PHP_DOTLESS} \
+			-f projects/dev.yml \
 			up -d
-	@./wait.sh chevereto${VERSION}-${PROJECT}-php${PHP}
+	@./wait.sh chevereto${VERSION}-dev-php${PHP}
 	@docker exec -it \
-		chevereto${VERSION}-${PROJECT}-php${PHP} \
+		chevereto${VERSION}-dev-php${PHP} \
 		bash /var/scripts/sync.sh
 	@docker exec --user ${DOCKER_USER} -it \
-		chevereto${VERSION}-${PROJECT}-php${PHP} \
+		chevereto${VERSION}-dev-php${PHP} \
 		composer dump-autoload \
 			--working-dir app \
 			--classmap-authoritative
 	@docker exec -it --user ${DOCKER_USER} \
-		chevereto${VERSION}-${PROJECT}-php${PHP} \
+		chevereto${VERSION}-dev-php${PHP} \
 		app/bin/legacy -C install \
 			-u admin \
 			-e admin@chevereto.loc \
@@ -89,23 +105,23 @@ dev: down--volumes
 
 dev--demo: arguments
 	@docker exec -it \
-    	chevereto${VERSION}-${PROJECT}-php${PHP} \
+    	chevereto${VERSION}-dev-php${PHP} \
     	bash /var/scripts/demo-importing.sh
 	@docker exec --user ${DOCKER_USER} \
-		-it chevereto${VERSION}-${PROJECT}-php${PHP} \
+		-it chevereto${VERSION}-dev-php${PHP} \
 		app/bin/legacy -C importing
 	@echo "👉 http://localhost:${FLAG_DEV}${VERSION_PORT}"
 
 dev--composer: arguments
 	@docker exec -it --user ${DOCKER_USER} \
-		chevereto${VERSION}-${PROJECT}-php${PHP} \
+		chevereto${VERSION}-dev-php${PHP} \
 		composer ${run} \
 			--working-dir app \
 			--ignore-platform-reqs
 
 dev--sh: arguments
 	@docker exec -it \
-		chevereto${VERSION}-${PROJECT}-php${PHP} \
+		chevereto${VERSION}-dev-php${PHP} \
 		bash /var/scripts/${run}.sh
 
 log-error: arguments

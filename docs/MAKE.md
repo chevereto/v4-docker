@@ -1,8 +1,8 @@
 # Make
 
-[Makefile](../Makefile) commands must pass `v` (Chevereto version) and `php` arguments.
+[Makefile](../Makefile) provides commands for managing multiple container provisionings.
 
-*Note:* Pass `user=<user>` to set the user for run commands. Default `www-data`.
+*Note:* Pass `DOCKER_USER=<user>` to set the user for run commands. Default `www-data`.
 
 ```sh
 make <command> <VERSION=4.0 PHP=8.1 DOCKER_USER=www-data ... >
@@ -28,6 +28,7 @@ make prod
 ## Demo
 
 💡 It requires a [Chevereto license](https://chevereto.com/pricing) key.
+👉 It creates default account with admin:password
 
 * To build a demo instance:
 
@@ -39,13 +40,15 @@ make demo
 
 A dev instance is used when you have a Chevereto project in your system (`source` argument). A Chevereto project is any folder containing Chevereto code, including your own modified versions.
 
-💡 It requires a Chevereto project.
+💡 It requires a Chevereto project,
+👉 It creates default account with admin:password
 
 * To build a dev instance:
 
 ```sh
-make dev source=~/git/chevereto/v4 version=4.0 php=8.1
+make dev SOURCE=~/git/chevereto/v4
 ```
+
 
 * To implement demo on dev:
 
@@ -56,13 +59,13 @@ make dev--demo version=4.0 php=8.1
 * To run composer `update` on dev:
 
 ```sh
-make dev--composer run=update version=4.0 php=8.1
+make dev--composer run=update
 ```
 
 * To run composer `install` on dev:
 
 ```sh
-make dev--composer run=install version=4.0 php=8.1
+make dev--composer run=install
 ```
 
 * To run `sync` script on dev instance:
@@ -70,7 +73,7 @@ make dev--composer run=install version=4.0 php=8.1
 💡 It syncs your `SOURCE` with the code running in the container.
 
 ```sh
-make dev--sh run=sync version=4.0 php=8.1
+make dev--sh run=sync
 ```
 
 * To run `observe` script on dev instance:
@@ -78,7 +81,7 @@ make dev--sh run=sync version=4.0 php=8.1
 💡 Same as sync, but observe `SOURCE` for auto re-sync.
 
 ```sh
-make dev--sh run=observe version=4.0 php=8.1
+make dev--sh run=observe
 ```
 
 ## General commands

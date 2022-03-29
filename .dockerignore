@@ -5,4 +5,4 @@
 docker-bake.hcl
 /docs
 /php
-Dockerfile
+**/Dockerfile

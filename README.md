@@ -17,12 +17,11 @@ This repository is for the [Chevereto](https://chevereto.com) Docker images used
 ## Features
 
 * Development standard
-* One-liner commands
+* One-liner Make commands
 * Supports spawning multiple versioned instances for Chevereto and PHP
-* Make command shortcuts
 
 ## Documentation
 
+* [REFERENCE](docs/REFERENCE.md)
 * [MAKE](docs/MAKE.md)
 * [DEV](docs/DEV.md)
-* [REFERENCE](docs/REFERENCE.md)
