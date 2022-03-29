@@ -25,6 +25,10 @@ build:
 		--build-arg PHP=${PHP} \
 		-t ghcr.io/chevereto/docker:${VERSION}-php${PHP}
 
+pull:
+	@echo "${FEEDBACK_SHORT}"
+	@docker pull ghcr.io/chevereto/docker:${VERSION}-php${PHP}
+
 bash: arguments
 	@docker exec -it --user ${DOCKER_USER} \
 		chevereto${VERSION}-${PROJECT}-php${PHP} \
