@@ -28,7 +28,6 @@ make prod
 ## Demo
 
 💡 It requires a [Chevereto license](https://chevereto.com/pricing) key.
-👉 It creates default account with admin:password
 
 * To build a demo instance:
 
@@ -40,15 +39,13 @@ make demo
 
 A dev instance is used when you have a Chevereto project in your system (`source` argument). A Chevereto project is any folder containing Chevereto code, including your own modified versions.
 
-💡 It requires a Chevereto project,
-👉 It creates default account with admin:password
+💡 It requires a Chevereto project.
 
 * To build a dev instance:
 
 ```sh
 make dev SOURCE=~/git/chevereto/v4
 ```
-
 
 * To implement demo on dev:
 
