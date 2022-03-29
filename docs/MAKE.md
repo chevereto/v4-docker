@@ -5,45 +5,34 @@
 *Note:* Pass `user=<user>` to set the user for run commands. Default `www-data`.
 
 ```sh
-make <command> version=4.0 php=8.1
+make <command> <VERSION=4.0 PHP=8.1 DOCKER_USER=www-data ... >
 ```
 
-💡 The `make` commands are destructive. Use it only to spawn new disposable instances.
+Default values:
+
+* PROJECT=dev
+* VERSION=4.0
+* PHP=8.1
+* DOCKER_USER=www-data
 
 ## Production
-
-A production instance is *ready to be installed*. It is used in production and to spawn a blank ready-to-install instances.
 
 💡 It requires a [Chevereto license](https://chevereto.com/pricing) key.
 
 * To build a production instance:
 
 ```sh
-make prod version=4.0 php=8.1
-```
-
-* To takedown a production instance:
-
-```sh
-make prod--down version=4.0 php=8.1
+make prod
 ```
 
 ## Demo
-
-A demo instance is *already installed*, with an admin user and with content provided by [demo-importing](https://github.com/chevereto/demo-importing). It is used for demo, to spawn an instance with content for end-users.
 
 💡 It requires a [Chevereto license](https://chevereto.com/pricing) key.
 
 * To build a demo instance:
 
 ```sh
-make demo version=4.0 php=8.1
-```
-
-* To takedown a demo instance:
-
-```sh
-make demo--down version=4.0 php=8.1
+make demo
 ```
 
 ## Dev
@@ -56,12 +45,6 @@ A dev instance is used when you have a Chevereto project in your system (`source
 
 ```sh
 make dev source=~/git/chevereto/v4 version=4.0 php=8.1
-```
-
-* To takedown a dev instance:
-
-```sh
-make dev--down version=4.0 php=8.1
 ```
 
 * To implement demo on dev:
@@ -98,37 +81,67 @@ make dev--sh run=sync version=4.0 php=8.1
 make dev--sh run=observe version=4.0 php=8.1
 ```
 
-## Logs
+## General commands
+
+### Up
+
+* To up an instance:
+
+```sh
+make up PROJECT=<dev|demo|prod>
+```
+
+* To up an instance (daemonized):
+
+```sh
+make up--d PROJECT=<dev|demo|prod>
+```
+
+### Down
+
+* To takedown an instance (keep volumes):
+
+```sh
+make down PROJECT=<dev|demo|prod>
+```
+
+* To takedown an instance (remove volumes):
+
+```sh
+make down--volumes PROJECT=<dev|demo|prod>
+```
+
+### Logs
 
 To retrieve and follow the error log:
 
 ```sh
-make log-error version=4.0 php=8.1
+make log-error PROJECT=<dev|demo|prod>
 ```
 
 To retrieve and follow the access log:
 
 ```sh
-make log-access version=4.0 php=8.1
+make log-access PROJECT=<dev|demo|prod>
 ```
 
-## Bash
+### Bash
 
 To enter a container's bash shell:
 
 ```sh
-make bash version=4.0 php=8.1
+make bash PROJECT=<dev|demo|prod>
 ```
 
-## Build container image
+### Build container image
 
 To build a container image:
 
 ```sh
-make build version=4.0 php=8.1
+make build PROJECT=<dev|demo|prod>
 ```
 
-## Build httpd.conf
+### Build httpd.conf
 
 To re-build `httpd.conf` and appending `chevereto.conf`:
 

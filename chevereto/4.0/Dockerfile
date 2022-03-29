@@ -1,6 +1,10 @@
+ARG PHP=8.1
 FROM composer:latest as composer
-FROM php:8.1-fpm
+FROM php:${PHP}-fpm
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+
+ARG VERSION=4.0
+ARG SERVICING=docker
 
 RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
@@ -26,13 +30,9 @@ RUN apt-get install -y \
     rsync \
     inotify-tools
 
-ARG CHEVERETO_SOFTWARE=chevereto
-ARG CHEVERETO_TAG=4.0
-ARG CHEVERETO_SERVICING=docker
-
-ENV CHEVERETO_SOFTWARE=$CHEVERETO_SOFTWARE \
-    CHEVERETO_TAG=$CHEVERETO_TAG \
-    CHEVERETO_SERVICING=$CHEVERETO_SERVICING \
+ENV CHEVERETO_SOFTWARE=chevereto \
+    CHEVERETO_TAG=$VERSION \
+    CHEVERETO_SERVICING=$SERVICING \
     CHEVERETO_LICENSE= \
     CHEVERETO_ASSET_STORAGE_ACCOUNT_ID= \
     CHEVERETO_ASSET_STORAGE_ACCOUNT_NAME= \
@@ -97,6 +97,12 @@ VOLUME /var/www/html/importing
 VOLUME /var/www/html/importing/no-parse
 VOLUME /var/www/html/importing/parse-albums
 VOLUME /var/www/html/importing/parse-users
+
+COPY chevereto/${VERSION} /var/www/html/app
+RUN composer install \
+    --working-dir=/var/www/html/app \
+    --no-progress \
+    --ignore-platform-reqs
 
 COPY scripts /var/scripts
 RUN chmod +x \
