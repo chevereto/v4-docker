@@ -49,6 +49,7 @@ jobs:
 
       - name: Prepare Dockerfile
         run: cp ./chevereto/4.0/Dockerfile .
+
       - name: Build
         uses: docker/bake-action@v1
         with:
