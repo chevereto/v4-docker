@@ -148,3 +148,22 @@ To re-build `httpd.conf` and appending `chevereto.conf`:
 ```sh
 make build-httpd
 ```
+
+## Troubleshooting
+
+### Container never stars
+
+**Problem**: If you get the following loop:
+
+```plain
+[* starting] Waiting for chevereto4.0-prod-php8.1...
+[* unhealthy] Waiting for chevereto4.0-prod-php8.1...
+[* starting] Waiting for chevereto4.0-prod-php8.1...
+.
+.
+.
+```
+
+**Possible cause**: Wrong license key provided.
+
+**Workaround**: Make sure to use `cmd + v` when using macOS, and `shift + ctrl + v` if using Linux to paste the license key.
