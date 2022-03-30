@@ -12,6 +12,11 @@ This repository is for the [Chevereto](https://chevereto.com) Docker images used
 
 * Get Docker in your system
 * Clone (or download) the repository in your system [chevereto/docker](https://github.com/chevereto/docker)
+
+```sh
+git clone https://github.com/chevereto/docker.git
+```
+
 * From the repository root folder run: `make demo`
 
 ## Features

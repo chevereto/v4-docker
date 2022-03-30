@@ -1,6 +1,6 @@
 # Reference
 
-The `./bootstrap.sh` script is executed on container run and it contains logic that detects the container status. It provides Chevereto application code using on first container run. This means that the software is downloaded and installed every time you spawn a new container.
+The `./scripts/bootstrap.sh` is executed on container run and it contains logic that detects the container status. It provides Chevereto application code on first container run. This means that the software is downloaded and installed every time you spawn a new container.
 
 This provisioning is intended to be used in systems where once the container gets created, it is then either stopped or started (not removed).
 

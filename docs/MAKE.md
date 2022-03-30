@@ -37,7 +37,7 @@ make demo
 
 ## Dev
 
-A dev instance is used when you have a Chevereto project in your system (`source` argument). A Chevereto project is any folder containing Chevereto code, including your own modified versions.
+A dev instance is used when you have a Chevereto project in your system (`SOURCE` argument). A Chevereto project is any folder containing Chevereto code, including your own modified versions.
 
 💡 It requires a Chevereto project.
 
@@ -50,7 +50,7 @@ make dev SOURCE=~/git/chevereto/v4
 * To implement demo on dev:
 
 ```sh
-make dev--demo version=4.0 php=8.1
+make dev--demo
 ```
 
 * To run composer `update` on dev:
