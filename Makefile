@@ -34,7 +34,7 @@ bash: arguments
 		chevereto${VERSION}-${PROJECT}-php${PHP} \
 		bash
 
-prod: down--volumes
+prod: prod--down-volumes
 	@SOURCE=$(SOURCE) \
 	FLAG_PROD=$(FLAG_PROD) \
 	LICENSE=$(LICENSE) \
@@ -50,7 +50,13 @@ prod: down--volumes
 	@./wait.sh chevereto${VERSION}-prod-php${PHP}
 	@echo "👉 http://localhost:${FLAG_PROD}${VERSION_PORT}"
 
-demo: down--volumes
+prod--down-volumes:
+	@SOURCE="" docker-compose \
+		-p chevereto${VERSION_DOTLESS}-prod-php${PHP_DOTLESS} \
+		-f projects/prod.yml \
+		down --volumes
+
+demo: demo--down-volumes
 	@FLAG_DEMO=$(FLAG_DEMO) \
 	LICENSE=$(LICENSE) \
 	PHP_DOTLESS=$(PHP_DOTLESS) \
@@ -77,7 +83,13 @@ demo: down--volumes
 		app/bin/legacy -C importing
 	@echo "👉 admin:password http://localhost:${FLAG_DEMO}${VERSION_PORT}"
 
-dev: down--volumes
+demo--down-volumes:
+	@docker-compose \
+		-p chevereto${VERSION_DOTLESS}-demo-php${PHP_DOTLESS} \
+		-f projects/demo.yml \
+		down --volumes
+
+dev: dev--down-volumes
 	@SOURCE=$(SOURCE) \
 	FLAG_DEV_DB=$(FLAG_DEV_DB) \
 	FLAG_DEV=$(FLAG_DEV) \
@@ -106,6 +118,12 @@ dev: down--volumes
 			-e admin@chevereto.loc \
 			-x password
 	@echo "👉 admin:password http://localhost:${FLAG_DEV}${VERSION_PORT}"
+
+dev--down-volumes:
+	@docker-compose \
+		-p chevereto${VERSION_DOTLESS}-dev-php${PHP_DOTLESS} \
+		-f projects/dev.yml \
+		down --volumes
 
 dev--demo: arguments
 	@docker exec -it \
