@@ -1,8 +1,36 @@
 # Reference
 
-The `./scripts/bootstrap.sh` is executed on container run and it contains logic that detects the container status. It provides Chevereto application code on first container run. This means that the software is downloaded and installed every time you spawn a new container.
+## Docker alternatives
 
-This provisioning is intended to be used in systems where once the container gets created, it is then either stopped or started (not removed).
+We provide two Docker-based alternatives, choose the one that suit your needs and use-case.
+
+### chevereto/v4-docker
+
+* [chevereto/v4-docker](https://github.com/chevereto/v4-docker)
+
+The [bootstrap.sh](../scripts/bootstrap.sh) script is executed on container run and it contains logic that detects the container status. It provides Chevereto application code on first container run, the software is downloaded every time you create a container.
+
+This provisioning is intended to be used in systems where once the container gets created, it is either stopped or re-started (not removed).
+
+👉 Use `chevereto/v4-docker` when needing to work en Chevereto, test a functionality or checking for bugs.
+
+* Doesn't require to build system images (use our published images)
+* Application files in a shared volume
+* Enables to builds PHP & VERSION variants
+* Provides development project with automatic file-sync
+
+### chevereto/v4-docker-production
+
+* [chevereto/v4-docker-production](https://github.com/chevereto/v4-docker-production)
+
+Docker provisioning at `chevere/v4-docker-production` is intended to be used in production systems where the application files are provided in the container image. The application files are part of the container filesystem, the software is downloaded once.
+
+👉 Use `chevereto/v4-docker-production` when needing to run Chevereto for production purposes.
+
+* Requires to build new image on each update
+* Application files on container filesystem (immutable)
+* Uses fixed PHP & VERSION
+* Provides production-grade 12F provisioning
 
 ## Project targets
 
@@ -54,7 +82,7 @@ Ports used in this project follow a 5-char convention. For example, `14080` repr
 
 With this provisioning you can spawn multiple container versions by switching Chevereto version and PHP.
 
-Table below provide some examples:
+Table below provide examples:
 
 | Port  | Application            |
 | ----- | ---------------------- |

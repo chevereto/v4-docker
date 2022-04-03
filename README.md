@@ -1,4 +1,4 @@
-# Docker
+# V4 Docker
 
 > 🔔 [Subscribe](https://newsletter.chevereto.com/subscription?f=PmL892XuTdfErVq763PCycJQrvZ8PYc9JbsVUttqiPV1zXt6DDtf7lhepEStqE8LhGs8922ZYmGT7CYjMH5uSx23pL6Q) to don't miss any update regarding Chevereto.
 
@@ -6,24 +6,24 @@
 
 [![Community](https://img.shields.io/badge/chv.to-community-blue?style=flat-square)](https://chv.to/community)
 
-This repository is for the [Chevereto](https://chevereto.com) Docker images used for development base standard.
+This repository is for the [Chevereto](https://chevereto.com) Docker images used for development base standard. We use this to spawn containers for testing, trying and developing Chevereto.
 
-## Quick-start
+👉 If you are looking for Docker production usage head over to [chevereto/v4-docker-production](https://github.com/chevereto/v4-docker-production).
+
+## Requirements
+
+* `docker compose` >= 2.0
+
+## Quick start
 
 * Get Docker in your system
-* Clone (or download) the repository in your system [chevereto/docker](https://github.com/chevereto/docker)
+* Clone this repository [chevereto/v4-docker](https://github.com/chevereto/v4-docker)
 
 ```sh
-git clone https://github.com/chevereto/docker.git
+git clone https://github.com/chevereto/v4-docker.git
 ```
 
-* From the repository root folder run: `make demo`
-
-## Features
-
-* Development standard
-* One-liner Make commands
-* Supports spawning multiple versioned instances for Chevereto and PHP
+* From the repository folder run `make demo`
 
 ## Documentation
 

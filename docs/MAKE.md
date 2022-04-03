@@ -1,6 +1,6 @@
 # Make
 
-[Makefile](../Makefile) provides commands for managing multiple container provisionings.
+[Makefile](../Makefile) provides commands for managing multiple container provisioning.
 
 *Note:* Pass `DOCKER_USER=<user>` to set the user for run commands. Default `www-data`.
 
@@ -95,7 +95,7 @@ Available options:
 make up
 ```
 
-* To up an instance (daemonized):
+* To up an instance (daemon):
 
 ```sh
 make up--d
@@ -147,7 +147,7 @@ make build
 
 ### Build httpd.conf
 
-To re-build `httpd.conf` and appending `chevereto.conf`:
+To re-build `httpd/httpd.conf` and appending `httpd/chevereto.conf`:
 
 ```sh
 make build-httpd

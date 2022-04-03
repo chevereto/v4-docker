@@ -8,8 +8,6 @@
 
 ## Quick start
 
-* Use `4.0` branch `git switch 4.0`
-
 You will need a Chevereto V4 project:
 
 * Using git
