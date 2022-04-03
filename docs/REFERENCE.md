@@ -4,31 +4,31 @@ The `./scripts/bootstrap.sh` is executed on container run and it contains logic 
 
 This provisioning is intended to be used in systems where once the container gets created, it is then either stopped or started (not removed).
 
-## Projects
+## Project targets
 
-At `./projects` folder there are the docker compose files which are used to orchestrate the spawining of the application containers.
+At `./projects` folder there are the docker compose files which are used to orchestrate spawning of the system containers.
 
 👉 Do not use the `.yml` files directly! Refer to [MAKE](MAKE.md) to issue commands.
 
 ### prod.yml
 
-💡 Use `prod` project when needing to spawn a producion-like(*) provisioning.
+💡 Use `prod` target when needing to spawn a production-like(*) provisioning.
 
-The projet at [prod.yml](../projects/prod.yml) describes a system that will bootstrap a Chevereto instance. It should be used to try the software as to see how it works and/or to debug an alleged error in the application.
+The target at [prod.yml](../projects/prod.yml) describes a system that will bootstrap a Chevereto instance. It should be used to try the software as to see how it works and/or to debug an alleged error in the application.
 
 (*) Production-like: We recommend checking [container-builder](https://github.com/chevereto/container-builder) for production provisioning.
 
 ### demo.yml
 
-💡 Use `demo` project when needing to try the software with dummy content.
+💡 Use `demo` target when needing to try the software with dummy content.
 
-The projet at [demo.yml](../projects/demo.yml) describes the same system  with demo content loaded from [demo-importing](https://github.com/chevereto/demo-importing). It should be used to try the software as to see how it works and/or to debug an alleged error in the application.
+The target at [demo.yml](../projects/demo.yml) describes the same system  with demo content loaded from [demo-importing](https://github.com/chevereto/demo-importing). It should be used to try the software as to see how it works and/or to debug an alleged error in the application.
 
 ### dev.yml
 
-💡 Use `dev` project when needing to work on Chevereto source code.
+💡 Use `dev` target when needing to work on Chevereto source code.
 
-The project at [dev.yml](../projects/dev.yml) describes a system that will sync the application source code from a local filesystem path. It should be used when the Chevereto source code exists as a project folder in your system.
+The target at [dev.yml](../projects/dev.yml) describes a system that will sync the application source code from a local filesystem path. It should be used when the Chevereto source code exists as a project folder in your system.
 
 ## Ports
 

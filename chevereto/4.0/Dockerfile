@@ -3,9 +3,6 @@ FROM composer:latest as composer
 FROM php:${PHP}-fpm
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
-ARG VERSION=4.0
-ARG SERVICING=docker
-
 RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
@@ -29,6 +26,9 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get install -y \
     rsync \
     inotify-tools
+
+ARG VERSION=4.0
+ARG SERVICING=docker
 
 ENV CHEVERETO_SOFTWARE=chevereto \
     CHEVERETO_TAG=$VERSION \
@@ -56,8 +56,6 @@ ENV CHEVERETO_SOFTWARE=chevereto \
     CHEVERETO_DEBUG_LEVEL=1 \
     CHEVERETO_ENABLE_HTACCESS_CHECK=0 \
     CHEVERETO_ENABLE_PHP_PAGES=0 \
-    CHEVERETO_ENABLE_UPDATE_CLI=0 \
-    CHEVERETO_ENABLE_UPDATE_HTTP=0 \
     CHEVERETO_ERROR_LOG=/dev/stderr \
     CHEVERETO_HOSTNAME_PATH=/ \
     CHEVERETO_HOSTNAME=localhost \
@@ -86,19 +84,14 @@ RUN set -eux; \
     echo "upload_max_filesize = \${CHEVERETO_UPLOAD_MAX_FILESIZE}"; \
     } > $PHP_INI_DIR/conf.d/php.ini
 
-RUN mkdir -p /var/www/html/importing && \
+RUN mkdir -p /var/www/html && \
+    mkdir -p /var/www/html/_assets && \
+    mkdir -p /var/www/html/images && \
     mkdir -p /var/www/html/importing/no-parse && \
     mkdir -p /var/www/html/importing/parse-albums && \
     mkdir -p /var/www/html/importing/parse-users
 
-VOLUME /var/www/html
-VOLUME /var/www/html/images
-VOLUME /var/www/html/importing
-VOLUME /var/www/html/importing/no-parse
-VOLUME /var/www/html/importing/parse-albums
-VOLUME /var/www/html/importing/parse-users
-
-COPY chevereto/${VERSION} /var/www/html/app
+COPY --chown=www-data chevereto/${VERSION}/ /var/www/html/app
 RUN composer install \
     --working-dir=/var/www/html/app \
     --no-progress \

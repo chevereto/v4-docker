@@ -12,6 +12,7 @@ chv_install() {
     echo "cd /chevereto/download"
     cd /chevereto/download
     echo "* Downloading chevereto/v4 $CHEVERETO_PACKAGE package"
+    echo "> ${CHEVERETO_API_DOWNLOAD}${CHEVERETO_PACKAGE}"
     curl -f -SOJL \
         -H "License: $CHEVERETO_LICENSE" \
         "${CHEVERETO_API_DOWNLOAD}${CHEVERETO_PACKAGE}"
@@ -39,4 +40,6 @@ if [ ! -e $CONTAINER_STARTED ]; then
 fi
 echo "[OK] Started $CHEVERETO_SOFTWARE $CHEVERETO_TAG"
 cd $WORKING_DIR
+chown www-data: . -R
+ls -la
 $1

@@ -10,10 +10,10 @@ make <command> <VERSION=4.0 PHP=8.1 DOCKER_USER=www-data ... >
 
 Default values:
 
-* PROJECT=dev
-* VERSION=4.0
-* PHP=8.1
 * DOCKER_USER=www-data
+* PHP=8.1
+* TARGET=dev
+* VERSION=4.0
 
 ## Production
 
@@ -83,18 +83,22 @@ make dev--sh run=observe
 
 ## General commands
 
+Available options:
+
+* TARGET=dev (dev, demo, prod)
+
 ### Up
 
 * To up an instance:
 
 ```sh
-make up PROJECT=<dev|demo|prod>
+make up
 ```
 
 * To up an instance (daemonized):
 
 ```sh
-make up--d PROJECT=<dev|demo|prod>
+make up--d
 ```
 
 ### Down
@@ -102,13 +106,13 @@ make up--d PROJECT=<dev|demo|prod>
 * To takedown an instance (keep volumes):
 
 ```sh
-make down PROJECT=<dev|demo|prod>
+make down
 ```
 
 * To takedown an instance (remove volumes):
 
 ```sh
-make down--volumes PROJECT=<dev|demo|prod>
+make down--volumes
 ```
 
 ### Logs
@@ -116,13 +120,13 @@ make down--volumes PROJECT=<dev|demo|prod>
 To retrieve and follow the error log:
 
 ```sh
-make log-error PROJECT=<dev|demo|prod>
+make log-error
 ```
 
 To retrieve and follow the access log:
 
 ```sh
-make log-access PROJECT=<dev|demo|prod>
+make log-access
 ```
 
 ### Bash
@@ -130,7 +134,7 @@ make log-access PROJECT=<dev|demo|prod>
 To enter a container's bash shell:
 
 ```sh
-make bash PROJECT=<dev|demo|prod>
+make bash
 ```
 
 ### Build container image
@@ -138,7 +142,7 @@ make bash PROJECT=<dev|demo|prod>
 To build a container image:
 
 ```sh
-make build PROJECT=<dev|demo|prod>
+make build
 ```
 
 ### Build httpd.conf

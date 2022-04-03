@@ -1,16 +1,30 @@
-version: "3.4"
+version: "3.8"
 
 services:
   database:
-    container_name: chevereto${VERSION}-${PROJECT}-php${PHP}_database
+    container_name: ${CONTAINER_BASENAME}_dev_database
     image: mariadb:focal
     networks:
       - chevereto
     volumes:
       - database:/var/lib/mysql
     ports:
-      - ${FLAG_DEV_DB}${VERSION_DOTLESS}${PHP_DOTLESS}:3306
+      - ${FLAG_DEV_DB}${VERSION_PORT}:3306
     restart: always
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-u",
+          "root",
+          "-p$${MYSQL_ROOT_PASSWORD?REQUIRED}",
+        ]
+      interval: 15s
+      timeout: 30s
+      retries: 5
+      start_period: 15s
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: chevereto
@@ -18,16 +32,17 @@ services:
       MYSQL_PASSWORD: user_database_password
 
   php:
-    container_name: chevereto${VERSION}-${PROJECT}-php${PHP}
-    image: ghcr.io/chevereto/docker:${VERSION}-php${PHP}
+    container_name: ${CONTAINER_BASENAME}_dev_php
+    image: ${TAG}
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     networks:
       - chevereto
     volumes:
       - storage:/var/www/html/images/
       - assets:/var/www/html/_assets/
-      - app:/var/www/html/
+      - chevereto:/var/www/html/
       - type: bind
         source: ${SOURCE}
         target: /var/www/chevereto
@@ -41,7 +56,7 @@ services:
       retries: 5
       start_period: 15s
     environment:
-      CHEVERETO_TAG: ${PROJECT}
+      CHEVERETO_TAG: dev
       CHEVERETO_DB_HOST: database
       CHEVERETO_DB_USER: chevereto
       CHEVERETO_DB_PASS: user_database_password
@@ -49,32 +64,33 @@ services:
       CHEVERETO_DB_NAME: chevereto
       CHEVERETO_HTTPS: 0
       CHEVERETO_ASSET_STORAGE_TYPE: local
-      CHEVERETO_ASSET_STORAGE_URL: http://localhost:${FLAG_DEV}${VERSION_DOTLESS}${PHP_DOTLESS}/_assets/
+      CHEVERETO_ASSET_STORAGE_URL: http://localhost:${FLAG_DEV}${VERSION_PORT}/_assets/
       CHEVERETO_ASSET_STORAGE_BUCKET: /var/www/html/_assets/
 
-  server:
-    container_name: chevereto${VERSION}-${PROJECT}-php${PHP}_server
+  http:
+    container_name: ${CONTAINER_BASENAME}_dev_http
     image: httpd:2.4
     depends_on:
-      - php
+      php:
+        condition: service_healthy
     networks:
       - chevereto
     volumes:
-      - storage:/var/www/html/images/
-      - assets:/var/www/html/_assets/
-      - app:/var/www/html/
+      - storage:/var/www/html/images/:ro
+      - assets:/var/www/html/_assets/:ro
+      - chevereto:/var/www/html/:ro
       - type: bind
-        source: ${PWD}/httpd.conf
+        source: ${PWD}/httpd/httpd.conf
         target: /usr/local/apache2/conf/httpd.conf
     ports:
-      - ${FLAG_DEV}${VERSION_DOTLESS}${PHP_DOTLESS}:80
+      - ${FLAG_DEV}${VERSION_PORT}:80
     restart: always
 
 volumes:
   database:
   assets:
   storage:
-  app:
+  chevereto:
 
 networks:
   chevereto:
