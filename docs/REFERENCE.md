@@ -44,7 +44,7 @@ At `./projects` folder there are the docker compose files which are used to orch
 
 The target at [prod.yml](../projects/prod.yml) describes a system that will bootstrap a Chevereto instance. It should be used to try the software as to see how it works and/or to debug an alleged error in the application.
 
-(*) Production-like: We recommend checking [container-builder](https://github.com/chevereto/container-builder) for production provisioning.
+(*) Production-like: We recommend checking [chevereto/v4-docker-production](https://github.com/chevereto/v4-docker-production) for production-grade provisioning.
 
 ### demo.yml
 
