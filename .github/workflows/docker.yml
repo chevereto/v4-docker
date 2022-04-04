@@ -1,10 +1,8 @@
 name: Build
-
 on:
   workflow_dispatch:
-
 env:
-  GHCR_SLUG: ghcr.io/${{ github.repository }}
+  GHCR_SLUG: ghcr.io/chevereto/${GITHUB_REF##*/}
 
 jobs:
   build:
@@ -30,7 +28,7 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
           labels: |
-            org.opencontainers.image.title=Chevereto
+            org.opencontainers.image.title=Chevereto ${{ env.GHCR_SLUG }}
             org.opencontainers.image.description=Chevereto bootstrapped
             org.opencontainers.image.vendor=Chevereto
 
@@ -53,11 +51,11 @@ jobs:
       - name: Build
         uses: docker/bake-action@v1
         with:
-          set: build.args.PHP=${{ matrix.php-versions }}
+          set: default.args.PHP=${{ matrix.php-versions }}
           files: |
             ./docker-bake.hcl
             ${{ steps.meta.outputs.bake-file }}
-          targets: build
+          targets: default
           push: true
 
       - name: Check manifest
