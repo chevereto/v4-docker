@@ -129,7 +129,7 @@ down--volumes: arguments
 
 # Projects
 
-prod: prod-down--volumes
+prod: prod--down--volumes
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	FLAG_PROD=${FLAG_PROD} \
 	LICENSE=${LICENSE} \
@@ -142,7 +142,7 @@ prod: prod-down--volumes
 		up -d
 	@echo "👉 http://localhost:${FLAG_PROD}${VERSION_PORT}"
 
-prod-down:
+prod--down:
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE="" \
 	VERSION=${VERSION} \
@@ -151,7 +151,7 @@ prod-down:
 		-f projects/prod.yml \
 		down
 
-prod-down--volumes:
+prod--down--volumes:
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE="" \
 	VERSION=${VERSION} \
@@ -160,7 +160,7 @@ prod-down--volumes:
 		-f projects/prod.yml \
 		down --volumes
 
-demo: demo-down--volumes
+demo: demo--down--volumes
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	FLAG_DEMO=$(FLAG_DEMO) \
 	LICENSE=${LICENSE} \
@@ -185,7 +185,7 @@ demo: demo-down--volumes
 		app/bin/legacy -C importing
 	@echo "👉 admin:password http://localhost:${FLAG_DEMO}${VERSION_PORT}"
 
-demo-down:
+demo--down:
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	VERSION=${VERSION} \
 	docker compose \
@@ -193,7 +193,7 @@ demo-down:
 		-f projects/demo.yml \
 		down
 
-demo-down--volumes:
+demo--down--volumes:
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	VERSION=${VERSION} \
 	docker compose \
@@ -201,7 +201,7 @@ demo-down--volumes:
 		-f projects/demo.yml \
 		down --volumes
 
-dev: dev-down--volumes
+dev: dev--down--volumes
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE=${SOURCE} \
 	FLAG_DEV_DB=${FLAG_DEV_DB} \
@@ -230,14 +230,14 @@ dev: dev-down--volumes
 			-x password
 	@echo "👉 admin:password http://localhost:${FLAG_DEV}${VERSION_PORT}"
 
-dev-down:
+dev--down:
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	docker compose \
 		-p ${PROJECT_BASENAME}-dev \
 		-f projects/dev.yml \
 		down
 
-dev-down--volumes:
+dev--down--volumes:
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	docker compose \
 		-p ${PROJECT_BASENAME}-dev \
