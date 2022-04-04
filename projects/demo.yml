@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   database:
-    container_name: ${CONTAINER_BASENAME}_demo_database
+    container_name: ${CONTAINER_BASENAME}-demo_database
     image: mariadb:focal
     networks:
       - chevereto
@@ -30,7 +30,7 @@ services:
       MYSQL_PASSWORD: user_database_password
 
   php:
-    container_name: ${CONTAINER_BASENAME}_demo_php
+    container_name: ${CONTAINER_BASENAME}-demo_php
     image: ${TAG}
     depends_on:
       database:
@@ -64,7 +64,7 @@ services:
       CHEVERETO_ASSET_STORAGE_BUCKET: /var/www/html/_assets/
 
   http:
-    container_name: ${CONTAINER_BASENAME}_demo_http
+    container_name: ${CONTAINER_BASENAME}-demo_http
     image: httpd:2.4
     depends_on:
       php:

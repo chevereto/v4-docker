@@ -2,19 +2,19 @@
 
 ## Docker alternatives
 
-We provide two Docker-based alternatives, choose the one that suit your needs and use-case.
+👉 At Chevereto we provide two docker based alternatives, choose the one that suit your needs and use-case. If you aren't sure, you can always start a [discussion](https://github.com/chevereto/v4-docker/discussions) to get help.
 
 ### chevereto/v4-docker
 
-* [chevereto/v4-docker](https://github.com/chevereto/v4-docker)
+* [chevereto/v4-docker](https://github.com/chevereto/v4-docker) (this repo)
 
 The [bootstrap.sh](../scripts/bootstrap.sh) script is executed on container run and it contains logic that detects the container status. It provides Chevereto application code on first container run, the software is downloaded every time you create a container.
 
 This provisioning is intended to be used in systems where once the container gets created, it is either stopped or re-started (not removed).
 
-👉 Use `chevereto/v4-docker` when needing to work en Chevereto, test a functionality or checking for bugs.
+👉 Use `chevereto/v4-docker` when needing to work on Chevereto, test a functionality or checking for bugs.
 
-* Doesn't require to build system images (use our published images)
+* Doesn't require to build system images (we publish those)
 * Application files in a shared volume
 * Enables to builds PHP & VERSION variants
 * Provides development project with automatic file-sync
@@ -23,11 +23,11 @@ This provisioning is intended to be used in systems where once the container get
 
 * [chevereto/v4-docker-production](https://github.com/chevereto/v4-docker-production)
 
-Docker provisioning at `chevere/v4-docker-production` is intended to be used in production systems where the application files are provided in the container image. The application files are part of the container filesystem, the software is downloaded once.
+Docker provisioning at `chevere/v4-docker-production` is intended to be used in production systems as the application files are part of the container filesystem, the software is downloaded once.
 
 👉 Use `chevereto/v4-docker-production` when needing to run Chevereto for production purposes.
 
-* Requires to build new image on each update
+* Requires to build new images (php + httpd) on each update
 * Application files on container filesystem (immutable)
 * Uses fixed PHP & VERSION
 * Provides production-grade 12F provisioning

@@ -98,7 +98,7 @@ make up
 * To up an instance (daemon):
 
 ```sh
-make up--d
+make up-d
 ```
 
 ### Down
