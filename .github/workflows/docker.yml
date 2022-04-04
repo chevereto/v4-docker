@@ -45,17 +45,22 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
       - name: Prepare Dockerfile
-        run: cp ./chevereto/4.0/Dockerfile .
+        run: cp ./chevereto/${{ steps.extract_branch.outputs.branch }}/Dockerfile .
 
       - name: Build
         uses: docker/bake-action@v1
         with:
-          set: default.args.PHP=${{ matrix.php }}
+          set: build.args.PHP=${{ matrix.php }}
           files: |
             ./docker-bake.hcl
             ${{ steps.meta.outputs.bake-file }}
-          targets: default
+          targets: build
           push: true
 
       - name: Check manifest
