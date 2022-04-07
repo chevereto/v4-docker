@@ -8,7 +8,7 @@ PROTOCOL ?= http
 NAMESPACE ?= local
 PROJECT_BASENAME = ${NAMESPACE}_chevereto-docker
 CONTAINER_BASENAME ?= ${NAMESPACE}_chevereto-${VERSION}-php-${PHP}
-TAG ?= ghcr.io/chevereto/${VERSION}:php${PHP}
+TAG ?= ghcr.io/chevereto/v4-docker:${VERSION}-php${PHP}
 # SERVICE php|database|http
 SERVICE ?= php
 # License ask
