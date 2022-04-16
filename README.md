@@ -12,7 +12,8 @@ This repository is for the [Chevereto](https://chevereto.com) Docker images used
 
 ## Requirements
 
-* `docker compose` >= 2.0
+* [Docker](https://docs.docker.com/)
+* [Compose V2](https://docs.docker.com/compose/cli-command/) `docker compose`
 
 ## Quick start
 

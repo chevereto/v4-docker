@@ -171,3 +171,11 @@ make build-httpd
 **Possible cause**: Wrong license key provided.
 
 **Workaround**: Make sure to use `cmd + v` when using macOS, and `shift + ctrl + v` if using Linux to paste the license key.
+
+### Unable to run containers
+
+**Problem**: Wrong Docker engine/compose versions.
+
+**Workaround**: Check if you are running latest Docker version with [Compose V2](https://docs.docker.com/compose/cli-command/) `docker compose` (not `docker-compose`).
+
+If Docker was included with your Linux distribution check for [Install Docker Engine](https://docs.docker.com/engine/install/) on Linux. Some distributions may be providing old docker engine for LTS compliance, make sure to follow Docker instructions.
