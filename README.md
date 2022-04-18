@@ -6,9 +6,13 @@
 
 [![Community](https://img.shields.io/badge/chv.to-community-blue?style=flat-square)](https://chv.to/community)
 
-This repository is for the [Chevereto](https://chevereto.com) Docker images used for development base standard. We use this to spawn containers for testing, trying and developing Chevereto.
+This repository is for the [Chevereto](https://chevereto.com) Docker images used for development base standard.
 
-👉 If you are looking for Docker production usage head over to [chevereto/v4-docker-production](https://github.com/chevereto/v4-docker-production).
+## WARNING
+
+This is a Docker project for **developing and testing** Chevereto. We use this infra for **development purposes**.
+
+👉 If you are looking for Docker **production-grade** provisioning go to [chevereto/v4-docker-production](https://github.com/chevereto/v4-docker-production).
 
 ## Requirements
 
