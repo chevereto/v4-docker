@@ -19,7 +19,9 @@ Default values:
 
 💡 It requires a [Chevereto license](https://chevereto.com/pricing) key.
 
-* To build a production instance:
+* To build a new production instance:
+
+> Note: This command will destroy any previous `prod` instance (including its volumes).
 
 ```sh
 make prod
@@ -29,7 +31,9 @@ make prod
 
 💡 It requires a [Chevereto license](https://chevereto.com/pricing) key.
 
-* To build a demo instance:
+* To build a new demo instance:
+
+> Note: This command will destroy any previous `demo` instance (including its volumes).
 
 ```sh
 make demo
@@ -41,7 +45,9 @@ A dev instance is used when you have a Chevereto project in your system (`SOURCE
 
 💡 It requires a Chevereto project.
 
-* To build a dev instance:
+* To build a new dev instance:
+
+> Note: This command will destroy any previous `dev` instance (including its volumes).
 
 ```sh
 make dev SOURCE=~/git/chevereto/v4
