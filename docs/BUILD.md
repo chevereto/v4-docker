@@ -5,5 +5,5 @@ The Dockerfile are at `chevereto/{VERSION}/Dockerfile`, you need to take the Doc
 ```sh
 docker build . \
     -f chevereto/4.0/Dockerfile \
-    -t ghcr.io/chevereto/4.0:php8.1
+    -t ghcr.io/chevereto/v4-docker:4.0-php8.1
 ```
