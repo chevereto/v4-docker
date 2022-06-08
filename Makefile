@@ -114,7 +114,7 @@ dev--demo: arguments
     	bash /var/scripts/demo-importing.sh
 	@docker exec --user ${DOCKER_USER} \
 		-it ${CONTAINER_BASENAME}-dev_php \
-		app/bin/legacy -C importing
+		app/bin/legacy -C bulk-importer
 	@echo "👉 http://localhost:${FLAG_DEV}${VERSION_PORT}"
 
 dev--composer: arguments
@@ -182,7 +182,7 @@ demo: demo--down--volumes
     	bash /var/scripts/demo-importing.sh
 	@docker exec --user ${DOCKER_USER} \
 		-it ${CONTAINER_BASENAME}-demo_php \
-		app/bin/legacy -C importing
+		app/bin/legacy -C bulk-importer
 	@echo "👉 admin:password http://localhost:${FLAG_DEMO}${VERSION_PORT}"
 
 demo--down:
