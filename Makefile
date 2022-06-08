@@ -124,6 +124,11 @@ dev--composer: arguments
 			--working-dir app \
 			--ignore-platform-reqs
 
+dev--test: arguments
+	@docker exec -it --user ${DOCKER_USER} \
+		${CONTAINER_BASENAME}-dev_php \
+		app/vendor/bin/phpunit -c app/phpunit.xml
+
 dev--sh: arguments
 	@docker exec -it \
 		${CONTAINER_BASENAME}-dev_${SERVICE} \
