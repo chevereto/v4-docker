@@ -17,15 +17,12 @@
     },
     "require": {
         "php": ">=8.0",
-        "phpunit/phpunit": "^9.2",
         "laminas/laminas-uri": "^2.7",
         "intervention/image": "^2.6",
         "jeroendesloovere/xmp-metadata-extractor": "^2.0",
         "ext-imagick": "^3.4",
-        "guzzlehttp/guzzle": "^6 || ^7",
         "league/flysystem": "^2.0",
         "ext-bcmath": "^8.0",
-        "doctrine/orm": "^2.8",
         "jenssegers/imagehash": "^0.5.0",
         "guzzlehttp/psr7": "^1.7",
         "aws/aws-sdk-php": "^3.191",
@@ -35,7 +32,6 @@
         "psr/log": "^1",
         "google/apiclient": "^2.10",
         "phpseclib/phpseclib": "^3.0",
-        "rackspace/php-opencloud": "^1.16",
         "mobiledetect/mobiledetectlib": "^2.8",
         "abraham/twitteroauth": "^3.1",
         "bocharsky-bw/vkontakte-php-sdk": "^2.0",
@@ -51,10 +47,10 @@
         "obregonco/backblaze-b2": "^1.1",
         "chevere/chevere": "^0.7.x-dev",
         "chevere/throwable-handler": "^0.3",
-        "chevere/var-dump": "^0.2",
         "chevere/xr": "^0.2",
-        "chevere/cache": "^0.1.x-dev",
-        "chevere/workflow": "^0.1.0"
+        "chevere/cache": "^0.1",
+        "chevere/workflow": "^0.1.0",
+        "php-opencloud/openstack": "^3.2"
     },
     "autoload": {
         "files": [
@@ -66,7 +62,10 @@
             "src/Legacy/functions.php",
             "src/Legacy/functions-render.php",
             "src/Legacy/G/functions.php",
-            "src/Legacy/G/functions-render.php"
+            "src/Legacy/G/functions-render.php",
+            "legacy/load/integrity-check.php",
+            "legacy/load/app.php",
+            "legacy/load/l10n.php"
         ],
         "psr-4": {
             "Chevereto\\": "src/",
@@ -74,10 +73,14 @@
         }
     },
     "require-dev": {
-        "symplify/easy-coding-standard": "^10.1",
+        "phpunit/phpunit": "^9.2",
+        "symplify/easy-coding-standard": "~10.1.4",
         "phpstan/phpstan": "^1.4",
         "rector/rector": "^0.12.15"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "scripts": {
+        "phpstan": "vendor/bin/phpstan analyse --memory-limit=512M"
+    }
 }
