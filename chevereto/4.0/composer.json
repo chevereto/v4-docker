@@ -17,7 +17,6 @@
     },
     "require": {
         "php": ">=8.0",
-        "laminas/laminas-uri": "^2.7",
         "intervention/image": "^2.6",
         "jeroendesloovere/xmp-metadata-extractor": "^2.0",
         "ext-imagick": "^3.4",
@@ -27,7 +26,6 @@
         "guzzlehttp/psr7": "^1.7",
         "aws/aws-sdk-php": "^3.191",
         "phpmailer/phpmailer": "^6.5",
-        "facebook/graph-sdk": "^5.1",
         "psr/cache": "^1",
         "psr/log": "^1",
         "google/apiclient": "^2.10",
