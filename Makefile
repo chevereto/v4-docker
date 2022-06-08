@@ -32,7 +32,7 @@ arguments:
 
 # Tools
 
-build-httpd: 
+build-httpd:
 	@echo "👉 Downloading source httpd.conf"
 	@docker run --rm httpd:2.4 cat /usr/local/apache2/conf/httpd.conf > httpd/httpd.conf
 	@echo "👉 Adding httpd/chevereto.conf to httpd/httpd.conf"
@@ -63,71 +63,71 @@ log-access: arguments
 log-error: arguments
 	@docker logs ${CONTAINER_BASENAME}-${TARGET}_${SERVICE} -f 1>/dev/null
 
-# docker compose
+# Projects
 
-up: arguments
+dev: dev--down--volumes
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE=${SOURCE} \
-	TAG=${TAG} \
+	FLAG_DEV_DB=${FLAG_DEV_DB} \
 	FLAG_DEV=${FLAG_DEV} \
 	FLAG_DEV_DB=${FLAG_DEV_DB} \
-	FLAG_PROD=${FLAG_PROD} \
-	FLAG_DEMO=${FLAG_DEMO} \
-	VERSION=${VERSION} \
 	VERSION_PORT=${VERSION_PORT} \
-	docker compose \
-		-p ${PROJECT_BASENAME}-${TARGET} \
-		-f projects/${TARGET}.yml \
-		up
-
-up-d: arguments
-	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
-	SOURCE=${SOURCE} \
 	TAG=${TAG} \
-	FLAG_DEV=${FLAG_DEV} \
-	FLAG_DEV_DB=${FLAG_DEV_DB} \
-	FLAG_PROD=${FLAG_PROD} \
-	FLAG_DEMO=${FLAG_DEMO} \
 	VERSION=${VERSION} \
-	VERSION_PORT=${VERSION_PORT} \
 	docker compose \
-		-p ${PROJECT_BASENAME}-${TARGET} \
-		-f projects/${TARGET}.yml \
+		-p ${PROJECT_BASENAME}-dev \
+		-f projects/dev.yml \
 		up -d
+	@docker exec -it \
+		${CONTAINER_BASENAME}-dev_php \
+		bash /var/scripts/sync.sh
+	@docker exec --user ${DOCKER_USER} -it \
+		${CONTAINER_BASENAME}-dev_php \
+		composer dump-autoload \
+			--working-dir app \
+			--classmap-authoritative
+	@docker exec -it --user ${DOCKER_USER} \
+		${CONTAINER_BASENAME}-dev_php \
+		app/bin/legacy -C install \
+			-u admin \
+			-e admin@chevereto.loc \
+			-x password
+	@echo "👉 admin:password http://localhost:${FLAG_DEV}${VERSION_PORT}"
 
-stop: arguments
+dev--down:
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
-	SOURCE='' \
-	FLAG_DEV=${FLAG_DEV} \
-	FLAG_DEV_DB=${FLAG_DEV_DB} \
-	FLAG_PROD=${FLAG_PROD} \
-	FLAG_DEMO=${FLAG_DEMO} \
-	VERSION=${VERSION} \
-	VERSION_PORT=${VERSION_PORT} \
 	docker compose \
-		-p ${PROJECT_BASENAME}-${TARGET} \
-		-f projects/${TARGET}.yml \
-		stop
-
-down: arguments
-	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
-	SOURCE='' \
-	VERSION=${VERSION} \
-	docker compose \
-		-p ${PROJECT_BASENAME}-${TARGET} \
-		-f projects/${TARGET}.yml \
+		-p ${PROJECT_BASENAME}-dev \
+		-f projects/dev.yml \
 		down
 
-down--volumes: arguments
+dev--down--volumes:
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
-	SOURCE='' \
-	VERSION=${VERSION} \
 	docker compose \
-		-p ${PROJECT_BASENAME}-${TARGET} \
-		-f projects/${TARGET}.yml \
+		-p ${PROJECT_BASENAME}-dev \
+		-f projects/dev.yml \
 		down --volumes
 
-# Projects
+dev--demo: arguments
+	@docker exec -it \
+    	${CONTAINER_BASENAME}-dev_php \
+    	bash /var/scripts/demo-importing.sh
+	@docker exec --user ${DOCKER_USER} \
+		-it ${CONTAINER_BASENAME}-dev_php \
+		app/bin/legacy -C importing
+	@echo "👉 http://localhost:${FLAG_DEV}${VERSION_PORT}"
+
+dev--composer: arguments
+	@docker exec -it --user ${DOCKER_USER} \
+		${CONTAINER_BASENAME}-dev_php \
+		composer ${run} \
+			--working-dir app \
+			--ignore-platform-reqs
+
+dev--sh: arguments
+	@docker exec -it \
+		${CONTAINER_BASENAME}-dev_${SERVICE} \
+		bash /var/scripts/${run}.sh
 
 prod: prod--down--volumes
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
@@ -201,66 +201,66 @@ demo--down--volumes:
 		-f projects/demo.yml \
 		down --volumes
 
-dev: dev--down--volumes
+# General purpose docker compose
+
+compose-up: arguments
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE=${SOURCE} \
-	FLAG_DEV_DB=${FLAG_DEV_DB} \
+	TAG=${TAG} \
 	FLAG_DEV=${FLAG_DEV} \
 	FLAG_DEV_DB=${FLAG_DEV_DB} \
+	FLAG_PROD=${FLAG_PROD} \
+	FLAG_DEMO=${FLAG_DEMO} \
+	VERSION=${VERSION} \
 	VERSION_PORT=${VERSION_PORT} \
+	docker compose \
+		-p ${PROJECT_BASENAME}-${TARGET} \
+		-f projects/${TARGET}.yml \
+		up
+
+compose-up-d: arguments
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	SOURCE=${SOURCE} \
 	TAG=${TAG} \
+	FLAG_DEV=${FLAG_DEV} \
+	FLAG_DEV_DB=${FLAG_DEV_DB} \
+	FLAG_PROD=${FLAG_PROD} \
+	FLAG_DEMO=${FLAG_DEMO} \
+	VERSION=${VERSION} \
+	VERSION_PORT=${VERSION_PORT} \
+	docker compose \
+		-p ${PROJECT_BASENAME}-${TARGET} \
+		-f projects/${TARGET}.yml \
+		up -d
+
+compose-stop: arguments
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	SOURCE='' \
+	FLAG_DEV=${FLAG_DEV} \
+	FLAG_DEV_DB=${FLAG_DEV_DB} \
+	FLAG_PROD=${FLAG_PROD} \
+	FLAG_DEMO=${FLAG_DEMO} \
+	VERSION=${VERSION} \
+	VERSION_PORT=${VERSION_PORT} \
+	docker compose \
+		-p ${PROJECT_BASENAME}-${TARGET} \
+		-f projects/${TARGET}.yml \
+		stop
+
+compose-down: arguments
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	SOURCE='' \
 	VERSION=${VERSION} \
 	docker compose \
-		-p ${PROJECT_BASENAME}-dev \
-		-f projects/dev.yml \
-		up -d
-	@docker exec -it \
-		${CONTAINER_BASENAME}-dev_php \
-		bash /var/scripts/sync.sh
-	@docker exec --user ${DOCKER_USER} -it \
-		${CONTAINER_BASENAME}-dev_php \
-		composer dump-autoload \
-			--working-dir app \
-			--classmap-authoritative
-	@docker exec -it --user ${DOCKER_USER} \
-		${CONTAINER_BASENAME}-dev_php \
-		app/bin/legacy -C install \
-			-u admin \
-			-e admin@chevereto.loc \
-			-x password
-	@echo "👉 admin:password http://localhost:${FLAG_DEV}${VERSION_PORT}"
-
-dev--down:
-	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
-	docker compose \
-		-p ${PROJECT_BASENAME}-dev \
-		-f projects/dev.yml \
+		-p ${PROJECT_BASENAME}-${TARGET} \
+		-f projects/${TARGET}.yml \
 		down
 
-dev--down--volumes:
+compose-down--volumes: arguments
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	SOURCE='' \
+	VERSION=${VERSION} \
 	docker compose \
-		-p ${PROJECT_BASENAME}-dev \
-		-f projects/dev.yml \
+		-p ${PROJECT_BASENAME}-${TARGET} \
+		-f projects/${TARGET}.yml \
 		down --volumes
-
-dev--demo: arguments
-	@docker exec -it \
-    	${CONTAINER_BASENAME}-dev_php \
-    	bash /var/scripts/demo-importing.sh
-	@docker exec --user ${DOCKER_USER} \
-		-it ${CONTAINER_BASENAME}-dev_php \
-		app/bin/legacy -C importing
-	@echo "👉 http://localhost:${FLAG_DEV}${VERSION_PORT}"
-
-dev--composer: arguments
-	@docker exec -it --user ${DOCKER_USER} \
-		${CONTAINER_BASENAME}-dev_php \
-		composer ${run} \
-			--working-dir app \
-			--ignore-platform-reqs
-
-dev--sh: arguments
-	@docker exec -it \
-		${CONTAINER_BASENAME}-dev_${SERVICE} \
-		bash /var/scripts/${run}.sh

@@ -87,7 +87,9 @@ make dev--sh run=sync
 make dev--sh run=observe
 ```
 
-## General commands
+## Docker compose commands
+
+Note: These commands only interact with the `docker compose` yml files. Any extra requirement (as sync, dependencies, etc.) is not provided.
 
 Available options:
 
@@ -98,13 +100,13 @@ Available options:
 * To up an instance:
 
 ```sh
-make up
+make compose-up
 ```
 
 * To up an instance (daemon):
 
 ```sh
-make up-d
+make compose-up-d
 ```
 
 ### Down
@@ -112,13 +114,13 @@ make up-d
 * To takedown an instance (keep volumes):
 
 ```sh
-make down
+make compose-down
 ```
 
 * To takedown an instance (remove volumes):
 
 ```sh
-make down--volumes
+make compose-down--volumes
 ```
 
 ### Logs

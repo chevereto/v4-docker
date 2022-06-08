@@ -1,0 +1,618 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# This program built for i386-apple-darwin11.3.0
+
+# Make data base, printed on Wed Jun  8 12:07:15 2022
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# makefile (from `Makefile', line 19)
+FLAG_DEV_DB = 3
+# environment
+VSCODE_LOG_NATIVE = false
+# makefile (from `Makefile', line 2)
+TARGET = dev
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+@F = $(notdir $@)
+# makefile
+CURDIR := /Users/rodolfo/git/chevereto/v4-docker
+# makefile
+SHELL = /bin/sh
+# makefile (from `Makefile', line 8)
+NAMESPACE = local
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{},"_languagePackSupport":true}
+# environment
+_ = /usr/bin/make
+# makefile (from `Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# makefile (from `Makefile', line 4)
+PHP = 8.1
+# makefile (from `Makefile', line 3)
+VERSION = 4.0
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# makefile (from `Makefile', line 17)
+FLAG_PROD = 1
+# environment
+__CFBundleIdentifier = com.microsoft.VSCode
+# environment
+INFOPATH = /opt/homebrew/share/info:
+# environment
+P9K_SSH = 0
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/j2/j57zt9mn6vd7_bvsj388kqhc0000gn/T/vscode-ipc-8a23e3bf-35f4-45dd-8a83-8b8f09d91681.sock
+# environment
+VSCODE_CWD = /
+# makefile (from `Makefile', line 6)
+PROTOCOL = http
+# environment
+PATH = /opt/homebrew/lib/ruby/gems/3.1.0/bin:/opt/homebrew/opt/ruby/bin:/Users/rodolfo/.rbenv/shims:/Users/rodolfo/.composer/vendor/bin:/opt/homebrew/bin/php:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+# environment
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# makefile (from `Makefile', line 20)
+FLAG_DEV = 4
+# environment
+VSCODE_LOG_STACK = false
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# default
+.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+# makefile (from `Makefile', line 11)
+TAG = ghcr.io/chevereto/v4-docker:${VERSION}-php${PHP}
+# environment
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.RO0XvOcO2t/Listeners
+# automatic
+%F = $(notdir $%)
+# makefile (from `Makefile', line 25)
+FEEDBACK = $(shell echo 👉 V\${VERSION} \${NAMESPACE} [PHP \${PHP}] \(\${DOCKER_USER}\))
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+PWD = /Users/rodolfo/git/chevereto/v4-docker
+# makefile (from `Makefile', line 22)
+PHP_DOTLESS = $(shell echo \${PHP} | tr -d '.')
+# makefile (from `Makefile', line 9)
+PROJECT_BASENAME = ${NAMESPACE}_chevereto-docker
+# environment
+HOMEBREW_CELLAR = /opt/homebrew/Cellar
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# makefile (from `Makefile', line 21)
+VERSION_DOTLESS = $(shell echo \${VERSION} | tr -d '.')
+# environment
+MANPATH = /opt/homebrew/share/man::
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /Users/rodolfo
+# makefile (from `Makefile', line 26)
+FEEDBACK_SHORT = $(shell echo 👉 V\${VERSION} [PHP \${PHP}] \(\${DOCKER_USER}\))
+# default
+MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
+# environment
+VSCODE_CODE_CACHE_PATH = /Users/rodolfo/Library/Application Support/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+# environment
+LOGNAME = rodolfo
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# environment
+ZSH = /Users/rodolfo/.oh-my-zsh
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+XPC_FLAGS = 0x0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# environment
+SHLVL = 1
+# makefile (from `Makefile', line 28)
+SOURCE = ~/git/chevereto/v4
+# default
+MAKE_VERSION := 3.81
+# environment
+USER = rodolfo
+# makefile
+.DEFAULT_GOAL := arguments
+# environment
+LESS = -R
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# default
+MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
+# default
+.VARIABLES := 
+# environment
+TMPDIR = /var/folders/j2/j57zt9mn6vd7_bvsj388kqhc0000gn/T/
+# automatic
+*F = $(notdir $*)
+# environment
+VSCODE_IPC_HOOK = /Users/rodolfo/Library/Application Support/Code/1.67.2-main.sock
+# makefile
+MAKEFLAGS = Rrqp
+# makefile (from `Makefile', line 13)
+SERVICE = php
+# environment
+MFLAGS = -Rrqp
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.38559068.38559074
+# environment
+HOMEBREW_PREFIX = /opt/homebrew
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
+# environment
+HOMEBREW_REPOSITORY = /opt/homebrew
+# environment
+__CF_USER_TEXT_ENCODING = 0x1F5:0x0:0x0
+# environment
+COMMAND_MODE = unix2003
+# default
+MAKEFILES := 
+# makefile (from `Makefile', line 5)
+DOCKER_USER = www-data
+# environment
+RBENV_SHELL = zsh
+# makefile (from `Makefile', line 10)
+CONTAINER_BASENAME = ${NAMESPACE}_chevereto-${VERSION}-php-${PHP}
+# automatic
+<F = $(notdir $<)
+# environment
+PAGER = less
+# environment
+LC_ALL = C
+# makefile (from `Makefile', line 23)
+VERSION_PORT = ${VERSION_DOTLESS}${PHP_DOTLESS}
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# makefile (from `Makefile', line 15)
+LICENSE = $(shell stty -echo; read -p "Chevereto V4 License key: " license; stty echo; echo $$license)
+# environment
+MAKELEVEL := 0
+# makefile (from `Makefile', line 18)
+FLAG_DEMO = 2
+# environment
+LANG = C
+# environment
+VSCODE_PID = 1299
+# variable set hash-table stats:
+# Load=93/1024=9%, Rehash=0, Collisions=7/127=6%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 16777231, inode 4481083): 18 files, no impossibilities.
+
+# 18 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+stop: arguments
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 99):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	SOURCE='' \
+	FLAG_DEV=${FLAG_DEV} \
+	FLAG_DEV_DB=${FLAG_DEV_DB} \
+	FLAG_PROD=${FLAG_PROD} \
+	FLAG_DEMO=${FLAG_DEMO} \
+	VERSION=${VERSION} \
+	VERSION_PORT=${VERSION_PORT} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-${TARGET} \
+	-f projects/${TARGET}.yml \
+	stop
+	
+
+# Not a target:
+all:
+#  Command-line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+dev--down:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 234):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-dev \
+	-f projects/dev.yml \
+	down
+	
+
+demo--down--volumes:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 197):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	VERSION=${VERSION} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-demo \
+	-f projects/demo.yml \
+	down --volumes
+	
+
+up: arguments
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 69):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	SOURCE=${SOURCE} \
+	TAG=${TAG} \
+	FLAG_DEV=${FLAG_DEV} \
+	FLAG_DEV_DB=${FLAG_DEV_DB} \
+	FLAG_PROD=${FLAG_PROD} \
+	FLAG_DEMO=${FLAG_DEMO} \
+	VERSION=${VERSION} \
+	VERSION_PORT=${VERSION_PORT} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-${TARGET} \
+	-f projects/${TARGET}.yml \
+	up
+	
+
+demo: demo--down--volumes
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 164):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	FLAG_DEMO=$(FLAG_DEMO) \
+	LICENSE=${LICENSE} \
+	VERSION_PORT=${VERSION_PORT} \
+	TAG=${TAG} \
+	VERSION=${VERSION} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-demo \
+	-f projects/demo.yml \
+	up -d
+ 
+make: *** No rule to make target `all'.  Stop.
+
+	@docker exec -it --user ${DOCKER_USER} \
+	${CONTAINER_BASENAME}-demo_php \
+	app/bin/legacy -C install \
+	-u admin \
+	-e admin@chevereto.loc \
+	-x password
+	@docker exec -it \
+	${CONTAINER_BASENAME}-demo_php \
+	bash /var/scripts/demo-importing.sh
+	@docker exec --user ${DOCKER_USER} \
+	-it ${CONTAINER_BASENAME}-demo_php \
+	app/bin/legacy -C importing
+	@echo "👉 admin:password http://localhost:${FLAG_DEMO}${VERSION_PORT}"
+	
+
+prod--down--volumes:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 155):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	SOURCE="" \
+	VERSION=${VERSION} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-prod \
+	-f projects/prod.yml \
+	down --volumes
+	
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+prod: prod--down--volumes
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 133):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	FLAG_PROD=${FLAG_PROD} \
+	LICENSE=${LICENSE} \
+	VERSION_PORT=${VERSION_PORT} \
+	TAG=${TAG} \
+	VERSION=${VERSION} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-prod \
+	-f projects/prod.yml \
+	up -d
+	@echo "👉 http://localhost:${FLAG_PROD}${VERSION_PORT}"
+	
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-16 10:05:14
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+down--volumes: arguments
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 122):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	SOURCE='' \
+	VERSION=${VERSION} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-${TARGET} \
+	-f projects/${TARGET}.yml \
+	down --volumes
+	
+
+dev--demo: arguments
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 248):
+	@docker exec -it \
+	${CONTAINER_BASENAME}-dev_php \
+	bash /var/scripts/demo-importing.sh
+	@docker exec --user ${DOCKER_USER} \
+	-it ${CONTAINER_BASENAME}-dev_php \
+	app/bin/legacy -C importing
+	@echo "👉 http://localhost:${FLAG_DEV}${VERSION_PORT}"
+	
+
+log-access: arguments
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 61):
+	@docker logs ${CONTAINER_BASENAME}-${TARGET}_${SERVICE} -f 2>/dev/null
+	
+
+dev--down--volumes:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 241):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-dev \
+	-f projects/dev.yml \
+	down --volumes
+	
+
+dev: dev--down--volumes
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 205):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	SOURCE=${SOURCE} \
+	FLAG_DEV_DB=${FLAG_DEV_DB} \
+	FLAG_DEV=${FLAG_DEV} \
+	FLAG_DEV_DB=${FLAG_DEV_DB} \
+	VERSION_PORT=${VERSION_PORT} \
+	TAG=${TAG} \
+	VERSION=${VERSION} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-dev \
+	-f projects/dev.yml \
+	up -d
+	@docker exec -it \
+	${CONTAINER_BASENAME}-dev_php \
+	bash /var/scripts/sync.sh
+	@docker exec --user ${DOCKER_USER} -it \
+	${CONTAINER_BASENAME}-dev_php \
+	composer dump-autoload \
+	--working-dir app \
+	--classmap-authoritative
+	@docker exec -it --user ${DOCKER_USER} \
+	${CONTAINER_BASENAME}-dev_php \
+	app/bin/legacy -C install \
+	-u admin \
+	-e admin@chevereto.loc \
+	-x password
+	@echo "👉 admin:password http://localhost:${FLAG_DEV}${VERSION_PORT}"
+	
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+pull:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 52):
+	@echo "${FEEDBACK_SHORT}"
+	@docker pull ${TAG}
+	
+
+dev--sh: arguments
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 264):
+	@docker exec -it \
+	${CONTAINER_BASENAME}-dev_${SERVICE} \
+	bash /var/scripts/${run}.sh
+	
+
+image:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 45):
+	@echo "${FEEDBACK_SHORT}"
+	@docker build . \
+	-f chevereto/${VERSION}/Dockerfile \
+	--build-arg PHP=${PHP} \
+	-t ${TAG}
+	
+
+log-error: arguments
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 64):
+	@docker logs ${CONTAINER_BASENAME}-${TARGET}_${SERVICE} -f 1>/dev/null
+	
+
+bash: arguments
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 56):
+	@docker exec -it --user ${DOCKER_USER} \
+	${CONTAINER_BASENAME}-${TARGET}_${SERVICE} \
+	bash
+	
+
+demo--down:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 189):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	VERSION=${VERSION} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-demo \
+	-f projects/demo.yml \
+	down
+	
+
+prod--down:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 146):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	SOURCE="" \
+	VERSION=${VERSION} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-prod \
+	-f projects/prod.yml \
+	down
+	
+
+dev--composer: arguments
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 257):
+	@docker exec -it --user ${DOCKER_USER} \
+	${CONTAINER_BASENAME}-dev_php \
+	composer ${run} \
+	--working-dir app \
+	--ignore-platform-reqs
+	
+
+build-httpd:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 36):
+	@echo "👉 Downloading source httpd.conf"
+	@docker run --rm httpd:2.4 cat /usr/local/apache2/conf/httpd.conf > httpd/httpd.conf
+	@echo "👉 Adding httpd/chevereto.conf to httpd/httpd.conf"
+	@cat httpd/chevereto.conf >> httpd/httpd.conf
+	@echo "✅ httpd/httpd.conf updated"
+	
+
+up-d: arguments
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 84):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	SOURCE=${SOURCE} \
+	TAG=${TAG} \
+	FLAG_DEV=${FLAG_DEV} \
+	FLAG_DEV_DB=${FLAG_DEV_DB} \
+	FLAG_PROD=${FLAG_PROD} \
+	FLAG_DEMO=${FLAG_DEMO} \
+	VERSION=${VERSION} \
+	VERSION_PORT=${VERSION_PORT} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-${TARGET} \
+	-f projects/${TARGET}.yml \
+	up -d
+	
+
+down: arguments
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 113):
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	SOURCE='' \
+	VERSION=${VERSION} \
+	docker compose \
+	-p ${PROJECT_BASENAME}-${TARGET} \
+	-f projects/${TARGET}.yml \
+	down
+	
+
+arguments:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 31):
+	@echo "${FEEDBACK}"
+	
+
+# files hash-table stats:
+# Load=28/1024=3%, Rehash=0, Collisions=0/54=0%
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+ 
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+
+# Finished Make data base on Wed Jun  8 12:07:15 2022
+
+ 

@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/rodolfo/git/chevereto/v4-docker'
+echo "👉 V4.0 local [PHP 8.1] (www-data)"
+make: Leaving directory `/Users/rodolfo/git/chevereto/v4-docker'
+ 
