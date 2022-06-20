@@ -1,6 +1,6 @@
 # V4 Docker
 
-> 🔔 [Subscribe](https://newsletter.chevereto.com/subscription?f=PmL892XuTdfErVq763PCycJQrvZ8PYc9JbsVUttqiPV1zXt6DDtf7lhepEStqE8LhGs8922ZYmGT7CYjMH5uSx23pL6Q) to don't miss any update regarding Chevereto.
+> **Note**: Subscribe to the [newsletter](https://newsletter.chevereto.com/subscription?f=PmL892XuTdfErVq763PCycJQrvZ8PYc9JbsVUttqiPV1zXt6DDtf7lhepEStqE8LhGs8922ZYmGT7CYjMH5uSx23pL6Q) to don't miss any update regarding Chevereto.
 
 <img alt="Chevereto" src="LOGO.svg" width="100%">
 
@@ -10,7 +10,7 @@ This repository is for the [Chevereto](https://chevereto.com) Docker images used
 
 ## WARNING
 
-This is a Docker project for **developing and testing** Chevereto. We use this infra for **development purposes**.
+> **Warning**: This is a Docker project for developing and testing Chevereto. We use this infra for **development purposes**.
 
 👉 If you are looking for Docker **production-grade** provisioning go to [chevereto/v4-docker-production](https://github.com/chevereto/v4-docker-production).
 
