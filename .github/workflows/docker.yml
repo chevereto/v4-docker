@@ -1,4 +1,4 @@
-name: Build
+name: Docker
 
 on: [create, workflow_dispatch]
 
@@ -11,6 +11,7 @@ jobs:
     strategy:
       matrix:
         php: ["8.0", "8.1"]
+    name: Build on PHP ${{ matrix.php-versions }} ${{ matrix.operating-system }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -29,7 +30,7 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
           labels: |
-            org.opencontainers.image.title=Chevereto
+            org.opencontainers.image.title=Chevereto V4
             org.opencontainers.image.description=Chevereto bootstrapped
             org.opencontainers.image.vendor=Chevereto
 
@@ -45,11 +46,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
 
       - name: Prepare Dockerfile
         run: cp ./chevereto/Dockerfile .
