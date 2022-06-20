@@ -7,11 +7,12 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-22.04]
         php: ["8.0", "8.1"]
-    name: Build on PHP ${{ matrix.php-versions }} ${{ matrix.operating-system }}
+    name: Build on PHP ${{ matrix.php }} ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
