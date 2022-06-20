@@ -1,6 +1,7 @@
 name: Build
-on:
-  workflow_dispatch:
+
+on: [create, workflow_dispatch]
+
 env:
   GHCR_SLUG: ghcr.io/${{ github.repository }}
 
@@ -51,7 +52,7 @@ jobs:
         id: extract_branch
 
       - name: Prepare Dockerfile
-        run: cp ./chevereto/${{ steps.extract_branch.outputs.branch }}/Dockerfile .
+        run: cp ./chevereto/Dockerfile .
 
       - name: Build
         uses: docker/bake-action@v1

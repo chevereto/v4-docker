@@ -44,7 +44,7 @@ build-httpd:
 image:
 	@echo "${FEEDBACK_SHORT}"
 	@docker build . \
-		-f chevereto/${VERSION}/Dockerfile \
+		-f chevereto/Dockerfile \
 		--build-arg PHP=${PHP} \
 		-t ${TAG}
 

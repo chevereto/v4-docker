@@ -92,7 +92,7 @@ RUN mkdir -p _assets images \
     importing/parse-albums \
     importing/parse-users
 
-COPY --chown=www-data chevereto/${VERSION}/ ./app
+COPY --chown=www-data chevereto/ ./app
 RUN composer install \
     --working-dir=app \
     --no-progress \
