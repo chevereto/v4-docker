@@ -94,6 +94,29 @@ dev: dev--down--volumes
 			-x password
 	@echo "👉 admin:password http://localhost:${FLAG_DEV}${VERSION_PORT}"
 
+dev--update: dev--down
+	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
+	SOURCE=${SOURCE} \
+	FLAG_DEV_DB=${FLAG_DEV_DB} \
+	FLAG_DEV=${FLAG_DEV} \
+	FLAG_DEV_DB=${FLAG_DEV_DB} \
+	VERSION_PORT=${VERSION_PORT} \
+	TAG=${TAG} \
+	VERSION=${VERSION} \
+	docker compose \
+		-p ${PROJECT_BASENAME}-dev \
+		-f projects/dev.yml \
+		up -d
+	@docker exec -it \
+		${CONTAINER_BASENAME}-dev_php \
+		bash /var/scripts/sync.sh
+	@docker exec --user ${DOCKER_USER} -it \
+		${CONTAINER_BASENAME}-dev_php \
+		composer dump-autoload \
+			--working-dir app \
+			--classmap-authoritative
+	@echo "👉 http://localhost:${FLAG_DEV}${VERSION_PORT}"
+
 dev--down:
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	docker compose \
