@@ -47,13 +47,18 @@
         "chevere/throwable-handler": "^0.7",
         "chevere/xr": "^0.3",
         "chevere/workflow": "^0.5",
-        "php-opencloud/openstack": "^3.2"
+        "php-opencloud/openstack": "^3.2",
+        "pragmarx/google2fa": "^8.0",
+        "pragmarx/google2fa-qrcode": "^3.0",
+        "bacon/bacon-qr-code": "^2.0",
+        "chevere/cache": "^0.2"
     },
     "autoload": {
         "files": [
             "src/File/functions.php",
             "src/Image/functions.php",
             "src/Encoding/functions.php",
+            "src/Encrypt/functions.php",
             "src/Workflow/functions.php",
             "src/Vars/functions.php",
             "src/Legacy/functions.php",
