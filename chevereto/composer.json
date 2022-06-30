@@ -58,7 +58,7 @@
             "src/File/functions.php",
             "src/Image/functions.php",
             "src/Encoding/functions.php",
-            "src/Encrypt/functions.php",
+            "src/Encryption/functions.php",
             "src/Workflow/functions.php",
             "src/Vars/functions.php",
             "src/Legacy/functions.php",
