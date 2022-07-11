@@ -46,12 +46,14 @@
         "chevere/chevere": "^0.8",
         "chevere/throwable-handler": "^0.7",
         "chevere/xr": "^0.3",
+        "chevere/xr-server": "^0.3",
         "chevere/workflow": "^0.5",
         "php-opencloud/openstack": "^3.2",
         "pragmarx/google2fa": "^8.0",
         "pragmarx/google2fa-qrcode": "^3.0",
         "bacon/bacon-qr-code": "^2.0",
-        "chevere/cache": "^0.2"
+        "chevere/cache": "^0.2",
+        "phpseclib/bcmath_compat": "^2.0"
     },
     "autoload": {
         "files": [
