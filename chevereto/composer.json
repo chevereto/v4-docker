@@ -51,9 +51,9 @@
         "php-opencloud/openstack": "^3.2",
         "pragmarx/google2fa": "^8.0",
         "pragmarx/google2fa-qrcode": "^3.0",
-        "bacon/bacon-qr-code": "^2.0",
         "chevere/cache": "^0.2",
-        "phpseclib/bcmath_compat": "^2.0"
+        "phpseclib/bcmath_compat": "^2.0",
+        "chillerlan/php-qrcode": "^4.3"
     },
     "autoload": {
         "files": [
