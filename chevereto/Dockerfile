@@ -110,13 +110,14 @@ RUN mkdir -p _assets images \
     importing/parse-users
 
 COPY --chown=www-data chevereto/ ./app
+
 RUN composer install \
     --working-dir=app \
-    --no-progress \
-    --ignore-platform-reqs && \
+    --no-progress && \
     chown www-data: app -R
 
 COPY scripts /var/scripts
+
 RUN chmod +x \
     /var/scripts/bootstrap.sh \
     /var/scripts/demo-importing.sh \

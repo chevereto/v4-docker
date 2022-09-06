@@ -22,7 +22,6 @@ chv_install() {
     composer install \
         --working-dir=$WORKING_DIR/app \
         --no-progress \
-        --classmap-authoritative \
         --ignore-platform-reqs
 }
 chv_provide() {

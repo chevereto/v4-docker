@@ -84,8 +84,7 @@ dev: dev--down--volumes
 	@docker exec --user ${DOCKER_USER} -it \
 		${CONTAINER_BASENAME}-dev_php \
 		composer dump-autoload \
-			--working-dir app \
-			--classmap-authoritative
+			--working-dir app
 	@docker exec -it --user ${DOCKER_USER} \
 		${CONTAINER_BASENAME}-dev_php \
 		app/bin/legacy -C install \

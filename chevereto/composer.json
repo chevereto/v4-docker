@@ -10,6 +10,7 @@
     ],
     "config": {
         "optimize-autoloader": true,
+        "classmap-authoritative": true,
         "vendor-dir": "vendor",
         "allow-plugins": {
             "composer/package-versions-deprecated": true
@@ -50,7 +51,6 @@
         "chevere/cache": "^0.3",
         "phpseclib/bcmath_compat": "^2.0",
         "chillerlan/php-qrcode": "^4.3",
-        "tijsverkoyen/akismet": "^1.1",
         "firebase/php-jwt": "^6.3"
     },
     "autoload": {
