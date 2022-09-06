@@ -2,7 +2,7 @@
 set -e
 SOURCE=/var/www/chevereto/
 TARGET=/var/www/html/
-EXCLUDE="\.git|\.DS_Store|\.vscode|\/app\/vendor|\/app\/settings\.php|\/app\/importer\/jobs"
+EXCLUDE="\.git|\.DS_Store|\.vscode|\/app\/vendor|\/app\/env\.php|\/app\/importer\/jobs"
 cp "${SOURCE}".gitignore "${TARGET}".gitignore
 function sync() {
     rsync -r -I -og \
