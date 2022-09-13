@@ -111,7 +111,7 @@ RUN mkdir -p _assets images \
 
 COPY --chown=www-data chevereto/ ./app
 
-RUN composer install \
+RUN /usr/local/bin/composer install \
     --working-dir=app \
     --no-progress && \
     chown www-data: app -R
