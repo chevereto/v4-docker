@@ -114,6 +114,7 @@ COPY --chown=www-data chevereto/ ./app
 RUN composer install \
     --working-dir=app \
     --no-progress \
+    --ignore-platform-reqs \
     && chown www-data: app -R
 
 COPY scripts /var/scripts
