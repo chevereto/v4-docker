@@ -23,15 +23,15 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable imagick opcache \
     && php -m
 
-RUN echo "sendmail_path=/usr/sbin/sendmail -t -i" >> /usr/local/etc/php/conf.d/sendmail.ini \
-    && sed -i '/#!\/bin\/sh/aservice sendmail restart' /usr/local/bin/docker-php-entrypoint \
-    && sed -i '/#!\/bin\/sh/aecho "$(hostname -i)\t$(hostname) $(hostname).localhost" >> /etc/hosts' /usr/local/bin/docker-php-entrypoint
+# RUN echo "sendmail_path=/usr/sbin/sendmail -t -i" >> /usr/local/etc/php/conf.d/sendmail.ini \
+#     && sed -i '/#!\/bin\/sh/aservice sendmail restart' /usr/local/bin/docker-php-entrypoint \
+#     && sed -i '/#!\/bin\/sh/aecho "$(hostname -i)\t$(hostname) $(hostname).localhost" >> /etc/hosts' /usr/local/bin/docker-php-entrypoint
 
-RUN apt-get install -y \
-    rsync \
-    inotify-tools
+# RUN apt-get install -y \
+#     rsync \
+#     inotify-tools
 
-RUN rm -rf /var/lib/apt/lists/*
+# RUN rm -rf /var/lib/apt/lists/*
 
 ARG VERSION=4.0
 ARG SERVICING=docker
@@ -111,10 +111,12 @@ RUN mkdir -p _assets images \
 
 COPY --chown=www-data chevereto/ ./app
 
-RUN /usr/local/bin/composer install \
+RUN composer install \
     --working-dir=app \
-    --no-progress && \
-    chown www-data: app -R
+    --no-progress \
+    --ignore-platform-reqs
+
+RUN chown www-data: app -R
 
 COPY scripts /var/scripts
 
