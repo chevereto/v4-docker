@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3e9022ca016159a23c800b5d5269823d",
+    "content-hash": "29bb245e6713d15511ebf435f5052a47",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -589,16 +589,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.235.5",
+            "version": "3.235.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "3b002b92369dbcb8d86f32546cb324eabcd19a4e"
+                "reference": "d7c649ff9d55eb8099cac97c5a37a5ed2720d06b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/3b002b92369dbcb8d86f32546cb324eabcd19a4e",
-                "reference": "3b002b92369dbcb8d86f32546cb324eabcd19a4e",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d7c649ff9d55eb8099cac97c5a37a5ed2720d06b",
+                "reference": "d7c649ff9d55eb8099cac97c5a37a5ed2720d06b",
                 "shasum": ""
             },
             "require": {
@@ -675,9 +675,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.235.5"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.235.6"
             },
-            "time": "2022-09-09T18:19:38+00:00"
+            "time": "2022-09-12T18:15:48+00:00"
         },
         {
             "name": "brick/math",
@@ -2274,7 +2274,7 @@
         },
         {
             "name": "illuminate/cache",
-            "version": "v9.29.0",
+            "version": "v9.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/cache.git",
@@ -2334,16 +2334,16 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v9.29.0",
+            "version": "v9.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
-                "reference": "f2d62ebe609b7c7ff40685ec15db9c48b585910b"
+                "reference": "75c6da8dae581e37943ddc864a8fc6830fae9065"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/collections/zipball/f2d62ebe609b7c7ff40685ec15db9c48b585910b",
-                "reference": "f2d62ebe609b7c7ff40685ec15db9c48b585910b",
+                "url": "https://api.github.com/repos/illuminate/collections/zipball/75c6da8dae581e37943ddc864a8fc6830fae9065",
+                "reference": "75c6da8dae581e37943ddc864a8fc6830fae9065",
                 "shasum": ""
             },
             "require": {
@@ -2385,11 +2385,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-09-07T13:10:58+00:00"
+            "time": "2022-09-12T13:46:55+00:00"
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v9.29.0",
+            "version": "v9.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -2435,7 +2435,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v9.29.0",
+            "version": "v9.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -2486,7 +2486,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v9.29.0",
+            "version": "v9.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -2534,16 +2534,16 @@
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v9.29.0",
+            "version": "v9.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
-                "reference": "de91c9c61c69f39783e706e20de6ef9254d5d8e1"
+                "reference": "2579700c62f5eb767305759d5b31da6697462096"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/filesystem/zipball/de91c9c61c69f39783e706e20de6ef9254d5d8e1",
-                "reference": "de91c9c61c69f39783e706e20de6ef9254d5d8e1",
+                "url": "https://api.github.com/repos/illuminate/filesystem/zipball/2579700c62f5eb767305759d5b31da6697462096",
+                "reference": "2579700c62f5eb767305759d5b31da6697462096",
                 "shasum": ""
             },
             "require": {
@@ -2592,11 +2592,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-09-05T14:29:16+00:00"
+            "time": "2022-09-13T13:42:06+00:00"
         },
         {
             "name": "illuminate/macroable",
-            "version": "v9.29.0",
+            "version": "v9.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -2642,16 +2642,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v9.29.0",
+            "version": "v9.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "fff7e3659a137ff254d9930bb16c0559f49033af"
+                "reference": "df3b4ad1f4d3cda0ee0d9172cb8f9fc1dc7e9b25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/fff7e3659a137ff254d9930bb16c0559f49033af",
-                "reference": "fff7e3659a137ff254d9930bb16c0559f49033af",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/df3b4ad1f4d3cda0ee0d9172cb8f9fc1dc7e9b25",
+                "reference": "df3b4ad1f4d3cda0ee0d9172cb8f9fc1dc7e9b25",
                 "shasum": ""
             },
             "require": {
@@ -2707,7 +2707,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-09-09T13:56:49+00:00"
+            "time": "2022-09-12T19:07:18+00:00"
         },
         {
             "name": "intervention/image",
@@ -6778,16 +6778,16 @@
         },
         {
             "name": "thecodingmachine/safe",
-            "version": "v2.2.3",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thecodingmachine/safe.git",
-                "reference": "e454a3142d2197694d1fda291a4462ccd3f66e12"
+                "reference": "dc8df8f5047e7d3021a3f41f492dc99f8b3dc475"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/e454a3142d2197694d1fda291a4462ccd3f66e12",
-                "reference": "e454a3142d2197694d1fda291a4462ccd3f66e12",
+                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/dc8df8f5047e7d3021a3f41f492dc99f8b3dc475",
+                "reference": "dc8df8f5047e7d3021a3f41f492dc99f8b3dc475",
                 "shasum": ""
             },
             "require": {
@@ -6910,9 +6910,9 @@
             "description": "PHP core functions that throw exceptions instead of returning FALSE on error",
             "support": {
                 "issues": "https://github.com/thecodingmachine/safe/issues",
-                "source": "https://github.com/thecodingmachine/safe/tree/v2.2.3"
+                "source": "https://github.com/thecodingmachine/safe/tree/v2.3.0"
             },
-            "time": "2022-08-04T14:05:49+00:00"
+            "time": "2022-09-13T15:49:48+00:00"
         },
         {
             "name": "voku/portable-ascii",
@@ -8695,16 +8695,16 @@
         },
         {
             "name": "sebastian/type",
-            "version": "3.1.0",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/type.git",
-                "reference": "fb44e1cc6e557418387ad815780360057e40753e"
+                "reference": "fb3fe09c5f0bae6bc27ef3ce933a1e0ed9464b6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/type/zipball/fb44e1cc6e557418387ad815780360057e40753e",
-                "reference": "fb44e1cc6e557418387ad815780360057e40753e",
+                "url": "https://api.github.com/repos/sebastianbergmann/type/zipball/fb3fe09c5f0bae6bc27ef3ce933a1e0ed9464b6e",
+                "reference": "fb3fe09c5f0bae6bc27ef3ce933a1e0ed9464b6e",
                 "shasum": ""
             },
             "require": {
@@ -8716,7 +8716,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "autoload": {
@@ -8739,7 +8739,7 @@
             "homepage": "https://github.com/sebastianbergmann/type",
             "support": {
                 "issues": "https://github.com/sebastianbergmann/type/issues",
-                "source": "https://github.com/sebastianbergmann/type/tree/3.1.0"
+                "source": "https://github.com/sebastianbergmann/type/tree/3.2.0"
             },
             "funding": [
                 {
@@ -8747,7 +8747,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-08-29T06:55:37+00:00"
+            "time": "2022-09-12T14:47:03+00:00"
         },
         {
             "name": "sebastian/version",
@@ -9435,8 +9435,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.0",
-        "ext-gd": "*"
+        "php": ">=8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
