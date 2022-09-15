@@ -60,7 +60,7 @@ bash: arguments
 repl: arguments
 	@docker exec -it --user ${DOCKER_USER} \
 		${CONTAINER_BASENAME}-${TARGET}_${SERVICE} \
-		bash -c "cd app && vendor/bin/psysh"
+		app/bin/repl
 
 log-access: arguments
 	@docker logs ${CONTAINER_BASENAME}-${TARGET}_${SERVICE} -f 2>/dev/null
