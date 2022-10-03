@@ -16,6 +16,7 @@ This repository is for the [Chevereto](https://chevereto.com) Docker images used
 
 ## Requirements
 
+* Chevereto V4 [license key](https://chevereto.com/pricing)
 * [Docker](https://docs.docker.com/)
 * [Compose V2](https://docs.docker.com/compose/cli-command/) `docker compose`
 
