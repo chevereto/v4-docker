@@ -1,4 +1,5 @@
 .DS_Store
+.vscode/
 *.dev.yml
 *.dev.sh
 php/**/*.sh
