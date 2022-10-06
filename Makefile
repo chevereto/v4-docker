@@ -189,6 +189,8 @@ prod: feedback feedback--prod prod--down--volumes
 	PORT_FLAG_PROD=${PORT_FLAG_PROD} \
 	LICENSE=${LICENSE} \
 	VERSION_PORT=${VERSION_PORT} \
+	HOSTNAME=${HOSTNAME} \
+	HOSTNAME_PATH=${HOSTNAME_PATH} \
 	URL_PROD=${URL_PROD} \
 	TAG=${TAG} \
 	VERSION=${VERSION} \
