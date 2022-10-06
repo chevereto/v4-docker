@@ -1,11 +1,12 @@
 TARGET ?= dev
+SOURCE ?= ~/git/chevereto/v4
+
 VERSION ?= 4.0
 PHP ?= 8.1
 DOCKER_USER ?= www-data
 HOSTNAME ?= localhost
 HOSTNAME_PATH ?= /
 PROTOCOL ?= http
-SOURCE ?= ~/git/chevereto/v4
 
 NAMESPACE ?= local
 PROJECT_BASENAME = ${NAMESPACE}_chevereto-docker
@@ -13,7 +14,7 @@ CONTAINER_BASENAME ?= ${NAMESPACE}_chevereto-${VERSION}-php-${PHP}
 TAG ?= ghcr.io/chevereto/v4-docker:${VERSION}-php${PHP}
 
 SERVICE ?= php
-LICENSE ?= $(shell stty -echo; read -p "Chevereto V4 License key: " license; stty echo; echo $$license)
+LICENSE ?= $(shell stty -echo; read -p "Chevereto V4 License key: 🔑" license; stty echo; echo $$license)
 
 PORT_FLAG_PROD = 1
 PORT_FLAG_DEMO = 2
@@ -35,6 +36,7 @@ URL_DEMO = ${ENDPOINT}:${PORT_FLAG_DEMO}${ENDPOINT_CONTEXT}
 URL_PROD = ${ENDPOINT}:${PORT_FLAG_PROD}${ENDPOINT_CONTEXT}
 
 feedback:
+	@./scripts/logo.sh
 	@echo "${FEEDBACK}"
 
 feedback--short:
