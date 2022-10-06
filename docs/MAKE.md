@@ -12,8 +12,11 @@ Default values:
 
 * DOCKER_USER=www-data
 * PHP=8.1
-* TARGET=dev
 * VERSION=4.0
+* TARGET=dev
+* HOSTNAME=localhost
+* HOSTNAME_PATH=/
+* PROTOCOL=http
 
 ## Production
 
