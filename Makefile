@@ -1,34 +1,53 @@
-# Default arguments
 TARGET ?= dev
 VERSION ?= 4.0
 PHP ?= 8.1
 DOCKER_USER ?= www-data
+HOSTNAME ?= localhost
+HOSTNAME_PATH ?= /
 PROTOCOL ?= http
-# NAMESPACE prefix in project's name
+SOURCE ?= ~/git/chevereto/v4
+
 NAMESPACE ?= local
 PROJECT_BASENAME = ${NAMESPACE}_chevereto-docker
 CONTAINER_BASENAME ?= ${NAMESPACE}_chevereto-${VERSION}-php-${PHP}
 TAG ?= ghcr.io/chevereto/v4-docker:${VERSION}-php${PHP}
-# SERVICE php|database|http
+
 SERVICE ?= php
-# License ask
 LICENSE ?= $(shell stty -echo; read -p "Chevereto V4 License key: " license; stty echo; echo $$license)
-# Port flags
-FLAG_PROD = 1
-FLAG_DEMO = 2
-FLAG_DEV_DB = 3
-FLAG_DEV = 4
+
+PORT_FLAG_PROD = 1
+PORT_FLAG_DEMO = 2
+PORT_FLAG_DBDEV = 3
+PORT_FLAG_DEV = 4
+
 VERSION_DOTLESS = $(shell echo \${VERSION} | tr -d '.')
 PHP_DOTLESS = $(shell echo \${PHP} | tr -d '.')
 VERSION_PORT = ${VERSION_DOTLESS}${PHP_DOTLESS}
-# Echo doing
+
 FEEDBACK = $(shell echo 👉 V\${VERSION} \${NAMESPACE} [PHP \${PHP}] \(\${DOCKER_USER}\))
 FEEDBACK_SHORT = $(shell echo 👉 V\${VERSION} [PHP \${PHP}] \(\${DOCKER_USER}\))
 
-SOURCE ?= ~/git/chevereto/v4
+ENDPOINT = ${PROTOCOL}://${HOSTNAME}
+ENDPOINT_CONTEXT = ${VERSION_PORT}${HOSTNAME_PATH}
 
-arguments:
+URL_DEV = ${ENDPOINT}:${PORT_FLAG_DEV}${ENDPOINT_CONTEXT}
+URL_DEMO = ${ENDPOINT}:${PORT_FLAG_DEMO}${ENDPOINT_CONTEXT}
+URL_PROD = ${ENDPOINT}:${PORT_FLAG_PROD}${ENDPOINT_CONTEXT}
+
+feedback:
 	@echo "${FEEDBACK}"
+
+feedback--short:
+	@echo "${FEEDBACK_SHORT}"
+
+feedback--dev:
+	@echo "${URL_DEV}"
+
+feedback--demo:
+	@echo "${URL_DEMO}"
+
+feedback--prod:
+	@echo "${URL_DEMO}"
 
 # Tools
 
@@ -41,42 +60,43 @@ build-httpd:
 
 # Docker
 
-image:
-	@echo "${FEEDBACK_SHORT}"
+image: feedback--short
 	@docker build . \
 		-f chevereto/Dockerfile \
 		--build-arg PHP=${PHP} \
 		-t ${TAG}
 
-pull:
-	@echo "${FEEDBACK_SHORT}"
+pull: feedback--short
 	@docker pull ${TAG}
 
-bash: arguments
+bash: feedback
 	@docker exec -it --user ${DOCKER_USER} \
 		${CONTAINER_BASENAME}-${TARGET}_${SERVICE} \
 		bash
 
-repl: arguments
+repl: feedback
 	@docker exec -it --user ${DOCKER_USER} \
 		${CONTAINER_BASENAME}-${TARGET}_${SERVICE} \
 		app/bin/repl
 
-log-access: arguments
+log-access: feedback
 	@docker logs ${CONTAINER_BASENAME}-${TARGET}_${SERVICE} -f 2>/dev/null
 
-log-error: arguments
+log-error: feedback
 	@docker logs ${CONTAINER_BASENAME}-${TARGET}_${SERVICE} -f 1>/dev/null
 
 # Projects
 
-dev: dev--down--volumes
+dev: feedback feedback--dev dev--down--volumes
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE=${SOURCE} \
-	FLAG_DEV_DB=${FLAG_DEV_DB} \
-	FLAG_DEV=${FLAG_DEV} \
-	FLAG_DEV_DB=${FLAG_DEV_DB} \
+	PORT_FLAG_DBDEV=${PORT_FLAG_DBDEV} \
+	PORT_FLAG_DEV=${PORT_FLAG_DEV} \
+	PORT_FLAG_DBDEV=${PORT_FLAG_DBDEV} \
 	VERSION_PORT=${VERSION_PORT} \
+	HOSTNAME=${HOSTNAME} \
+	HOSTNAME_PATH=${HOSTNAME_PATH} \
+	URL_DEV=${URL_DEV} \
 	TAG=${TAG} \
 	VERSION=${VERSION} \
 	docker compose \
@@ -96,15 +116,18 @@ dev: dev--down--volumes
 			-u admin \
 			-e admin@chevereto.loc \
 			-x password
-	@echo "👉 admin:password http://localhost:${FLAG_DEV}${VERSION_PORT}"
+	@echo "👉 admin:password ${URL_DEV}"
 
-dev--update: dev--down
+dev--update: feedback dev--down
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE=${SOURCE} \
-	FLAG_DEV_DB=${FLAG_DEV_DB} \
-	FLAG_DEV=${FLAG_DEV} \
-	FLAG_DEV_DB=${FLAG_DEV_DB} \
+	PORT_FLAG_DBDEV=${PORT_FLAG_DBDEV} \
+	PORT_FLAG_DEV=${PORT_FLAG_DEV} \
+	PORT_FLAG_DBDEV=${PORT_FLAG_DBDEV} \
 	VERSION_PORT=${VERSION_PORT} \
+	HOSTNAME=${HOSTNAME} \
+	HOSTNAME_PATH=${HOSTNAME_PATH} \
+	URL_DEV=${URL_DEV} \
 	TAG=${TAG} \
 	VERSION=${VERSION} \
 	docker compose \
@@ -119,62 +142,63 @@ dev--update: dev--down
 		composer dump-autoload \
 			--working-dir app \
 			--classmap-authoritative
-	@echo "👉 http://localhost:${FLAG_DEV}${VERSION_PORT}"
+	@echo "👉 ${URL_DEV}"
 
-dev--down:
+dev--down: feedback
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	docker compose \
 		-p ${PROJECT_BASENAME}-dev \
 		-f projects/dev.yml \
 		down
 
-dev--down--volumes:
+dev--down--volumes: feedback
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	docker compose \
 		-p ${PROJECT_BASENAME}-dev \
 		-f projects/dev.yml \
 		down --volumes
 
-dev--demo: arguments
+dev--demo: feedback
 	@docker exec -it \
     	${CONTAINER_BASENAME}-dev_php \
     	bash /var/scripts/demo-importing.sh
 	@docker exec --user ${DOCKER_USER} \
 		-it ${CONTAINER_BASENAME}-dev_php \
 		app/bin/legacy -C bulk-importer
-	@echo "👉 http://localhost:${FLAG_DEV}${VERSION_PORT}"
+	@echo "👉 ${URL_DEV}"
 
-dev--composer: arguments
+dev--composer: feedback
 	@docker exec -it --user ${DOCKER_USER} \
 		${CONTAINER_BASENAME}-dev_php \
 		composer ${run} \
 			--working-dir app \
 			--ignore-platform-reqs
 
-dev--test: arguments
+dev--test: feedback
 	@docker exec -it --user ${DOCKER_USER} \
 		${CONTAINER_BASENAME}-dev_php \
 		app/vendor/bin/phpunit -c app/phpunit.xml
 
-dev--sh: arguments
+dev--sh: feedback
 	@docker exec -it \
 		${CONTAINER_BASENAME}-dev_${SERVICE} \
 		bash /var/scripts/${run}.sh
 
-prod: prod--down--volumes
+prod: feedback feedback--prod prod--down--volumes
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
-	FLAG_PROD=${FLAG_PROD} \
+	PORT_FLAG_PROD=${PORT_FLAG_PROD} \
 	LICENSE=${LICENSE} \
 	VERSION_PORT=${VERSION_PORT} \
+	URL_PROD=${URL_PROD} \
 	TAG=${TAG} \
 	VERSION=${VERSION} \
 	docker compose \
 		-p ${PROJECT_BASENAME}-prod \
 		-f projects/prod.yml \
 		up -d
-	@echo "👉 http://localhost:${FLAG_PROD}${VERSION_PORT}"
+	@echo "👉 ${URL_PROD}"
 
-prod--down:
+prod--down: feedback
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE="" \
 	VERSION=${VERSION} \
@@ -183,7 +207,7 @@ prod--down:
 		-f projects/prod.yml \
 		down
 
-prod--down--volumes:
+prod--down--volumes: feedback
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE="" \
 	VERSION=${VERSION} \
@@ -192,11 +216,14 @@ prod--down--volumes:
 		-f projects/prod.yml \
 		down --volumes
 
-demo: demo--down--volumes
+demo: feedback feedback--demo demo--down--volumes
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
-	FLAG_DEMO=$(FLAG_DEMO) \
+	PORT_FLAG_DEMO=$(PORT_FLAG_DEMO) \
 	LICENSE=${LICENSE} \
 	VERSION_PORT=${VERSION_PORT} \
+	HOSTNAME=${HOSTNAME} \
+	HOSTNAME_PATH=${HOSTNAME_PATH} \
+	URL_DEMO=${URL_DEMO} \
 	TAG=${TAG} \
 	VERSION=${VERSION} \
 	docker compose \
@@ -215,9 +242,9 @@ demo: demo--down--volumes
 	@docker exec --user ${DOCKER_USER} \
 		-it ${CONTAINER_BASENAME}-demo_php \
 		app/bin/legacy -C bulk-importer
-	@echo "👉 admin:password http://localhost:${FLAG_DEMO}${VERSION_PORT}"
+	@echo "👉 admin:password ${URL_DEMO}"
 
-demo--down:
+demo--down: feedback
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	VERSION=${VERSION} \
 	docker compose \
@@ -225,7 +252,7 @@ demo--down:
 		-f projects/demo.yml \
 		down
 
-demo--down--volumes:
+demo--down--volumes: feedback
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	VERSION=${VERSION} \
 	docker compose \
@@ -235,51 +262,66 @@ demo--down--volumes:
 
 # General purpose docker compose
 
-compose-up: arguments
+compose-up: feedback
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE=${SOURCE} \
 	TAG=${TAG} \
-	FLAG_DEV=${FLAG_DEV} \
-	FLAG_DEV_DB=${FLAG_DEV_DB} \
-	FLAG_PROD=${FLAG_PROD} \
-	FLAG_DEMO=${FLAG_DEMO} \
+	PORT_FLAG_DEV=${PORT_FLAG_DEV} \
+	PORT_FLAG_DBDEV=${PORT_FLAG_DBDEV} \
+	PORT_FLAG_PROD=${PORT_FLAG_PROD} \
+	PORT_FLAG_DEMO=${PORT_FLAG_DEMO} \
 	VERSION=${VERSION} \
 	VERSION_PORT=${VERSION_PORT} \
+	HOSTNAME=${HOSTNAME} \
+	HOSTNAME_PATH=${HOSTNAME_PATH} \
+	URL_DEV=${URL_DEV} \
+	URL_DEMO=${URL_DEMO} \
+	URL_PROD=${URL_PROD} \
 	docker compose \
 		-p ${PROJECT_BASENAME}-${TARGET} \
 		-f projects/${TARGET}.yml \
 		up
 
-compose-up-d: arguments
+compose-up-d: feedback
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE=${SOURCE} \
 	TAG=${TAG} \
-	FLAG_DEV=${FLAG_DEV} \
-	FLAG_DEV_DB=${FLAG_DEV_DB} \
-	FLAG_PROD=${FLAG_PROD} \
-	FLAG_DEMO=${FLAG_DEMO} \
+	PORT_FLAG_DEV=${PORT_FLAG_DEV} \
+	PORT_FLAG_DBDEV=${PORT_FLAG_DBDEV} \
+	PORT_FLAG_PROD=${PORT_FLAG_PROD} \
+	PORT_FLAG_DEMO=${PORT_FLAG_DEMO} \
 	VERSION=${VERSION} \
 	VERSION_PORT=${VERSION_PORT} \
+	HOSTNAME=${HOSTNAME} \
+	HOSTNAME_PATH=${HOSTNAME_PATH} \
+	URL_DEV=${URL_DEV} \
+	URL_DEMO=${URL_DEMO} \
+	URL_PROD=${URL_PROD} \
 	docker compose \
 		-p ${PROJECT_BASENAME}-${TARGET} \
 		-f projects/${TARGET}.yml \
 		up -d
 
-compose-stop: arguments
+compose-stop: feedback
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE='' \
-	FLAG_DEV=${FLAG_DEV} \
-	FLAG_DEV_DB=${FLAG_DEV_DB} \
-	FLAG_PROD=${FLAG_PROD} \
-	FLAG_DEMO=${FLAG_DEMO} \
+	PORT_FLAG_DEV=${PORT_FLAG_DEV} \
+	PORT_FLAG_DBDEV=${PORT_FLAG_DBDEV} \
+	PORT_FLAG_PROD=${PORT_FLAG_PROD} \
+	PORT_FLAG_DEMO=${PORT_FLAG_DEMO} \
 	VERSION=${VERSION} \
 	VERSION_PORT=${VERSION_PORT} \
+	HOSTNAME=${HOSTNAME} \
+	HOSTNAME_PATH=${HOSTNAME_PATH} \
+	URL_DEV=${URL_DEV} \
+	URL_DEMO=${URL_DEMO} \
+	URL_PROD=${URL_PROD} \
 	docker compose \
 		-p ${PROJECT_BASENAME}-${TARGET} \
 		-f projects/${TARGET}.yml \
 		stop
 
-compose-down: arguments
+compose-down: feedback
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE='' \
 	VERSION=${VERSION} \
@@ -288,7 +330,7 @@ compose-down: arguments
 		-f projects/${TARGET}.yml \
 		down
 
-compose-down--volumes: arguments
+compose-down--volumes: feedback
 	@CONTAINER_BASENAME=${CONTAINER_BASENAME} \
 	SOURCE='' \
 	VERSION=${VERSION} \

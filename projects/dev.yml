@@ -9,7 +9,7 @@ services:
     volumes:
       - database:/var/lib/mysql
     ports:
-      - ${FLAG_DEV_DB}${VERSION_PORT}:3306
+      - ${PORT_FLAG_DBDEV}${VERSION_PORT}:3306
     restart: always
     healthcheck:
       test:
@@ -62,9 +62,11 @@ services:
       CHEVERETO_DB_PASS: user_database_password
       CHEVERETO_DB_PORT: 3306
       CHEVERETO_DB_NAME: chevereto
+      CHEVERETO_HOSTNAME: ${HOSTNAME}
+      CHEVERETO_HOSTNAME_PATH: ${HOSTNAME_PATH}
       CHEVERETO_HTTPS: 0
       CHEVERETO_ASSET_STORAGE_TYPE: local
-      CHEVERETO_ASSET_STORAGE_URL: http://localhost:${FLAG_DEV}${VERSION_PORT}/_assets/
+      CHEVERETO_ASSET_STORAGE_URL: ${URL_DEV}_assets/
       CHEVERETO_ASSET_STORAGE_BUCKET: /var/www/html/_assets/
       CHEVERETO_ENCRYPTION_KEY: 2536+Rn8cIAiESCwkSouKUvV7QWp+IK33LZscOKbW4k=
 
@@ -84,7 +86,7 @@ services:
         source: ${PWD}/httpd/httpd.conf
         target: /usr/local/apache2/conf/httpd.conf
     ports:
-      - ${FLAG_DEV}${VERSION_PORT}:80
+      - ${PORT_FLAG_DEV}${VERSION_PORT}:80
     restart: always
 
 volumes:
