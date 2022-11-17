@@ -1,3 +1,5 @@
+> **Warning**: This project has been superseded by [chevereto/docker](https://github.com/chevereto/docker). Do not use this repository.
+
 # V4 Docker
 
 > 🔔 [Subscribe](https://chv.to/newsletter) to don't miss any update regarding Chevereto.
@@ -7,10 +9,6 @@
 [![Community](https://img.shields.io/badge/chv.to-community-blue?style=flat-square)](https://chv.to/community)
 
 This repository is for the [Chevereto](https://chevereto.com) Docker images used for development base standard.
-
-## WARNING
-
-> **Warning**: This is a Docker project for developing and testing Chevereto. We use this infra for **development purposes**.
 
 👉 If you are looking for Docker **production-grade** provisioning go to [chevereto/v4-docker-production](https://github.com/chevereto/v4-docker-production).
 
