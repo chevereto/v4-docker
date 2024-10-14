@@ -2,11 +2,9 @@
 
 # V4 Docker
 
-> 🔔 [Subscribe](https://chv.to/newsletter) to don't miss any update regarding Chevereto.
-
 <img alt="Chevereto" src="LOGO.svg" width="100%">
 
-[![Community](https://img.shields.io/badge/chv.to-community-blue?style=flat-square)](https://chv.to/community)
+[![Community](https://img.shields.io/badge/community-blue?style=flat-square)](https://chevereto.com/community)
 
 This repository is for the [Chevereto](https://chevereto.com) Docker images used for development base standard.
 
